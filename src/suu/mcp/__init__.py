@@ -1,1 +1,1 @@
-"""Let an AI assistant fill SU forms. Needs: pip install "suu-cli[mcp]"."""
+"""Let an AI assistant fill SU forms. Needs: pip install "suu[mcp]"."""

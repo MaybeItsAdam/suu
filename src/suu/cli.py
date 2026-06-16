@@ -20,13 +20,13 @@ def _need_extra(extra: str, error: ModuleNotFoundError) -> "click.ClickException
         f"This feature needs an extra piece that isn't installed yet "
         f"(missing: {error.name}).\n\n"
         f"Copy-paste this line, press Enter, then try again:\n\n"
-        f'    pip install "suu-cli[{extra}]"\n'
+        f'    pip install "suu[{extra}]"\n'
     )
     return click.ClickException(msg)
 
 
 @click.group(context_settings={"help_option_names": ["-h", "--help"]})
-@click.version_option(package_name="suu-cli", prog_name="suu")
+@click.version_option(package_name="suu", prog_name="suu")
 def cli() -> None:
     """suu — tools for Students' Union UCL.
 

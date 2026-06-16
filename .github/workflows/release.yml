@@ -1,0 +1,122 @@
+name: Build & Publish
+
+# Strategy:
+#   • Push to main        → build + test + publish to TestPyPI (staging)
+#   • Push a tag like v*   → build + test + publish to real PyPI (release)
+#
+# Publishing uses PyPI "Trusted Publishing" (OIDC) — no API tokens are stored
+# in GitHub. You configure each index once to trust this repo + workflow.
+# See the README / repo notes for the one-time setup steps.
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+
+# Don't let two runs publish at once; cancel superseded runs on the same ref.
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build distributions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build sdist and wheel
+        run: |
+          python -m pip install --upgrade build twine
+          python -m build
+          python -m twine check dist/*
+
+      - name: Upload built distributions
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package with test extras
+        run: python -m pip install -e ".[dev,forms]"
+
+      - name: Run pytest
+        run: pytest -q
+
+  # ── Staging: every push to main goes to TestPyPI ───────────────────────────
+  publish-testpypi:
+    name: Publish to TestPyPI
+    needs: [build, test]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/project/suu/
+    permissions:
+      id-token: write          # required for OIDC trusted publishing
+    steps:
+      - name: Download built distributions
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          # main is pushed often; don't fail if this version is already there.
+          skip-existing: true
+
+  # ── Release: pushing a vX.Y.Z tag goes to real PyPI ────────────────────────
+  publish-pypi:
+    name: Publish to PyPI
+    needs: [build, test]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/suu/
+    permissions:
+      id-token: write          # required for OIDC trusted publishing
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check tag matches pyproject version
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          VER="$(grep -m1 '^version' pyproject.toml | sed -E 's/.*"([^"]+)".*/\1/')"
+          echo "tag=$TAG  pyproject=$VER"
+          if [ "$TAG" != "$VER" ]; then
+            echo "::error::Git tag v$TAG does not match pyproject version $VER"
+            exit 1
+          fi
+
+      - name: Download built distributions
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1

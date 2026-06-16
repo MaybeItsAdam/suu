@@ -11,6 +11,7 @@ dist/
 # Virtual environments
 venv/
 .venv/
+.build-venv/
 env/
 
 # Environment / secrets

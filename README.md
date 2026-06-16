@@ -1,4 +1,8 @@
-# suu
+<p align="center">
+  <img src="https://raw.githubusercontent.com/MaybeItsAdam/suu/main/assets/logo.png" alt="suu logo" width="120" height="120">
+</p>
+
+<h1 align="center">suu</h1>
 
 One friendly toolkit for **Students' Union UCL**, made to save student leaders time.
 It does two jobs:
@@ -18,10 +22,10 @@ Everything runs through a single command: `suu`.
 You only install the parts you need. Pick one:
 
 ```bash
-pip install "suu-cli[scrape]"   # just the data scraper
-pip install "suu-cli[forms]"    # just the form filler (from a file)
-pip install "suu-cli[mcp]"      # form filler + AI assistant support
-pip install "suu-cli[all]"      # everything
+pip install "suu[scrape]"   # just the data scraper
+pip install "suu[forms]"    # just the form filler (from a file)
+pip install "suu[mcp]"      # form filler + AI assistant support
+pip install "suu[all]"      # everything
 ```
 
 New to the command line? `pip` comes with Python. If `pip` isn't found, install Python
