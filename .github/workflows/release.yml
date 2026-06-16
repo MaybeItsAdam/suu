@@ -26,9 +26,9 @@ jobs:
     name: Build distributions
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
@@ -39,7 +39,7 @@ jobs:
           python -m twine check dist/*
 
       - name: Upload built distributions
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: dist
           path: dist/
@@ -51,9 +51,9 @@ jobs:
       matrix:
         python-version: ["3.10", "3.12"]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -76,7 +76,7 @@ jobs:
       id-token: write          # required for OIDC trusted publishing
     steps:
       - name: Download built distributions
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: dist
           path: dist/
@@ -100,7 +100,7 @@ jobs:
     permissions:
       id-token: write          # required for OIDC trusted publishing
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Check tag matches pyproject version
         run: |
@@ -113,7 +113,7 @@ jobs:
           fi
 
       - name: Download built distributions
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: dist
           path: dist/
