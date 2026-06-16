@@ -126,3 +126,10 @@ The worker uses the same saved login as `suu forms` — run `suu forms login` fi
 
 Everything lives in one folder: `~/.suu` (saved logins, downloads). Delete it, or run
 `suu logout`, to start fresh. Advanced users can move it with the `SUU_HOME` env var.
+
+---
+
+## Contributing / releasing
+
+Maintainers: see the **[DevOps guide](docs/DEVOPS.md)** for local setup, the build/test/
+publish pipeline, and how to cut a release.
