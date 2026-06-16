@@ -21,6 +21,11 @@ concurrency:
 permissions:
   contents: read
 
+# upload/download-artifact still bundle Node 20; opt their JS into Node 24
+# (where GitHub is defaulting anyway) to clear the deprecation warnings.
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 jobs:
   build:
     name: Build distributions
