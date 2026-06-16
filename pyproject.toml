@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "suu-cli"
+version = "0.1.0"
+description = "One friendly toolkit for Students' Union UCL: scrape data and auto-fill forms, with a single `suu` command."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "MaybeItsAdam" }]
+
+# Core stays dependency-light so a beginner's first install is fast and small.
+# The heavy pieces live behind optional extras below.
+dependencies = [
+    "click",
+    "python-dotenv",
+    "pydantic>=2",
+]
+
+[project.optional-dependencies]
+scrape = ["selenium", "beautifulsoup4", "requests", "supabase", "cuid", "openpyxl", "typing_extensions"]
+forms = ["playwright", "httpx"]
+mcp = ["fastmcp>=0.3.0", "playwright", "httpx"]
+all = ["suu-cli[scrape,forms,mcp]"]
+dev = ["pytest", "pytest-asyncio", "pytest-playwright"]
+
+[project.scripts]
+suu = "suu.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["suu*"]
+
+[tool.setuptools.package-data]
+"suu.forms" = ["definitions/*.json"]

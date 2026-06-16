@@ -1,0 +1,284 @@
+{
+    "form_id": "purchase_request",
+    "url": "https://studentsunionucl.org/forms/purchase-request-form",
+    "description": "UCL Student Union Purchase Request Form. USE THIS FOR PAYING INVOICES (Suppliers) OR ASKING THE UNION TO BUY SOMETHING. DO NOT use this for reimbursing members (use Payment Request). Provide a breakdown of costs.",
+    "login_required": true,
+    "fields": [
+        {
+            "name": "club_society",
+            "selector": "[data-drupal-selector='edit-webform-access-group']",
+            "type": "autocomplete",
+            "description": "Club or Society Name (type to search, Enter to select)",
+            "required": true
+        },
+        {
+            "name": "cost_items",
+            "type": "list",
+            "description": "List of items being purchased. TIP: You may summarize multiple small items from the same invoice into a single line if they share the same expenditure type, but list them separately if they require distinct categorization.",
+            "required": true,
+            "add_button_selector": "[data-drupal-selector='edit-description-of-goods-or-services-add-submit']",
+            "fields": [
+                {
+                    "name": "description",
+                    "selector": "[data-drupal-selector='edit-description-of-goods-or-services-items-{i}-description']",
+                    "type": "text",
+                    "description": "Description of this item",
+                    "required": true
+                },
+                {
+                    "name": "grant_type",
+                    "selector": "[data-drupal-selector='edit-description-of-goods-or-services-items-{i}-grant-nongrant']",
+                    "type": "select",
+                    "description": "Grant or Non-grant expenditure (Default: Non-grant)",
+                    "required": false,
+                    "default": "Non-grant",
+                    "options": [
+                        "Grant",
+                        "Non-grant"
+                    ]
+                },
+                {
+                    "name": "expenditure_type",
+                    "selector": "[data-drupal-selector='edit-description-of-goods-or-services-items-{i}-account-code-nomcod']",
+                    "type": "select",
+                    "description": "Type of expenditure (Default: MISCELLANEOUS EXPENDITURE)",
+                    "required": false,
+                    "default": "MISCELLANEOUS EXPENDITURE",
+                    "options": [
+                        "MISCELLANEOUS EXPENDITURE",
+                        "TOUR COSTS",
+                        "KIT EXPENDITURE",
+                        "PUBLICITY COSTS",
+                        "SPEAKERS/WORKSHOPS",
+                        "COACH/INSTRUCTORS",
+                        "EQUIPMENT MAINTENANCE",
+                        "EQUIPMENT PURCHASE",
+                        "PRODUCTIONS COSTS",
+                        "FACILITY HIRE",
+                        "TRANSPORT",
+                        "COMPETITION ENTRY",
+                        "MATCH OFFICIALS",
+                        "ADDITIONAL GRANT",
+                        "FRIENDS TRUST"
+                    ]
+                },
+                {
+                    "name": "cost",
+                    "selector": "[data-drupal-selector='edit-description-of-goods-or-services-items-{i}-total-cost']",
+                    "type": "text",
+                    "description": "Cost in GBP (e.g. 50.00)",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "name": "payment_method",
+            "selector": "[data-drupal-selector='edit-how-should-these-goods-services-be-purchased'] + .chosen-container",
+            "type": "chosen_select",
+            "description": "How should the purchase be made? (Default: UK Bank transfer)",
+            "required": false,
+            "default": "UK Bank transfer (e.g. to pay an invoice or pay by BACS)",
+            "options": [
+                "UK Bank transfer (e.g. to pay an invoice or pay by BACS)",
+                "Payment over the phone (via credit card)",
+                "Online payment (via credit card)",
+                "International bank transfer (e.g. to pay an invoice from overseas)"
+            ]
+        },
+        {
+            "name": "phone_payment_details",
+            "selector": "#edit-details-telephone",
+            "type": "textarea",
+            "description": "[ONLY FOR: Payment over the phone] Provide company name, phone number to call, and any reference numbers",
+            "required": false
+        },
+        {
+            "name": "online_payment_links",
+            "selector": "#edit-exact-website-links-",
+            "type": "textarea",
+            "description": "[ONLY FOR: Online payment] Provide exact website links to each product to purchase",
+            "required": false
+        },
+        {
+            "name": "account_number",
+            "selector": "#edit-account-number",
+            "type": "type_text",
+            "description": "[ONLY FOR: UK Bank transfer] 8-digit UK bank account number (no spaces)",
+            "required": false
+        },
+        {
+            "name": "sort_code",
+            "selector": "#edit-sort-code",
+            "type": "type_text",
+            "description": "[ONLY FOR: UK Bank transfer] 6-digit sort code (no dashes or spaces, e.g. 010203)",
+            "required": false
+        },
+        {
+            "name": "company_name",
+            "selector": "#edit-company-name",
+            "type": "text",
+            "description": "[ONLY FOR: UK Bank transfer] Name of company being paid",
+            "required": false
+        },
+        {
+            "name": "company_email",
+            "selector": "#edit-company-email-address",
+            "type": "text",
+            "description": "[ONLY FOR: UK Bank transfer] Company's email address",
+            "required": false
+        },
+        {
+            "name": "invoice_number",
+            "selector": "#edit-invoice-number",
+            "type": "text",
+            "description": "[ONLY FOR: UK Bank transfer] Invoice number from the supplier",
+            "required": false
+        },
+        {
+            "name": "invoice_file",
+            "selector": "#edit-file-invoice-upload",
+            "type": "file",
+            "description": "[ONLY FOR: UK Bank transfer] Path to invoice file (jpg, png, pdf, doc)",
+            "validation_selector": "input[value='Remove']",
+            "required": false
+        },
+        {
+            "name": "international_confirm_fee",
+            "selector": "#edit-i-confirm-that-the-clubsociety-will-cover-the-charge-for-proce",
+            "type": "checkbox",
+            "description": "[ONLY FOR: International transfer] Confirm fee coverage",
+            "required": false
+        },
+        {
+            "name": "iban",
+            "selector": "#edit-iban-account-code",
+            "type": "text",
+            "description": "[ONLY FOR: International transfer] IBAN",
+            "required": false
+        },
+        {
+            "name": "bic",
+            "selector": "#edit-bank-identifier-code-bic",
+            "type": "text",
+            "description": "[ONLY FOR: International transfer] Bank Identifier Code (BIC/SWIFT)",
+            "required": false
+        },
+        {
+            "name": "receiver_name",
+            "selector": "#edit-name-of-receiver-of-payment",
+            "type": "text",
+            "description": "[ONLY FOR: International transfer] Name of person/company receiving payment",
+            "required": false
+        },
+        {
+            "name": "receiver_address",
+            "selector": "#edit-address",
+            "type": "text",
+            "description": "[ONLY FOR: International transfer] Receiver's address line 1",
+            "required": false
+        },
+        {
+            "name": "receiver_address2",
+            "selector": "#edit-address-2",
+            "type": "text",
+            "description": "[ONLY FOR: International transfer] Receiver's address line 2 (optional)",
+            "required": false
+        },
+        {
+            "name": "receiver_city",
+            "selector": "#edit-citytown",
+            "type": "text",
+            "description": "[ONLY FOR: International transfer] Receiver's city/town",
+            "required": false
+        },
+        {
+            "name": "receiver_state",
+            "selector": "#edit-stateprovince",
+            "type": "select",
+            "description": "[ONLY FOR: International transfer] Receiver's state/province",
+            "required": false
+        },
+        {
+            "name": "receiver_postcode",
+            "selector": "#edit-zippostal-code",
+            "type": "text",
+            "description": "[ONLY FOR: International transfer] Receiver's postal/ZIP code",
+            "required": false
+        },
+        {
+            "name": "receiver_country",
+            "selector": "#edit-country",
+            "type": "select",
+            "description": "[ONLY FOR: International transfer] Receiver's country",
+            "required": false
+        },
+        {
+            "name": "bank_name",
+            "selector": "#edit-name-of-bank-recieving-funds",
+            "type": "text",
+            "description": "[ONLY FOR: International transfer] Name of receiving bank",
+            "required": false
+        },
+        {
+            "name": "bank_address",
+            "selector": "#edit-address--2",
+            "type": "text",
+            "description": "[ONLY FOR: International transfer] Bank address line 1",
+            "required": false
+        },
+        {
+            "name": "bank_city",
+            "selector": "#edit-citytown--2",
+            "type": "text",
+            "description": "[ONLY FOR: International transfer] Bank city/town",
+            "required": false
+        },
+        {
+            "name": "bank_country",
+            "selector": "#edit-country--2",
+            "type": "select",
+            "description": "[ONLY FOR: International transfer] Bank country",
+            "required": false
+        },
+        {
+            "name": "linked_to_event_budget",
+            "selector": "#edit-linked-to-an-event-budget-submission-2",
+            "type": "click",
+            "value": "2",
+            "description": "Select 'No' for linked to event budget (default)",
+            "required": false
+        },
+        {
+            "name": "clothing_or_kit",
+            "selector": "#edit-clothing-or-sports-kit-2",
+            "type": "click",
+            "value": "2",
+            "description": "Select 'No' for clothing/sports kit purchase (default)",
+            "required": false
+        },
+        {
+            "name": "involves_coach",
+            "selector": "input[name='does_this_purchase_involve_a_coach_or_instructor'][value='2']",
+            "type": "click",
+            "value": "2",
+            "description": "Select 'No' for coach/instructor involvement (default)",
+            "required": true
+        },
+        {
+            "name": "involves_speaker",
+            "selector": "input[name='does_this_purchase_involve_an_external_speaker'][value='2']",
+            "type": "click",
+            "value": "2",
+            "description": "Select 'No' for external speaker involvement (default)",
+            "required": true
+        },
+        {
+            "name": "has_contract",
+            "selector": "#edit-contract-associated-2",
+            "type": "click",
+            "value": "2",
+            "description": "Select 'No' for associated contract (default)",
+            "required": false
+        }
+    ]
+}

@@ -1,0 +1,142 @@
+{
+    "form_id": "payment_request",
+    "url": "https://studentsunionucl.org/forms/payment-request-form",
+    "description": "UCL Student Union Payment Request Form (UK). USE THIS FOR REIMBURSEMENTS (paying back a member) ONLY. Do not use for paying invoices or purchasing new items directly from suppliers.",
+    "login_required": true,
+    "fields": [
+        {
+            "name": "club_society",
+            "selector": "[data-drupal-selector='edit-webform-access-group']",
+            "type": "autocomplete",
+            "description": "Club or Society Name (type to search, Enter to select)",
+            "required": true
+        },
+        {
+            "name": "description",
+            "selector": "textarea[id='edit-description']",
+            "type": "textarea",
+            "description": "Description of the purchase",
+            "required": true
+        },
+        {
+            "name": "activity_registration_form",
+            "selector": "[data-drupal-selector='edit-if-this-payment-is-linked-to-an-activity-registration-form-submi']",
+            "type": "type_and_enter",
+            "description": "Link to Activity Registration Form submission (optional)",
+            "required": false
+        },
+        {
+            "name": "payee_name",
+            "selector": "[data-drupal-selector='edit-payable-to']",
+            "type": "text",
+            "description": "Name of the person/company to receive payment",
+            "required": true
+        },
+        {
+            "name": "phone_number",
+            "selector": "[id='edit-payee-phone-number']",
+            "type": "text",
+            "description": "Phone number of the payee",
+            "required": true
+        },
+        {
+            "name": "email",
+            "selector": "[data-drupal-selector='edit-payee-ucl-email-address']",
+            "type": "text",
+            "description": "Email address of the payee",
+            "required": true
+        },
+        {
+            "name": "account_number",
+            "selector": "[id='edit-account-number']",
+            "type": "type_text",
+            "description": "Bank account number",
+            "required": true
+        },
+        {
+            "name": "sort_code",
+            "selector": "[id='edit-sort-code']",
+            "type": "type_text",
+            "description": "Bank sort code",
+            "required": true
+        },
+        {
+            "name": "payee_details_changed",
+            "selector": "[id='edit-payee-details-changed']",
+            "type": "select",
+            "value": "No",
+            "description": "Have payee details changed? (Default: No)",
+            "required": false,
+            "default": "No"
+        },
+        {
+            "name": "receipts",
+            "type": "list",
+            "description": "List of receipts to upload",
+            "add_button_selector": "[id='edit-purchases-add-submit']",
+            "required": true,
+            "fields": [
+                {
+                    "name": "expenditure_type",
+                    "selector": "[data-drupal-selector='edit-purchases-items'] tbody tr:nth-child({n}) div.chosen-container a",
+                    "type": "click",
+                    "description": "Open dropdown"
+                },
+                {
+                    "name": "expenditure_type_search",
+                    "selector": "[data-drupal-selector='edit-purchases-items'] tbody tr:nth-child({n}) div.chosen-drop input",
+                    "type": "type_text",
+                    "description": "Type to search expenditure",
+                    "options": [
+                        "MISCELLANEOUS EXPENDITURE",
+                        "TOUR COSTS",
+                        "KIT EXPENDITURE",
+                        "PUBLICITY COSTS",
+                        "SPEAKERS/WORKSHOPS",
+                        "COACH/INSTRUCTORS",
+                        "EQUIPMENT MAINTENANCE",
+                        "EQUIPMENT PURCHASE",
+                        "PRODUCTIONS COSTS",
+                        "FACILITY HIRE",
+                        "TRANSPORT",
+                        "COMPETITION ENTRY",
+                        "MATCH OFFICIALS",
+                        "ADDITIONAL GRANT",
+                        "FRIENDS TRUST"
+                    ]
+                },
+                {
+                    "name": "expenditure_type_select",
+                    "selector": "[data-drupal-selector='edit-purchases-items'] tbody tr:nth-child({n}) div.chosen-drop input",
+                    "type": "press_enter",
+                    "description": "Select the item"
+                },
+                {
+                    "name": "grant",
+                    "selector": "select[data-drupal-selector^='edit-purchases-items-{i}-account-code-cc']",
+                    "type": "select",
+                    "description": "Grant (G) or Non-Grant (N) (Default: N)",
+                    "required": false,
+                    "default": "N",
+                    "options": [
+                        "N",
+                        "G"
+                    ]
+                },
+                {
+                    "name": "cost",
+                    "selector": "input[data-drupal-selector^='edit-purchases-items-{i}-net']",
+                    "type": "text",
+                    "description": "The cost amount"
+                },
+                {
+                    "name": "file",
+                    "selector": "input[type='file'][data-drupal-selector^='edit-purchases-items-{i}-receipt-upload']",
+                    "type": "file",
+                    "description": "Receipt file upload",
+                    "validation_selector": "[data-drupal-selector^='edit-purchases-items-{i}-operations-remove']"
+                }
+            ]
+        }
+    ]
+}
