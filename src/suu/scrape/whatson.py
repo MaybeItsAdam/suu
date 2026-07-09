@@ -29,9 +29,9 @@ class WhatsOnScraper:
             if resp.status_code != 200:
                 print(f"Failed to fetch {url}: {resp.status_code}")
                 return
-                
+
             soup = BeautifulSoup(resp.text, 'html.parser')
-            
+
             # Strategy 1: Standard Body
             body = soup.select_one(".field--name-body")
             if body:
@@ -39,14 +39,14 @@ class WhatsOnScraper:
                 if text:
                     event['description'] = text
                     return
-    
+
             # Strategy 2: Node Content fallback
             content = soup.select_one(".node__content")
             if content:
                 text = content.get_text(separator='\n', strip=True)
                 if text:
                     event['description'] = text
-    
+
         except Exception as e:
             print(f"Error fetching description for {event.get('title')}: {e}")
 
@@ -55,14 +55,14 @@ class WhatsOnScraper:
         Visit each event link PARALLELLY to extract full description.
         """
         if not events: return
-        
+
         print(f"Enriching {len(events)} events with details in parallel...")
-        
+
         with requests.Session() as session:
             session.headers.update({
                 "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
             })
-            
+
             with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
                 futures = [executor.submit(self.fetch_description, session, event) for event in events]
                 concurrent.futures.wait(futures)
@@ -71,19 +71,19 @@ class WhatsOnScraper:
         print(f"Scraping What's On from {self.start_date} to {self.end_date}...")
         driver = get_selenium_driver(headless=True)
         wait = WebDriverWait(driver, 10)
-        
+
         url = f"{BASE_URL}?s={self.start_date}&e={self.end_date}"
-        
+
         try:
             driver.get(url)
             time.sleep(5) # Let JS load
-            
+
             # Wait for React to mount
             try:
                 wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".whats-on-container")))
             except:
                 print("Container not found within 10s.")
-            
+
             # 1. Force Date Update
             try:
                 date_input = driver.find_element(By.CSS_SELECTOR, "input.whats-on-datepicker")
@@ -105,7 +105,7 @@ class WhatsOnScraper:
                     time.sleep(3) # Wait for update
             except Exception as e:
                 print(f"Failed to set date input: {e}")
-    
+
             # 2. Switch to List View
             try:
                 list_btn = driver.find_element(By.XPATH, "//button[contains(text(), 'List')]")
@@ -113,26 +113,46 @@ class WhatsOnScraper:
                 time.sleep(2)
             except:
                 print("Could not find/click List button. Staying in Week view.")
-            
-            # 3. Navigate to the correct week (Basic attempt, might need robust logic if date set failed)
-            
+
+            # 3. Navigate to the correct week (fallback if the date input didn't
+            # actually move the calendar — click "Next" until the first visible
+            # day-header reaches the target start date).
+            target_start = datetime.strptime(self.start_date, "%Y-%m-%d").date()
+            max_nav_clicks = 5
+
+            for _ in range(max_nav_clicks):
+                try:
+                    first_header = driver.find_element(By.CSS_SELECTOR, ".day-header")
+                    header_text = first_header.text.strip()
+                    current_first_date = datetime.strptime(header_text, "%A %d %B %Y").date()
+
+                    if current_first_date >= target_start:
+                        break
+
+                    next_btn = driver.find_element(By.XPATH, "//span[@class='rbc-btn-group']/button[contains(text(), 'Next')]")
+                    next_btn.click()
+                    time.sleep(2)
+                except Exception as e:
+                    print(f"Navigation error: {e}")
+                    break
+
             # 4. Extract Events from List View
             max_pages = 200 # Safety limit
             page_count = 0
-            
+
             while page_count < max_pages:
                 page_count += 1
                 print(f"Scraping Page {page_count}...")
-                
+
                 rows = driver.find_elements(By.CSS_SELECTOR, ".rbc-list-content .rbc-list-table > tbody > div")
-                
+
                 current_date_obj = None
                 last_event_date = None
-                
+
                 for row in rows:
                     try:
                         class_attr = row.get_attribute("class")
-                        
+
                         if "day-header" in class_attr:
                             header_text = row.text.strip()
                             try:
@@ -141,20 +161,19 @@ class WhatsOnScraper:
                             except Exception as e:
                                 print(f"Failed to parse date header '{header_text}': {e}")
                             continue
-                        
+
                         if "card-grid" in class_attr:
                             if not current_date_obj:
-                                continue 
-                            
+                                continue
+
                             try:
                                 link_el = row.find_element(By.TAG_NAME, "a")
                                 link = link_el.get_attribute("href")
-                            except: 
+                            except:
                                 continue
-                            
-                            if any(e['link'] == link for e in self.events):
-                                continue
-                            
+
+                            existing = next((e for e in self.events if e['link'] == link), None)
+
                             time_str = "00:00"
                             title_str = ""
                             try:
@@ -169,7 +188,24 @@ class WhatsOnScraper:
                                     pass
                             except:
                                 continue
-                            
+
+                            # Multi-day event: same link seen on a later day-header
+                            # row — extend its end_time instead of duplicating it.
+                            if existing:
+                                day_end_dt = datetime.combine(current_date_obj, datetime.strptime("23:59", "%H:%M").time(), tzinfo=UK_TZ)
+                                end_time_iso = day_end_dt.isoformat()
+                                if "–" in time_str or "-" in time_str:
+                                    parts = time_str.replace("–", "-").split("-")
+                                    if len(parts) >= 2:
+                                        e_time = parts[1].strip()
+                                        try:
+                                            end_dt = datetime.combine(current_date_obj, datetime.strptime(e_time, "%H:%M").time(), tzinfo=UK_TZ)
+                                            end_time_iso = end_dt.isoformat()
+                                        except Exception:
+                                            pass
+                                existing['end_time'] = end_time_iso
+                                continue
+
                             # Parse times
                             start_time_iso = datetime.combine(current_date_obj, datetime.strptime("00:00", "%H:%M").time(), tzinfo=UK_TZ).isoformat()
                             end_time_iso = datetime.combine(current_date_obj, datetime.strptime("23:59", "%H:%M").time(), tzinfo=UK_TZ).isoformat()
@@ -188,7 +224,7 @@ class WhatsOnScraper:
                                         end_dt = datetime.combine(current_date_obj, datetime.strptime(e_time, "%H:%M").time(), tzinfo=UK_TZ)
                                         end_time_iso = end_dt.isoformat()
                                     except: pass
-                            
+
                             location = ""
                             society = ""
                             try:
@@ -202,7 +238,7 @@ class WhatsOnScraper:
                                     society = group_span.text.strip()
                                 except: pass
                             except: pass
-                                
+
                             self.events.append({
                                 "title": title_str,
                                 "link": link,
@@ -210,17 +246,20 @@ class WhatsOnScraper:
                                 "end_time": end_time_iso,
                                 "location": location,
                                 "host_name": society,
-                                "description": "" # Will be enriched
+                                # Enrichment overwrites this if the event's own
+                                # page yields a real description; otherwise this
+                                # fallback is kept instead of an empty string.
+                                "description": f"Organized by {society}. Location: {location}",
                             })
-                                
+
                     except Exception as row_e:
                         pass
-                
+
                 target_end_date = datetime.strptime(self.end_date, "%Y-%m-%d").date()
                 if last_event_date and last_event_date >= target_end_date:
                     print(f"Reached target date {last_event_date}, stopping pagination.")
                     break
-                
+
                 # Pagination
                 try:
                     toolbar_next = driver.find_element(By.XPATH, "//span[@class='rbc-btn-group']/button[contains(text(), 'Next')]")
@@ -231,13 +270,13 @@ class WhatsOnScraper:
                         break
                 except:
                     break
-            
+
             self.enrich_event_details(self.events)
-                    
+
         except Exception as e:
             print(f"Failed during scrape: {e}")
         finally:
             if driver:
                 driver.quit()
-                
+
         return {"events": self.events}

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "suu"
-version = "0.1.1"
+version = "0.2.0"
 description = "One friendly toolkit for Students' Union UCL: scrape data and auto-fill forms, with a single `suu` command."
 readme = "README.md"
 requires-python = ">=3.10"
