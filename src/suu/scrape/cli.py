@@ -8,6 +8,7 @@ confirmed installed. Ported from suu-scrape's ``main.py``.
 from __future__ import annotations
 
 import os
+from pathlib import Path
 from typing import Any, Optional
 
 import click
@@ -229,6 +230,61 @@ def run_whatson(start: Optional[str], end: Optional[str], upload: bool) -> None:
     }
 
     run_plugins(scraped_data, context)
+
+
+def run_gov(scope: str, output_dir: str, write_docs: bool) -> None:
+    """Fetch UCL SU governing documents (Bye-Laws, Code of Practice, Clubs & Societies Regulations) as PDF + text.
+
+    Deliberately doesn't tail-call run_plugins() like run_election/run_whatson
+    do: the export-plugin system is built for tabular scrape data, and
+    JsonExportPlugin has no export-flag gate the way the csv/xlsx/clipboard
+    plugins do — it always json.dumps() whatever scrape() returned. If that
+    ever held raw PDF bytes, `default=str` would stringify them into a
+    garbage multi-MB file dropped in the CWD. Writing straight to disk here
+    instead. Also skips quit_driver(): this scraper is plain requests/
+    BeautifulSoup, no Selenium driver ever gets created.
+    """
+    from suu.scrape.gov import GovDocsScraper
+
+    click.echo(f"Fetching governing documents (scope: {scope})...")
+    scraper = GovDocsScraper()
+    entries = scraper.discover(scope)  # type: ignore[arg-type]
+    if not entries:
+        click.echo("No documents found for that scope.")
+        return
+
+    results = scraper.fetch(entries)
+
+    out_dir = Path(output_dir)
+    pdf_dir = out_dir / "pdf"
+    text_dir = out_dir / "text"
+    pdf_dir.mkdir(parents=True, exist_ok=True)
+    text_dir.mkdir(parents=True, exist_ok=True)
+
+    doc_targets: list[Path] = []
+    if write_docs:
+        doc_targets.append(Path("docs/governing-documents"))
+        sibling_repo = Path("../ucl-tools")
+        if sibling_repo.is_dir():
+            doc_targets.append(sibling_repo / "docs" / "governing-documents")
+
+    for result in results:
+        (pdf_dir / f"{result.slug}.pdf").write_bytes(result.pdf_bytes)
+        (text_dir / f"{result.slug}.md").write_text(result.formatted_text, encoding="utf-8")
+
+        for target in doc_targets:
+            try:
+                target.mkdir(parents=True, exist_ok=True)
+                (target / f"{result.slug}.md").write_text(result.formatted_text, encoding="utf-8")
+            except OSError as e:
+                click.echo(f"  (skipped writing to {target}: {e})")
+
+        version_suffix = f" ({result.version_label})" if result.version_label else ""
+        click.echo(f"  {result.slug}: {result.title}{version_suffix}")
+
+    click.echo(f"\nDone — {len(results)} document(s) saved to {out_dir}/")
+    if doc_targets:
+        click.echo("Also copied formatted text to: " + ", ".join(str(t) for t in doc_targets))
 
 
 def run_plugins(data: dict[str, Any], context: dict[str, Any]) -> None:

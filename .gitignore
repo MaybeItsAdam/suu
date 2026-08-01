@@ -28,5 +28,9 @@ env/
 .suu_checkpoint*
 *.xlsx
 
+# `suu gov`'s default --output-dir — raw PDFs + per-run text dump, not the
+# curated docs/governing-documents/ mirror (that one's tracked and committed).
+gov-docs/
+
 # OS
 .DS_Store
