@@ -74,6 +74,29 @@ interrupted run). See `suu scrape election --help` for the full list.
 To also upload results to Supabase, add `--upload` and set `SUPABASE_URL` / `SUPABASE_KEY`
 (see `.env.example`).
 
+### Seeding the accountability tracker (`seed`)
+
+`suu scrape election` is for a human at a terminal — it prompts you to disambiguate a
+name. `suu seed election` is the unattended counterpart: it seeds an election's winners
+straight into [ucl-tools](https://github.com/MaybeItsAdam/ucl-tools)'s Officer
+accountability tracker (`/accountability`), and NAME must resolve to exactly one election
+(pass a direct URL if a name is ambiguous). This is what `ucl-suu-pipeline`'s
+`election-seed` task runs on a schedule; you can also run it by hand.
+
+```bash
+suu seed election "Leadership Race 2026" --year 2026-27 --election-type leadership
+
+# Re-run later in the same cycle and fully replace this election's prior rows
+# (winners who lost a re-count, roles that were pulled, etc.) with this run's:
+suu seed election "Leadership Race 2026" --year 2026-27 --election-type leadership --supersede
+
+# See what would happen without writing anything
+suu seed election "Leadership Race 2026" --year 2026-27 --dry-run
+```
+
+Needs the same Supabase credentials as `scrape --upload`, but a service-role key (bypasses
+RLS) — see `.env.example`. See `suu seed election --help` for the full list of options.
+
 ---
 
 ## Filling forms (`forms`)

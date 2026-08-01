@@ -123,6 +123,116 @@ def whatson(start: "str | None", end: "str | None", upload: bool) -> None:
     run_whatson(start=start, end=end, upload=upload)
 
 
+@cli.command()
+@click.argument("scope", type=click.Choice(["byelaws", "cop", "csregs", "all"]), default="all")
+@click.option(
+    "--output-dir",
+    default="./gov-docs",
+    show_default=True,
+    help="Where to save fetched PDFs and formatted text.",
+)
+@click.option(
+    "--write-docs",
+    is_flag=True,
+    help=(
+        "Also copy the formatted text into docs/governing-documents/ here, and "
+        "into a sibling ../ucl-tools checkout if one exists — for agent context."
+    ),
+)
+def gov(scope: str, output_dir: str, write_docs: bool) -> None:
+    """Fetch UCL SU governing documents (Bye-Laws, Code of Practice, Clubs & Societies Regulations) as PDF + text."""
+    try:
+        from suu.scrape.cli import run_gov
+    except ModuleNotFoundError as e:
+        raise _need_extra("scrape", e)
+    run_gov(scope=scope, output_dir=output_dir, write_docs=write_docs)
+
+
+# ---------------------------------------------------------------------------
+# seed  (non-interactive election -> ucl-tools Officer table)
+# ---------------------------------------------------------------------------
+
+
+@cli.group()
+def seed() -> None:
+    """Seed ucl-tools' Officer accountability tracker from a live election (non-interactive)."""
+
+
+@seed.command("election")
+@click.argument("name_or_url")
+@click.option("--year", required=True, help='Academic year label, e.g. "2026-27".')
+@click.option(
+    "--election-type",
+    type=click.Choice(["leadership", "reps", "by-election"]),
+    default=None,
+    help="Defaults to a best-effort guess from the election URL — pass explicitly when running unattended.",
+)
+@click.option(
+    "--source-election",
+    default=None,
+    help="Defaults to the resolved election URL. Scopes --supersede to this election's own rows.",
+)
+@click.option("--term-starts", "term_starts_at", default=None, help="ISO date (optional).")
+@click.option("--term-ends", "term_ends_at", default=None, help="ISO date (optional).")
+@click.option(
+    "--supersede",
+    is_flag=True,
+    help="After seeding, delete this election's prior Officer rows that this run didn't produce.",
+)
+@click.option("--dry-run", is_flag=True, help="Scrape and classify, but don't write anything.")
+def seed_election_cmd(
+    name_or_url: str,
+    year: str,
+    election_type: "str | None",
+    source_election: "str | None",
+    term_starts_at: "str | None",
+    term_ends_at: "str | None",
+    supersede: bool,
+    dry_run: bool,
+) -> None:
+    """Seed winners from an election into the Officer table.
+
+    NAME_OR_URL works like `suu scrape election`'s NAME, except it must
+    resolve to exactly one election — no interactive disambiguation, since
+    this is meant to run unattended too.
+    """
+    try:
+        from suu.seed.election import ElectionResolutionError, seed_election
+    except ModuleNotFoundError as e:
+        raise _need_extra("scrape", e)
+
+    def on_progress(*, role: str, name: str) -> None:
+        click.echo(f"  {role}: {name}")
+
+    try:
+        result = seed_election(
+            name_or_url,
+            year=year,
+            election_type=election_type,
+            source_election=source_election,
+            term_starts_at=term_starts_at,
+            term_ends_at=term_ends_at,
+            supersede=supersede,
+            dry_run=dry_run,
+            progress=on_progress,
+        )
+    except ElectionResolutionError as e:
+        raise click.ClickException(str(e))
+    except (ValueError, RuntimeError) as e:
+        raise click.ClickException(str(e))
+
+    click.echo("")
+    if dry_run:
+        click.echo(f"Dry run — would seed from: {result.election_title} ({result.election_url})")
+    else:
+        click.echo(f"Seeded from: {result.election_title} ({result.election_url})")
+        click.echo(f"  Created: {result.created}, Updated: {result.updated}")
+        if supersede:
+            click.echo(f"  Removed (superseded): {result.superseded_removed}")
+    if result.positions_skipped_no_winner:
+        click.echo(f"  Positions with no declared winner: {result.positions_skipped_no_winner}")
+
+
 # ---------------------------------------------------------------------------
 # forms
 # ---------------------------------------------------------------------------
