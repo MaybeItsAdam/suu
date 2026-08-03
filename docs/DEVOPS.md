@@ -163,6 +163,28 @@ The version lives **only** in `pyproject.toml` (`[project] version`). Bump it, c
 
 ---
 
+## Rotating local Supabase credentials
+
+`suu` reads `SUPABASE_URL` / `SUPABASE_KEY` / `SUPABASE_SERVICE_ROLE_KEY` from a
+local `.env` — the same production Supabase project used by `ucl-tools` and
+`ucl-suu-pipeline`. This repo does not integrate with GCP Secret Manager
+directly (overkill for a local-only CLI). After any rotation of those three
+values, pull the current ones and copy them into `.env` by hand:
+
+```bash
+gcloud secrets versions access latest --secret=SUPABASE_URL --project gen-lang-client-0191839179
+gcloud secrets versions access latest --secret=SUPABASE_SERVICE_ROLE_KEY --project gen-lang-client-0191839179
+gcloud secrets versions access latest --secret=SUPABASE_KEY --project gen-lang-client-0191839179
+```
+
+Requires `gcloud` authenticated as an identity granted `roles/secretmanager.secretAccessor`
+on these three secrets. `WORKER_AUTH_TOKEN` (used by `suu poll` against
+`ucl-tools`'s worker route) is rotated independently in `ucl-tools` — after
+that rotation, copy the new value into `.env` here too; there's no automated
+sync for it.
+
+---
+
 ## Repo-specific gotchas
 
 - **Git commit signing / USB key.** The maintainer's shell wraps `git` to GPG-sign
