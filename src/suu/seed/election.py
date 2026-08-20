@@ -185,6 +185,7 @@ def seed_election(
     supersede: bool = False,
     seed_committees: bool = True,
     displace: Optional[bool] = None,
+    resume: bool = False,
     dry_run: bool = False,
     progress: Optional[Any] = None,
 ) -> SeedResult:
@@ -229,11 +230,28 @@ def seed_election(
         )
     resolved_source = source_election or selected["url"]
 
+    # Build the DB client BEFORE the scrape, not after.
+    #
+    # A full Leadership Race is ~2,100 positions and the better part of an
+    # hour of browser work. Discovering missing credentials at the end of that
+    # — which is what used to happen, because the client was created just
+    # before the first write — throws the entire run away for a two-second
+    # check. `get_client` only reads env vars and constructs a client; it
+    # doesn't hold a connection open, so doing it early costs nothing.
+    client = None if dry_run else db.get_client()
+
     scraper = GenericElectionScraper(selected["url"])
     try:
         scraped = scraper.scrape(
             include_tallies=True,
             winners_only=True,
+            # A full Leadership Race is ~2,100 positions and takes the better
+            # part of an hour of browser work. The scraper checkpoints after
+            # every position regardless; `resume` is what lets a second run
+            # read that back instead of starting over. Without it the
+            # dry-run-then-apply sequence — the sensible way to use this —
+            # pays for the same scrape twice.
+            resume=resume,
         )
     finally:
         quit_driver()
@@ -250,7 +268,6 @@ def seed_election(
         displace if displace is not None else resolved_type == "by-election"
     )
 
-    client = None if dry_run else db.get_client()
     seen_officer_ids: set[str] = set()
     seen_committee_ids: set[str] = set()
     # (societyName, role) seats this run filled — the displacement candidates.

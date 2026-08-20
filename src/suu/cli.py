@@ -196,6 +196,14 @@ def seed() -> None:
         "reported rather than guessed at."
     ),
 )
+@click.option(
+    "--resume",
+    is_flag=True,
+    help=(
+        "Reuse the checkpoint from a previous run of this same election instead "
+        "of re-scraping it. A full Leadership Race is ~2,100 positions."
+    ),
+)
 @click.option("--dry-run", is_flag=True, help="Scrape and classify, but don't write anything.")
 def seed_election_cmd(
     name_or_url: str,
@@ -207,6 +215,7 @@ def seed_election_cmd(
     supersede: bool,
     no_committees: bool,
     displace: "bool | None",
+    resume: bool,
     dry_run: bool,
 ) -> None:
     """Seed winners from an election into Officer and CommitteeMember.
@@ -238,6 +247,7 @@ def seed_election_cmd(
             supersede=supersede,
             seed_committees=not no_committees,
             displace=displace,
+            resume=resume,
             dry_run=dry_run,
             progress=on_progress,
         )
