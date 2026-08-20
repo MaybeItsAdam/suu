@@ -185,12 +185,20 @@ def list_organisers(client: Client) -> list[dict[str, Any]]:
     return res.data or []
 
 
-def create_organiser(client: Client, *, name: str, type_: str) -> dict[str, Any]:
+def create_organiser(
+    client: Client, *, name: str, type_: str, union_url: Optional[str] = None
+) -> dict[str, Any]:
     """Create an Organiser for a group that ran but has no row yet.
 
-    `slug`/`instagram`/`logoUrl`/`color` are deliberately left NULL — this
-    knows the name and nothing else. ucl-tools' `seed-organiser-slugs.ts`,
-    `seed-logos.ts` and `seed-colors.ts` fill them in afterwards.
+    `union_url` is the group's page on the SU site, which the election scrape
+    already carries as each position's `group_link` — 387 of the 398 groups in
+    the 2026-27 race have one. Capturing it here costs nothing and is what
+    lets `organiser-enrich` find the group's Instagram afterwards without
+    guessing a URL from its name.
+
+    `slug`/`instagram`/`logoUrl`/`color` are left NULL: this knows the name
+    and the SU page, nothing else. ucl-tools' `seed-organiser-slugs.ts` and
+    the pipeline's `organiser-enrich` fill in the rest.
 
     Find-then-insert on the unique `name`, for the same reason
     `upsert_officer` does it: a PostgREST on_conflict upsert would put a
@@ -198,11 +206,25 @@ def create_organiser(client: Client, *, name: str, type_: str) -> dict[str, Any]
     organiser's primary key, orphaning every row that references it.
     """
     existing = (
-        client.table(ORGANISER_TABLE).select("id,name,type").eq("name", name).limit(1).execute()
+        client.table(ORGANISER_TABLE)
+        .select("id,name,type,unionUrl")
+        .eq("name", name)
+        .limit(1)
+        .execute()
     )
     if existing.data:
-        return existing.data[0]
+        row = existing.data[0]
+        # Backfill the SU page onto a row that predates this, but never
+        # overwrite one someone has set by hand.
+        if union_url and not row.get("unionUrl"):
+            client.table(ORGANISER_TABLE).update({"unionUrl": union_url}).eq(
+                "id", row["id"]
+            ).execute()
+            row["unionUrl"] = union_url
+        return row
     payload = {"id": cuid(), "name": name, "type": type_}
+    if union_url:
+        payload["unionUrl"] = union_url
     res = client.table(ORGANISER_TABLE).insert(payload).execute()
     return res.data[0]
 

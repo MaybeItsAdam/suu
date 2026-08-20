@@ -282,7 +282,9 @@ def seed_election(
     # would then fail the unique name constraint).
     organiser_cache: dict[str, Optional[str]] = {}
 
-    def _organiser_for(group_name: str, group_type: str) -> Optional[str]:
+    def _organiser_for(
+        group_name: str, group_type: str, group_link: Optional[str]
+    ) -> Optional[str]:
         if group_name in organiser_cache:
             return organiser_cache[group_name]
         match = org.match_organiser(group_name, known_organisers)
@@ -291,7 +293,10 @@ def seed_election(
             organiser_cache[group_name] = match.organiser_id
             return match.organiser_id
         created = db.create_organiser(
-            client, name=group_name, type_=org.organiser_type(group_type)
+            client,
+            name=group_name,
+            type_=org.organiser_type(group_type),
+            union_url=group_link,
         )
         known_organisers.append(
             {"id": created["id"], "name": created["name"], "type": created.get("type")}
@@ -376,7 +381,9 @@ def seed_election(
                 # it before it ever reached the seeder.
                 manifesto=winner.get("election_statement"),
                 order=org.role_order(role),
-                organiser_id=_organiser_for(group_name, group_type),
+                organiser_id=_organiser_for(
+                    group_name, group_type, position.get("group_link")
+                ),
             )
             seen_committee_ids.add(member["id"])
             refilled_seats.add((group_name, role))
