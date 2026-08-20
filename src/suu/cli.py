@@ -177,7 +177,24 @@ def seed() -> None:
 @click.option(
     "--supersede",
     is_flag=True,
-    help="After seeding, delete this election's prior Officer rows that this run didn't produce.",
+    help="After seeding, delete this election's prior Officer and CommitteeMember rows that this run didn't produce.",
+)
+@click.option(
+    "--no-committees",
+    "no_committees",
+    is_flag=True,
+    help="Seed only union-level Officer rows, skipping every society committee.",
+)
+@click.option(
+    "--displace/--no-displace",
+    "displace",
+    default=None,
+    help=(
+        "Remove the previous holder of a seat this election refilled (i.e. a "
+        "resignation). Defaults on for --election-type by-election. Acts only "
+        "where exactly one prior holder exists; multi-holder seats are "
+        "reported rather than guessed at."
+    ),
 )
 @click.option("--dry-run", is_flag=True, help="Scrape and classify, but don't write anything.")
 def seed_election_cmd(
@@ -188,13 +205,19 @@ def seed_election_cmd(
     term_starts_at: "str | None",
     term_ends_at: "str | None",
     supersede: bool,
+    no_committees: bool,
+    displace: "bool | None",
     dry_run: bool,
 ) -> None:
-    """Seed winners from an election into the Officer table.
+    """Seed winners from an election into Officer and CommitteeMember.
 
     NAME_OR_URL works like `suu scrape election`'s NAME, except it must
     resolve to exactly one election — no interactive disambiguation, since
     this is meant to run unattended too.
+
+    Union-level positions become `Officer` rows; every society, club and
+    network committee position becomes a `CommitteeMember` row soft-linked to
+    an `Organiser` (created when the group has no row yet).
     """
     try:
         from suu.seed.election import ElectionResolutionError, seed_election
@@ -213,6 +236,8 @@ def seed_election_cmd(
             term_starts_at=term_starts_at,
             term_ends_at=term_ends_at,
             supersede=supersede,
+            seed_committees=not no_committees,
+            displace=displace,
             dry_run=dry_run,
             progress=on_progress,
         )
@@ -226,11 +251,33 @@ def seed_election_cmd(
         click.echo(f"Dry run — would seed from: {result.election_title} ({result.election_url})")
     else:
         click.echo(f"Seeded from: {result.election_title} ({result.election_url})")
-        click.echo(f"  Created: {result.created}, Updated: {result.updated}")
+        click.echo(f"  Officers    created {result.created}, updated {result.updated}")
+        if not no_committees:
+            click.echo(
+                f"  Committees  created {result.committee_created}, "
+                f"updated {result.committee_updated}"
+            )
+            click.echo(
+                f"  Organisers  linked {result.organisers_linked}, "
+                f"created {result.organisers_created}"
+            )
         if supersede:
-            click.echo(f"  Removed (superseded): {result.superseded_removed}")
+            click.echo(
+                f"  Superseded  {result.superseded_removed} officers, "
+                f"{result.committee_superseded_removed} committee rows"
+            )
+        if result.displaced:
+            click.echo(f"  Displaced   {result.displaced} previous seat holders")
     if result.positions_skipped_no_winner:
         click.echo(f"  Positions with no declared winner: {result.positions_skipped_no_winner}")
+    if result.displacement_ambiguous:
+        # Never silently dropped: these are seats a person now has to settle.
+        click.echo(
+            f"\n  {len(result.displacement_ambiguous)} seat(s) had several prior "
+            "holders, so the previous occupant was left in place. Check by hand:"
+        )
+        for line in result.displacement_ambiguous:
+            click.echo(f"    - {line}")
 
 
 # ---------------------------------------------------------------------------
