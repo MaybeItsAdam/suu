@@ -182,6 +182,7 @@ def seed_election(
     source_election: Optional[str] = None,
     term_starts_at: Optional[str] = None,
     term_ends_at: Optional[str] = None,
+    term_window: Optional[Any] = None,
     supersede: bool = False,
     seed_committees: bool = True,
     displace: Optional[bool] = None,
@@ -213,6 +214,16 @@ def seed_election(
     `seed_committees` (default True) can be turned off to write only the
     union-level `Officer` rows, which is what the old behaviour effectively
     was.
+
+    `term_window`, when given, is called as `term_window(category)` per officer
+    and returns that officer's `(start, end)` — because the window is not
+    uniform. Nearly everyone serves handover to handover, but a **student
+    trustee serves a full 365 days**, and two of the four are elected in
+    October rather than in the March Leadership Race, so their term straddles
+    the handover into the next academic year. Passing a callable keeps that
+    policy in `ucl-suu-pipeline`, which has the `AcademicYear` dates; this
+    package only knows each position's category. `term_starts_at`/
+    `term_ends_at` are the flat fallback when no callable is supplied.
 
     `term_starts_at`/`term_ends_at` (ISO date strings) are left `None` unless
     passed explicitly — NULL means "always current, until backfilled" per the
@@ -331,20 +342,28 @@ def seed_election(
                 continue
 
             if is_officer:
+                category = category_slug(role)
+                # Per-category, because a student trustee's 365-day term
+                # doesn't line up with everyone else's handover-to-handover.
+                officer_term_start, officer_term_end = (
+                    term_window(category)
+                    if term_window is not None
+                    else (term_starts_at, term_ends_at)
+                )
                 existing = db.find_officer(client, name=name, role=role, year=year)
                 officer = db.upsert_officer(
                     client,
                     name=name,
                     role=role,
-                    category=category_slug(role),
+                    category=category,
                     year=year,
                     election_type=resolved_type,
                     source_election=resolved_source,
                     image_url=winner.get("image_url"),
                     election_margin=_election_margin(winner),
                     manifesto=winner.get("election_statement"),
-                    term_starts_at=term_starts_at,
-                    term_ends_at=term_ends_at,
+                    term_starts_at=officer_term_start,
+                    term_ends_at=officer_term_end,
                 )
                 seen_officer_ids.add(officer["id"])
                 result.updated += 1 if existing else 0
