@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import time
 from typing import Optional
 
@@ -30,8 +31,34 @@ _driver: Optional[webdriver.Chrome] = None
 # ---------------------------------------------------------------------------
 
 
+# Explicit browser/driver paths, when Selenium Manager can't resolve a pair
+# itself. It normally downloads a chromedriver matching whatever Chrome it
+# finds, which fails whenever the installed Chrome is newer than the newest
+# published driver — on a long scrape that surfaces as a mid-run crash rather
+# than a startup error, because the first driver comes from cache and only the
+# `_RECYCLE_EVERY` re-create has to re-resolve. Pointing both at a known-good
+# matched pair skips the network entirely.
+#
+#   SUU_CHROME_BINARY=~/.cache/selenium/chrome/mac-arm64/<v>/Google\ Chrome\ for\ Testing.app/Contents/MacOS/Google\ Chrome\ for\ Testing
+#   SUU_CHROMEDRIVER=~/.cache/selenium/chromedriver/mac-arm64/<v>/chromedriver
+#
+# Unset (the default) keeps Selenium Manager's automatic resolution.
+_CHROME_BINARY_ENV = "SUU_CHROME_BINARY"
+_CHROMEDRIVER_ENV = "SUU_CHROMEDRIVER"
+
+
+def _chrome_service() -> "webdriver.ChromeService":
+    driver_path = os.environ.get(_CHROMEDRIVER_ENV)
+    if driver_path:
+        return webdriver.ChromeService(executable_path=os.path.expanduser(driver_path))
+    return webdriver.ChromeService()
+
+
 def _make_driver(headless: bool) -> webdriver.Chrome:
     opts = Options()
+    binary = os.environ.get(_CHROME_BINARY_ENV)
+    if binary:
+        opts.binary_location = os.path.expanduser(binary)
     if headless:
         opts.add_argument("--headless=new")
     opts.add_argument("--window-size=1280,900")
@@ -44,7 +71,7 @@ def _make_driver(headless: bool) -> webdriver.Chrome:
     )
     opts.add_experimental_option("excludeSwitches", ["enable-automation"])
     opts.add_experimental_option("useAutomationExtension", False)
-    driver = webdriver.Chrome(service=webdriver.ChromeService(), options=opts)
+    driver = webdriver.Chrome(service=_chrome_service(), options=opts)
     driver.execute_script(
         "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
     )
