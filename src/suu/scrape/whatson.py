@@ -144,7 +144,21 @@ class WhatsOnScraper:
                 page_count += 1
                 print(f"Scraping Page {page_count}...")
 
-                rows = driver.find_elements(By.CSS_SELECTOR, ".rbc-list-content .rbc-list-table > tbody > div")
+                # Both row kinds, in document order — the loop below reads a
+                # `.day-header` to set the current date and applies it to the
+                # `.card-grid` rows that follow, so order is load-bearing.
+                #
+                # This used to be `.rbc-list-table > tbody > div`, which the SU
+                # broke by swapping the list's real `<table>` for divs: the rows
+                # now sit under an unclassed wrapper div instead of a `tbody`.
+                # Nothing else moved — `.day-header` and `.card-grid` are
+                # untouched — so a descendant match on the row classes says what
+                # we actually mean and survives the next wrapper someone adds.
+                rows = driver.find_elements(
+                    By.CSS_SELECTOR,
+                    ".rbc-list-content .rbc-list-table div.day-header, "
+                    ".rbc-list-content .rbc-list-table div.card-grid",
+                )
 
                 current_date_obj = None
                 last_event_date = None
@@ -258,6 +272,20 @@ class WhatsOnScraper:
                 target_end_date = datetime.strptime(self.end_date, "%Y-%m-%d").date()
                 if last_event_date and last_event_date >= target_end_date:
                     print(f"Reached target date {last_event_date}, stopping pagination.")
+                    break
+
+                # A page with no rows at all means the list is empty or we can no
+                # longer read it. Either way there is nothing to page *towards*:
+                # `last_event_date` stays None, so the check above can never fire
+                # and the only remaining exit is the 200-page safety limit.
+                #
+                # That is exactly what the tbody change above caused — a run on
+                # 2026-08-20 clicked "Next" 200 times over 10m45s, walking four
+                # years into an empty future, and reported zero events scraped.
+                # A break here turns the next such breakage into a fast, honest
+                # zero instead of a ten-minute one.
+                if not rows:
+                    print("No rows on this page — stopping pagination.")
                     break
 
                 # Pagination
