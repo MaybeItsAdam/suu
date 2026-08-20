@@ -343,7 +343,10 @@ def seed_election(
             member = db.upsert_committee_member(
                 client,
                 society_name=group_name,
-                group_type=group_type,
+                # Normalised, not raw: the scraper's "Other" (student media)
+                # and "Network" fall outside CommitteeMember.groupType's
+                # documented domain. See organisers.committee_group_type.
+                group_type=org.committee_group_type(group_type),
                 role=role,
                 member_name=name,
                 year=year,

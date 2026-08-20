@@ -172,3 +172,21 @@ def test_role_order_longest_match_wins() -> None:
     assert role_order("Welfare & Wellbeing Officer") == 4
     assert role_order("Kit Secretary") == 2
     assert role_order("Backgammon Captain") == 50
+
+
+def test_committee_group_type_maps_student_media_to_society() -> None:
+    """The 12 "Other" groups are student media — Rare FM, Pi Media, Cheese
+    Grater… They ran in the Leadership Race, but the upstream JSON export
+    filtered to the three documented values and dropped all 97 of their
+    positions, which is why they had no roster and looked defunct."""
+    from suu.seed.organisers import committee_group_type
+
+    assert committee_group_type("Other") == "Society"
+    assert committee_group_type("Network") == "NetworkCommittee"
+    assert committee_group_type("Society") == "Society"
+    assert committee_group_type("Club") == "Club"
+    assert committee_group_type("NetworkCommittee") == "NetworkCommittee"
+
+
+def test_organiser_type_handles_a_bare_network() -> None:
+    assert organiser_type("Network") == "Network"

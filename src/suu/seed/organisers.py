@@ -97,10 +97,37 @@ def identity_tokens(name: str) -> frozenset[str]:
 
 def organiser_type(group_type: str) -> str:
     """`GenericElectionScraper`'s `group_type` -> `Organiser.type`."""
-    if group_type == "NetworkCommittee":
+    if group_type in ("NetworkCommittee", "Network"):
         return "Network"
     if group_type == "Club":
         return "Club"
+    return "Society"
+
+
+def committee_group_type(group_type: str) -> str:
+    """`group_type` -> `CommitteeMember.groupType`, whose documented domain is
+    "Society" | "Club" | "NetworkCommittee".
+
+    The scraper emits two values outside that set, and both must be mapped
+    rather than stored raw:
+
+      * **"Other"** — 97 positions across 12 groups in the 2026-27 Leadership
+        Race, all of them student media: Rare FM, Pi Media, Cheese Grater,
+        Analogue, Delilah, Kinesis, Era Journal, Shakespeare Company, United
+        Nations Association… These are ordinary societies as far as this app is
+        concerned. The upstream `committee_data_to_seed.json` export filtered
+        to the three documented values and so dropped every one of them, which
+        is why they had no roster and looked defunct despite having run.
+      * **"Network"** — the network itself rather than its committee.
+
+    Getting this wrong is not cosmetic: a roster keyed on an undocumented
+    groupType still links its Organiser, but any read filtering on the three
+    known values silently omits it.
+    """
+    if group_type in ("Society", "Club", "NetworkCommittee"):
+        return group_type
+    if group_type == "Network":
+        return "NetworkCommittee"
     return "Society"
 
 
