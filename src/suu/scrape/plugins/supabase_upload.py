@@ -147,8 +147,12 @@ class SupabasePlugin(PluginBase):
                     "updatedAt": datetime.now().isoformat()
                 }
                 
-                # Check duplication by link/sourceId
-                source_id = event.get('link')
+                # Check duplication by link/sourceId. `source_id` is the
+                # per-day key — the bare link is shared by every date of a
+                # recurring series now that each date is its own event, and
+                # AdhocEvent.sourceId is UNIQUE, so keying on the link would
+                # collapse the series back into one row.
+                source_id = event.get('source_id') or event.get('link')
                 if source_id:
                     db_data['sourceId'] = source_id
                     

@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
+import re
 import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -11,6 +12,61 @@ from .browser import get_selenium_driver
 
 BASE_URL = "https://studentsunionucl.org/whats-on"
 UK_TZ = ZoneInfo("Europe/London")
+
+# Clock formats the What's On list view actually uses, tried in order and
+# matched strictly. Anything matching none of them is "no time was given",
+# not midnight — see _parse_time_range.
+_CLOCK_FORMATS = ("%H:%M", "%H.%M", "%I:%M%p", "%I%p")
+
+
+def _parse_clock(text, date_obj):
+    """Combine a clock string ("18:30", "6pm") with `date_obj`, or None.
+
+    None means "this isn't a time", and the caller must not substitute one.
+    """
+    candidate = re.sub(r"\s+", "", str(text or "")).lower()
+    if not candidate:
+        return None
+    for fmt in _CLOCK_FORMATS:
+        try:
+            parsed = datetime.strptime(candidate, fmt).time()
+        except ValueError:
+            continue
+        return datetime.combine(date_obj, parsed, tzinfo=UK_TZ)
+    return None
+
+
+def _parse_time_range(time_str, date_obj):
+    """(start, end) for one listing's time text. Either may be None.
+
+    Times are never invented. A row with no `.list-item--time` element, or
+    with text that isn't a clock time, returns (None, None) — it used to
+    fall through to a 00:00 -> 23:59 pair, which is indistinguishable from a
+    genuine all-day listing and accounted for 181 of the 191 events
+    production held longer than twelve hours (73 of which swallowed other
+    events whole on the calendar).
+
+    A single time with no dash ("18:30") is a known start with an unknown
+    end, so it keeps its start rather than being discarded.
+
+    An end at or before its start has run past midnight ("18:30 - 00:00"),
+    so it rolls onto the next day. Both ends used to be combined with the
+    same date, which is where production's 80 rows with endTime <= startTime
+    came from.
+    """
+    text = str(time_str or "").replace("\u2013", "-").replace("\u2014", "-").strip()
+    if not text:
+        return None, None
+
+    parts = [part.strip() for part in text.split("-")]
+    start_dt = _parse_clock(parts[0], date_obj)
+    if start_dt is None:
+        return None, None
+
+    end_dt = _parse_clock(parts[1], date_obj) if len(parts) > 1 else None
+    if end_dt is not None and end_dt <= start_dt:
+        end_dt += timedelta(days=1)
+    return start_dt, end_dt
 
 class WhatsOnScraper:
     def __init__(self, start_date=None, end_date=None):
@@ -53,10 +109,23 @@ class WhatsOnScraper:
     def enrich_event_details(self, events):
         """
         Visit each event link PARALLELLY to extract full description.
+
+        Fetched once per unique link, not once per event: a recurring series
+        now emits one event per day-header (they all share one page), and
+        re-fetching the same URL five times would be five times the load on
+        the SU for one description.
         """
         if not events: return
 
-        print(f"Enriching {len(events)} events with details in parallel...")
+        by_link = {}
+        for event in events:
+            by_link.setdefault(event.get('link'), []).append(event)
+        representatives = [group[0] for group in by_link.values()]
+
+        print(
+            f"Enriching {len(events)} events "
+            f"({len(representatives)} unique pages) with details in parallel..."
+        )
 
         with requests.Session() as session:
             session.headers.update({
@@ -64,8 +133,13 @@ class WhatsOnScraper:
             })
 
             with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
-                futures = [executor.submit(self.fetch_description, session, event) for event in events]
+                futures = [executor.submit(self.fetch_description, session, event) for event in representatives]
                 concurrent.futures.wait(futures)
+
+        for group in by_link.values():
+            description = group[0].get('description')
+            for sibling in group[1:]:
+                sibling['description'] = description
 
     def scrape(self):
         print(f"Scraping What's On from {self.start_date} to {self.end_date}...")
@@ -140,6 +214,11 @@ class WhatsOnScraper:
             max_pages = 200 # Safety limit
             page_count = 0
 
+            # (link, day) pairs already emitted. Pages overlap when the date
+            # input and the "Next" fallback both move the calendar, and a
+            # listing must not be emitted twice for the same day.
+            seen_occurrences = set()
+
             while page_count < max_pages:
                 page_count += 1
                 print(f"Scraping Page {page_count}...")
@@ -186,9 +265,18 @@ class WhatsOnScraper:
                             except:
                                 continue
 
-                            existing = next((e for e in self.events if e['link'] == link), None)
+                            # One event per (link, day-header). A listing that
+                            # reappears under a later day is a *recurring
+                            # series*, not one long event. The old code
+                            # extended the first occurrence's end_time to the
+                            # later day's 23:59 while keeping day one's 00:00
+                            # start — inventing a multi-day span and throwing
+                            # away every date in the series but the first.
+                            occurrence = (link, current_date_obj)
+                            if occurrence in seen_occurrences:
+                                continue
 
-                            time_str = "00:00"
+                            time_str = ""
                             title_str = ""
                             try:
                                 title_container = row.find_element(By.CSS_SELECTOR, ".MuiListItemText-primary")
@@ -203,41 +291,10 @@ class WhatsOnScraper:
                             except:
                                 continue
 
-                            # Multi-day event: same link seen on a later day-header
-                            # row — extend its end_time instead of duplicating it.
-                            if existing:
-                                day_end_dt = datetime.combine(current_date_obj, datetime.strptime("23:59", "%H:%M").time(), tzinfo=UK_TZ)
-                                end_time_iso = day_end_dt.isoformat()
-                                if "–" in time_str or "-" in time_str:
-                                    parts = time_str.replace("–", "-").split("-")
-                                    if len(parts) >= 2:
-                                        e_time = parts[1].strip()
-                                        try:
-                                            end_dt = datetime.combine(current_date_obj, datetime.strptime(e_time, "%H:%M").time(), tzinfo=UK_TZ)
-                                            end_time_iso = end_dt.isoformat()
-                                        except Exception:
-                                            pass
-                                existing['end_time'] = end_time_iso
-                                continue
+                            seen_occurrences.add(occurrence)
 
-                            # Parse times
-                            start_time_iso = datetime.combine(current_date_obj, datetime.strptime("00:00", "%H:%M").time(), tzinfo=UK_TZ).isoformat()
-                            end_time_iso = datetime.combine(current_date_obj, datetime.strptime("23:59", "%H:%M").time(), tzinfo=UK_TZ).isoformat()
-
-                            if "–" in time_str or "-" in time_str:
-                                parts = time_str.replace("–", "-").split("-")
-                                if len(parts) >= 1:
-                                    s_time = parts[0].strip()
-                                    try:
-                                        start_dt = datetime.combine(current_date_obj, datetime.strptime(s_time, "%H:%M").time(), tzinfo=UK_TZ)
-                                        start_time_iso = start_dt.isoformat()
-                                    except: pass
-                                if len(parts) >= 2:
-                                    e_time = parts[1].strip()
-                                    try:
-                                        end_dt = datetime.combine(current_date_obj, datetime.strptime(e_time, "%H:%M").time(), tzinfo=UK_TZ)
-                                        end_time_iso = end_dt.isoformat()
-                                    except: pass
+                            start_dt, end_dt = _parse_time_range(time_str, current_date_obj)
+                            time_known = start_dt is not None
 
                             location = ""
                             society = ""
@@ -256,8 +313,19 @@ class WhatsOnScraper:
                             self.events.append({
                                 "title": title_str,
                                 "link": link,
-                                "start_time": start_time_iso,
-                                "end_time": end_time_iso,
+                                # Per-day identity. The link alone stopped
+                                # being unique the moment a series emitted one
+                                # event per day, and AdhocEvent.sourceId is
+                                # UNIQUE — consumers should key on this and
+                                # fall back to `link` only for older payloads.
+                                "source_id": f"{link}#{current_date_obj.isoformat()}",
+                                "date": current_date_obj.isoformat(),
+                                "start_time": start_dt.isoformat() if start_dt else None,
+                                "end_time": end_dt.isoformat() if end_dt else None,
+                                # False = the listing gave a date but no time.
+                                # Consumers must not fill that gap with
+                                # midnight; that is the whole point.
+                                "time_known": time_known,
                                 "location": location,
                                 "host_name": society,
                                 # Enrichment overwrites this if the event's own
