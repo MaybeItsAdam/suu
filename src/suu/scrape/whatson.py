@@ -68,6 +68,40 @@ def _parse_time_range(time_str, date_obj):
         end_dt += timedelta(days=1)
     return start_dt, end_dt
 
+def parse_event_tags(soup):
+    """The SU's own tags for one listing, from its event page's soup.
+
+    Every listing page carries a taxonomy field —
+    `.field--name-field-event-tags` — holding a link per tag: "Social Impact",
+    "Volunteering", "Free", "Under 18 Friendly", and so on. It is the SU's own
+    vocabulary rather than anything inferred from the title, which makes it the
+    one place a What's On event says what *kind* of thing it is.
+
+    Each tag comes back as `{"slug", "label"}`. The slug is the **last** path
+    segment of the href, because the taxonomy is not flat: "Social Impact" is
+    `/tags/content/social-impact` while "Volunteering" is `/tags/volunteering`,
+    and a consumer matching on a fixed prefix would see one and miss the other.
+    The label is the link text as written, for anything that displays them.
+
+    An empty list means "the page said nothing", which includes the case where
+    the page was never readable at all (login-gated volunteering listings all
+    redirect anonymous requests). It is not evidence that the event is
+    untagged, and must not be scored as such.
+    """
+    tags = []
+    seen = set()
+    for link in soup.select(".field--name-field-event-tags a[href]"):
+        href = (link.get("href") or "").strip()
+        if "/tags/" not in href:
+            continue
+        slug = href.rstrip("/").rsplit("/", 1)[-1].strip()
+        if not slug or slug in seen:
+            continue
+        seen.add(slug)
+        tags.append({"slug": slug, "label": link.get_text(strip=True)})
+    return tags
+
+
 class WhatsOnScraper:
     def __init__(self, start_date=None, end_date=None):
         uk_now = datetime.now(UK_TZ)
@@ -77,7 +111,17 @@ class WhatsOnScraper:
 
     def fetch_description(self, session, event):
         """
-        Helper to fetch description for a single event.
+        Helper to fetch the description *and the tags* for a single event.
+
+        Both live on the listing's own page and nowhere else — the list view
+        the calendar is scraped from carries a title, a time, a venue and a
+        group, and that is all.
+
+        Neither is guaranteed. A `/whats-on/volunteering/...` listing answers
+        302 to `/user/login` for an anonymous request, so the whole page is
+        unreachable and the event keeps the fallback description it was built
+        with and an empty tag list. That is why a consumer must not treat
+        "no tags" as "not tagged"; see `parse_event_tags`.
         """
         try:
             url = event['link']
@@ -87,6 +131,8 @@ class WhatsOnScraper:
                 return
 
             soup = BeautifulSoup(resp.text, 'html.parser')
+
+            event['tags'] = parse_event_tags(soup)
 
             # Strategy 1: Standard Body
             body = soup.select_one(".field--name-body")
@@ -136,10 +182,16 @@ class WhatsOnScraper:
                 futures = [executor.submit(self.fetch_description, session, event) for event in representatives]
                 concurrent.futures.wait(futures)
 
+        # Every date of a recurring series shares one page, so it shares one
+        # description *and one tag list*. Tags were left behind when this
+        # copied only the description: day one of a series carried them and
+        # every later occurrence looked untagged.
         for group in by_link.values():
             description = group[0].get('description')
+            tags = group[0].get('tags') or []
             for sibling in group[1:]:
                 sibling['description'] = description
+                sibling['tags'] = list(tags)
 
     def scrape(self):
         print(f"Scraping What's On from {self.start_date} to {self.end_date}...")
@@ -328,6 +380,12 @@ class WhatsOnScraper:
                                 "time_known": time_known,
                                 "location": location,
                                 "host_name": society,
+                                # Filled in by `enrich_event_details` from the
+                                # listing's own page. Present-and-empty rather
+                                # than absent so the key is always there, but
+                                # see `parse_event_tags` on why empty is not
+                                # the same claim as untagged.
+                                "tags": [],
                                 # Enrichment overwrites this if the event's own
                                 # page yields a real description; otherwise this
                                 # fallback is kept instead of an empty string.
