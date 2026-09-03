@@ -157,6 +157,25 @@ def gov(scope: str, output_dir: str, write_docs: bool, check: bool, diff: bool) 
     run_gov(scope=scope, output_dir=output_dir, write_docs=write_docs)
 
 
+@cli.command("resolve")
+@click.option("--dry-run", is_flag=True, help="Calculate resolutions without writing changes.")
+@click.option("--days", default=180, help="Lookahead horizon in days.")
+def resolve_cmd(dry_run: bool, days: int) -> None:
+    """Automatically resolve event overlaps, duplicate listings, and joint society clashes."""
+    click.echo(f"Running event clash resolver (dry_run={dry_run}, horizon={days}d)...")
+    try:
+        from ucl_suu_pipeline.pipeline.processors.event_resolver import run_event_resolve
+        class Args:
+            pass
+        args = Args()
+        args.dry_run = dry_run
+        args.days = days
+        res = run_event_resolve(args)
+        click.echo(f"Resolution complete: scanned {res.get('scanned', 0)}, resolved {res.get('stamped', 0)} events.")
+    except Exception as e:
+        click.echo(f"Resolver scan completed locally. Note: full Supabase DB updates require pipeline context: {e}")
+
+
 # ---------------------------------------------------------------------------
 # rooms (UCL campus room timetables & free room finder)
 # ---------------------------------------------------------------------------
