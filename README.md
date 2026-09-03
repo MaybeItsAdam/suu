@@ -99,12 +99,45 @@ RLS) — see `.env.example`. See `suu seed election --help` for the full list of
 
 ---
 
+## Logging in (`suu login`)
+
+```bash
+# Log in once (opens a browser window; log in, then close the window)
+suu login
+```
+
+Logging in saves your session state in `~/.suu` so that `suu retrieve`, `suu forms fill`, `suu poll`, and AI assistant tools can access authenticated Students' Union UCL pages on your behalf. To clear all saved logins at any time: `suu logout`.
+
+---
+
+## Retrieving committee data (`retrieve`)
+
+For student leaders (Presidents, Treasurers, Vice Presidents, Committee Members):
+
+```bash
+# Fetch society member roster
+suu retrieve members "Volunteering Society" --xlsx
+
+# Check account balances and submitted payment requests
+suu retrieve finance "Volunteering Society"
+
+# Export event door list / ticket sales
+suu retrieve sales "Volunteering Society" --event "Welcome Social" --csv
+
+# Check submitted room booking requests
+suu retrieve bookings "Volunteering Society"
+
+# Fetch official committee lineup
+suu retrieve committee "Volunteering Society"
+```
+
+Export options for `retrieve` commands: `--csv`, `--xlsx`, `--json`, and `--sheets` (copies formatted text ready to paste directly into Google Sheets).
+
+---
+
 ## Filling forms (`forms`)
 
 ```bash
-# Log in once (opens a browser; log in, then close the window)
-suu forms login
-
 # Fill a form from a data file — opens a browser, fills it in, leaves it for you to check
 suu forms fill payment_request --data my_payment.json
 ```

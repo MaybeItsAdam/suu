@@ -298,3 +298,74 @@ def _strip_repeated_boilerplate(pages: list[str]) -> list[str]:
         return pages
 
     return ["\n".join(l for l in lines if l.strip() not in boilerplate) for lines in line_lists]
+
+
+def check_gov_docs(scope: Scope = "all", output_dir: str = "./gov-docs") -> list[dict]:
+    """Check remote governing documents against local files to detect updates."""
+    import hashlib
+    from pathlib import Path
+
+    scraper = GovDocsScraper()
+    entries = scraper.discover(scope=scope)
+    out_path = Path(output_dir)
+    changes = []
+
+    for entry in entries:
+        txt_file = out_path / f"{entry.slug}.txt"
+        pdf_file = out_path / f"{entry.slug}.pdf"
+
+        res = scraper._fetch_one(entry)
+        remote_hash = hashlib.md5(res.pdf_bytes).hexdigest()
+
+        local_hash = None
+        if pdf_file.exists():
+            local_hash = hashlib.md5(pdf_file.read_bytes()).hexdigest()
+
+        is_changed = local_hash != remote_hash
+        changes.append(
+            {
+                "slug": entry.slug,
+                "title": entry.title,
+                "url": entry.pdf_url,
+                "version": entry.version_label,
+                "changed": is_changed,
+                "local_exists": pdf_file.exists(),
+            }
+        )
+    return changes
+
+
+def diff_gov_docs(scope: Scope = "all", output_dir: str = "./gov-docs") -> str:
+    """Generate a unified git-style text diff of local vs remote governing documents."""
+    import difflib
+    from pathlib import Path
+
+    scraper = GovDocsScraper()
+    entries = scraper.discover(scope=scope)
+    out_path = Path(output_dir)
+    diff_lines: list[str] = []
+
+    for entry in entries:
+        txt_file = out_path / f"{entry.slug}.txt"
+        res = scraper._fetch_one(entry)
+
+        if not txt_file.exists():
+            diff_lines.append(f"--- /dev/null\n+++ {txt_file}\n@@ -0,0 +1 @@\n+[NEW DOCUMENT] {entry.title}\n")
+            continue
+
+        local_text = txt_file.read_text(encoding="utf-8").splitlines()
+        remote_text = res.formatted_text.splitlines()
+
+        diff = list(
+            difflib.unified_diff(
+                local_text,
+                remote_text,
+                fromfile=f"a/{entry.slug}.txt",
+                tofile=f"b/{entry.slug}.txt",
+                lineterm="",
+            )
+        )
+        if diff:
+            diff_lines.extend(diff)
+
+    return "\n".join(diff_lines) if diff_lines else "No changes detected — all governing documents match local files."

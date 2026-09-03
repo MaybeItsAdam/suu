@@ -131,21 +131,42 @@ def whatson(start: "str | None", end: "str | None", upload: bool) -> None:
     show_default=True,
     help="Where to save fetched PDFs and formatted text.",
 )
-@click.option(
-    "--write-docs",
-    is_flag=True,
-    help=(
-        "Also copy the formatted text into docs/governing-documents/ here, and "
-        "into a sibling ../ucl-tools checkout if one exists — for agent context."
-    ),
-)
-def gov(scope: str, output_dir: str, write_docs: bool) -> None:
+@click.option("--check", is_flag=True, help="Check remote documents against local files to detect updates.")
+@click.option("--diff", is_flag=True, help="Display a unified text diff of remote changes vs local files.")
+def gov(scope: str, output_dir: str, write_docs: bool, check: bool, diff: bool) -> None:
     """Fetch UCL SU governing documents (Bye-Laws, Code of Practice, Clubs & Societies Regulations) as PDF + text."""
     try:
         from suu.scrape.cli import run_gov
+        from suu.scrape.gov import check_gov_docs, diff_gov_docs
     except ModuleNotFoundError as e:
         raise _need_extra("scrape", e)
+
+    if diff:
+        res = diff_gov_docs(scope=scope, output_dir=output_dir)
+        click.echo(res)
+        return
+
+    if check:
+        res = check_gov_docs(scope=scope, output_dir=output_dir)
+        click.echo(f"Governing documents check ({scope}):")
+        for item in res:
+            status = "CHANGED" if item["changed"] else "UP TO DATE"
+            click.echo(f"  [{status}] {item['title']} ({item['slug']})")
+        return
+
     run_gov(scope=scope, output_dir=output_dir, write_docs=write_docs)
+
+
+# ---------------------------------------------------------------------------
+# rooms (UCL campus room timetables & free room finder)
+# ---------------------------------------------------------------------------
+
+
+try:
+    from suu.rooms.cli import rooms
+    cli.add_command(rooms)
+except Exception:
+    pass
 
 
 # ---------------------------------------------------------------------------
@@ -291,6 +312,35 @@ def seed_election_cmd(
 
 
 # ---------------------------------------------------------------------------
+# login (top-level authenticated session provider)
+# ---------------------------------------------------------------------------
+
+
+@cli.command()
+@click.argument("form_id", required=False, default="default")
+@click.option("--url", default=None, help="Page to open for logging in (advanced).")
+def login(form_id: str, url: "str | None") -> None:
+    """Log in to the Students' Union UCL website once and save your session state."""
+    try:
+        from suu.forms.runner import login as run_login
+    except ModuleNotFoundError as e:
+        raise _need_extra("forms", e)
+    run_login(form_id=form_id, url=url)
+
+
+# ---------------------------------------------------------------------------
+# retrieve (authenticated leadership / committee data)
+# ---------------------------------------------------------------------------
+
+
+try:
+    from suu.retrieve.cli import retrieve
+    cli.add_command(retrieve)
+except Exception:
+    pass
+
+
+# ---------------------------------------------------------------------------
 # forms
 # ---------------------------------------------------------------------------
 
@@ -320,13 +370,10 @@ def forms_fill(form_id: str, data_path: "str | None", auth_file: "str | None") -
 @forms.command("login")
 @click.argument("form_id", required=False, default="default")
 @click.option("--url", default=None, help="Page to open for logging in (advanced).")
-def forms_login(form_id: str, url: "str | None") -> None:
-    """Log in to the SU site once and save it, so forms can be filled for you."""
-    try:
-        from suu.forms.runner import login
-    except ModuleNotFoundError as e:
-        raise _need_extra("forms", e)
-    login(form_id=form_id, url=url)
+@click.pass_context
+def forms_login(ctx: click.Context, form_id: str, url: "str | None") -> None:
+    """Log in to the SU site once and save it (alias to `suu login`)."""
+    ctx.invoke(login, form_id=form_id, url=url)
 
 
 # ---------------------------------------------------------------------------

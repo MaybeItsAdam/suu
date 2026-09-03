@@ -176,5 +176,91 @@ async def run_form_automation(form_id: str, data: str) -> str:
         return f"FAILED: {e}"
 
 
+@mcp.tool()
+def retrieve_members(group_name: str) -> str:
+    """
+    Retrieve official member roster for a Students' Union UCL club or society.
+    Requires the user to be logged in via `suu login`.
+
+    Args:
+        group_name: Club or society name (e.g. "Volunteering Society", "Chess Club")
+    """
+    try:
+        from suu.retrieve.members import fetch_members
+        members = fetch_members(group_name)
+        if not members:
+            return f"No member records found for '{group_name}'."
+        return json.dumps(members, indent=2)
+    except Exception as e:
+        return f"Failed to retrieve members: {e}"
+
+
+@mcp.tool()
+def retrieve_finance(group_name: str) -> str:
+    """
+    Retrieve financial balances (Grant & Non-Grant accounts) and payment requests.
+    Requires the user to be logged in via `suu login`.
+
+    Args:
+        group_name: Club or society name (e.g. "Volunteering Society", "Chess Club")
+    """
+    try:
+        from suu.retrieve.finance import fetch_finance
+        finance = fetch_finance(group_name)
+        return json.dumps(finance, indent=2)
+    except Exception as e:
+        return f"Failed to retrieve financial data: {e}"
+
+
+@mcp.tool()
+def retrieve_sales(group_name: str, event_name: str = "") -> str:
+    """
+    Retrieve ticket sales and door entry list for society events.
+    Requires the user to be logged in via `suu login`.
+
+    Args:
+        group_name: Club or society name
+        event_name: Optional filter for a specific event
+    """
+    try:
+        from suu.retrieve.sales import fetch_sales
+        sales = fetch_sales(group_name, event_name=event_name or None)
+        return json.dumps(sales, indent=2)
+@mcp.tool()
+def find_free_rooms(building: str = "", min_capacity: int = 0) -> str:
+    """
+    Find currently free study & meeting rooms on UCL campus.
+
+    Args:
+        building: Optional building name filter (e.g. "Student Centre", "Cruciform")
+        min_capacity: Minimum room capacity needed (e.g. 10)
+    """
+    try:
+        from suu.rooms.query import find_free_rooms as fetch_free
+        rooms_list = fetch_free(building=building or None, min_capacity=min_capacity)
+        if not rooms_list:
+            return "No free rooms found matching criteria."
+        return json.dumps(rooms_list, indent=2)
+    except Exception as e:
+        return f"Failed to search for free rooms: {e}"
+
+
+@mcp.tool()
+def query_room_schedule(room_name: str, target_date: str = "") -> str:
+    """
+    Query scheduled events for a specific UCL room.
+
+    Args:
+        room_name: Room name or code (e.g. "Christopher Ingold XLG1", "B104")
+        target_date: Optional filter date (YYYY-MM-DD)
+    """
+    try:
+        from suu.rooms.query import query_room_schedule as fetch_schedule
+        sched = fetch_schedule(room_name, target_date=target_date or None)
+        return json.dumps(sched, indent=2, default=str)
+    except Exception as e:
+        return f"Failed to query room schedule: {e}"
+
+
 if __name__ == "__main__":
     mcp.run()

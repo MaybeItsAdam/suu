@@ -115,8 +115,10 @@ def login(form_id: str = "default", url: Optional[str] = None) -> None:
     click.echo("Log in to the Students' Union website the normal way.")
     click.echo("When you're logged in, just CLOSE THE BROWSER WINDOW — your login will be saved.\n")
 
+    from suu.core.browser import launch_browser_safe
+
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = launch_browser_safe(p, headless=False)
         context = browser.new_context()
         page = context.new_page()
         page.goto(target)
