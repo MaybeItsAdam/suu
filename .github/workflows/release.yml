@@ -62,8 +62,14 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      # `[all,dev]`, not `[dev,forms]`: tests/test_gov.py and
+      # tests/test_seed_displacement.py import bs4, which lives in the
+      # `scrape` extra. Without it pytest fails at *collection* — exit 2, two
+      # errors, before a single test runs — and since publish needs this job,
+      # every push to main has silently skipped TestPyPI since the gov
+      # scrapers landed. Install what the suite actually imports.
       - name: Install package with test extras
-        run: python -m pip install -e ".[dev,forms]"
+        run: python -m pip install -e ".[all,dev]"
 
       - name: Run pytest
         run: pytest -q
