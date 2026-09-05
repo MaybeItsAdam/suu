@@ -18,6 +18,15 @@ UK_TZ = ZoneInfo("Europe/London")
 # not midnight — see _parse_time_range.
 _CLOCK_FORMATS = ("%H:%M", "%H.%M", "%I:%M%p", "%I%p")
 
+# Per-page fetch retries in enrich_event_details, and seconds of linear
+# backoff between them. See fetch_description.
+_FETCH_ATTEMPTS = 3
+_FETCH_BACKOFF = 1.5
+
+# Concurrent page fetches. Ten was enough to get a Welcome Week page
+# throttled wholesale; five plus the retry above got every listing.
+_FETCH_WORKERS = 5
+
 
 def _parse_clock(text, date_obj):
     """Combine a clock string ("18:30", "6pm") with `date_obj`, or None.
@@ -67,6 +76,22 @@ def _parse_time_range(time_str, date_obj):
     if end_dt is not None and end_dt <= start_dt:
         end_dt += timedelta(days=1)
     return start_dt, end_dt
+
+_SR_ONLY_SUFFIX = re.compile(r"\s*\(opens in a new tab\)\s*$", re.IGNORECASE)
+
+
+def _clean_title(text):
+    """The listing's title without the screen-reader text glued to it.
+
+    Each card's title now ends in a `.visually-hidden` span reading
+    "(opens in a new tab)". It is positioned off-screen rather than hidden,
+    so Selenium counts it as rendered text and every scraped title came
+    back as "Karaoke @ Phineas\\n(opens in a new tab)" — including the ones
+    written to CSV and uploaded to Supabase.
+    """
+    cleaned = re.sub(r"\s+", " ", str(text or "")).strip()
+    return _SR_ONLY_SUFFIX.sub("", cleaned).strip()
+
 
 def parse_event_tags(soup):
     """The SU's own tags for one listing, from its event page's soup.
@@ -125,9 +150,26 @@ class WhatsOnScraper:
         """
         try:
             url = event['link']
-            resp = session.get(url, timeout=10)
-            if resp.status_code != 200:
-                print(f"Failed to fetch {url}: {resp.status_code}")
+
+            # Retried, because a busy week is exactly when this fails. A
+            # single attempt at ten-way concurrency is enough for the SU to
+            # start refusing: a run over Welcome Week 2026 lost the tags for
+            # 39 of 41 listings on one page, all of which answered 200 on a
+            # slower serial retry. The events kept their fallback description
+            # and an empty tag list, which is indistinguishable from a
+            # genuinely untagged event — so a caller filtering on tags
+            # silently dropped them.
+            resp = None
+            for attempt in range(_FETCH_ATTEMPTS):
+                resp = session.get(url, timeout=15)
+                if resp.status_code == 200:
+                    break
+                if attempt < _FETCH_ATTEMPTS - 1:
+                    time.sleep(_FETCH_BACKOFF * (attempt + 1))
+
+            if resp is None or resp.status_code != 200:
+                status = resp.status_code if resp is not None else "no response"
+                print(f"Failed to fetch {url}: {status}")
                 return
 
             soup = BeautifulSoup(resp.text, 'html.parser')
@@ -178,7 +220,7 @@ class WhatsOnScraper:
                 "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
             })
 
-            with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+            with concurrent.futures.ThreadPoolExecutor(max_workers=_FETCH_WORKERS) as executor:
                 futures = [executor.submit(self.fetch_description, session, event) for event in representatives]
                 concurrent.futures.wait(futures)
 
@@ -233,12 +275,24 @@ class WhatsOnScraper:
                 print(f"Failed to set date input: {e}")
 
             # 2. Switch to List View
+            #
+            # The view switcher is a MUI ToggleButtonGroup whose buttons carry
+            # an icon `<svg>` followed by a non-breaking space and the label
+            # ("\xa0List"). Matching on the text was how this used to find it,
+            # and the nbsp broke it — silently, because the `except` below
+            # leaves the scraper in Week view, where `.day-header` and
+            # `.card-grid` don't exist and every run reports zero events.
+            # `value` and `aria-label` are what the widget is actually keyed
+            # on, so match those and click via JS (the button is a
+            # ToggleButton; a native click can land on the child svg).
             try:
-                list_btn = driver.find_element(By.XPATH, "//button[contains(text(), 'List')]")
-                list_btn.click()
+                list_btn = driver.find_element(
+                    By.CSS_SELECTOR, 'button[value="list"], button[aria-label="List"]'
+                )
+                driver.execute_script("arguments[0].click()", list_btn)
                 time.sleep(2)
-            except:
-                print("Could not find/click List button. Staying in Week view.")
+            except Exception as e:
+                print(f"Could not find/click List button ({e}). Staying in Week view.")
 
             # 3. Navigate to the correct week (fallback if the date input didn't
             # actually move the calendar — click "Next" until the first visible
@@ -340,6 +394,7 @@ class WhatsOnScraper:
                                     title_str = title_text_full.replace(time_str, "").strip()
                                 except:
                                     pass
+                                title_str = _clean_title(title_str)
                             except:
                                 continue
 
