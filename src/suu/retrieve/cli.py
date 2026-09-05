@@ -147,3 +147,28 @@ def retrieve_committee(
         as_sheets=as_sheets,
         auth_file=auth_file,
     )
+
+
+@retrieve.command("timetable")
+@click.option("--csv", "as_csv", is_flag=True, help="Save room booking timetable as CSV file.")
+@click.option("--xlsx", "as_xlsx", is_flag=True, help="Save room booking timetable as Excel (.xlsx) file.")
+@click.option("--json", "as_json", is_flag=True, help="Save as JSON file.")
+@click.option("--sheets", "as_sheets", is_flag=True, help="Copy to clipboard in Google Sheets format.")
+@click.option("--auth", "auth_file", default=None, help="Use a specific saved-login state file.")
+def retrieve_timetable(
+    as_csv: bool,
+    as_xlsx: bool,
+    as_json: bool,
+    as_sheets: bool,
+    auth_file: Optional[str],
+) -> None:
+    """Retrieve Students' Union term room booking timetable sheet & bookings."""
+    from suu.retrieve.timetable import retrieve_timetable_cmd
+    retrieve_timetable_cmd(
+        as_csv=as_csv,
+        as_xlsx=as_xlsx,
+        as_json=as_json,
+        as_sheets=as_sheets,
+        auth_file=auth_file,
+    )
+

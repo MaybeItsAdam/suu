@@ -68,3 +68,27 @@ def test_cli_retrieve_help():
     assert "sales" in result.output
     assert "bookings" in result.output
     assert "committee" in result.output
+    assert "timetable" in result.output
+
+
+def test_cli_retrieve_timetable_help():
+    runner = CliRunner()
+    result = runner.invoke(cli, ["retrieve", "timetable", "--help"])
+    assert result.exit_code == 0
+    assert "Retrieve Students' Union term room booking timetable sheet" in result.output
+
+
+def test_extract_spreadsheet_id():
+    from suu.retrieve.timetable import extract_spreadsheet_id
+    url = "https://docs.google.com/spreadsheets/d/10yIxgUm-WoIiSGk4w4OXicIMH46CUy2C2k-hm31lS7E/edit?gid=320908680#gid=320908680"
+    assert extract_spreadsheet_id(url) == "10yIxgUm-WoIiSGk4w4OXicIMH46CUy2C2k-hm31lS7E"
+
+
+def test_parse_sheet_bookings():
+    from suu.retrieve.timetable import parse_sheet_bookings
+    csv_sample = """Header Title,,,\nRoom,Day,Time,Status\n25 Gordon St,Monday,10:00,Booked\n"""
+    bookings = parse_sheet_bookings(csv_sample)
+    assert len(bookings) == 1
+    assert bookings[0]["Room"] == "25 Gordon St"
+    assert bookings[0]["Status"] == "Booked"
+
