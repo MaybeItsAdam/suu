@@ -310,7 +310,8 @@ class WhatsOnScraper:
                         break
 
                     next_btn = driver.find_element(By.XPATH, "//span[@class='rbc-btn-group']/button[contains(text(), 'Next')]")
-                    next_btn.click()
+                    driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", next_btn)
+                    driver.execute_script("arguments[0].click();", next_btn)
                     time.sleep(2)
                 except Exception as e:
                     print(f"Navigation error: {e}")
@@ -473,11 +474,13 @@ class WhatsOnScraper:
                 try:
                     toolbar_next = driver.find_element(By.XPATH, "//span[@class='rbc-btn-group']/button[contains(text(), 'Next')]")
                     if toolbar_next and toolbar_next.is_displayed():
-                        toolbar_next.click()
+                        driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", toolbar_next)
+                        driver.execute_script("arguments[0].click();", toolbar_next)
                         time.sleep(3)
                     else:
                         break
-                except:
+                except Exception as page_e:
+                    print(f"Pagination stopped: {page_e}")
                     break
 
             self.enrich_event_details(self.events)
