@@ -124,7 +124,7 @@ def whatson(start: "str | None", end: "str | None", upload: bool) -> None:
 
 
 @cli.command()
-@click.argument("scope", type=click.Choice(["byelaws", "cop", "csregs", "all"]), default="all")
+@click.argument("scope", type=click.Choice(["memo", "byelaws", "cop", "csregs", "all"]), default="all")
 @click.option(
     "--output-dir",
     default="./gov-docs",
@@ -133,8 +133,9 @@ def whatson(start: "str | None", end: "str | None", upload: bool) -> None:
 )
 @click.option("--check", is_flag=True, help="Check remote documents against local files to detect updates.")
 @click.option("--diff", is_flag=True, help="Display a unified text diff of remote changes vs local files.")
+@click.option("--write-docs", is_flag=True, help="Also refresh the repositories' checked-in Markdown copies.")
 def gov(scope: str, output_dir: str, write_docs: bool, check: bool, diff: bool) -> None:
-    """Fetch UCL SU governing documents (Bye-Laws, Code of Practice, Clubs & Societies Regulations) as PDF + text."""
+    """Fetch the current UCL SU governing documents as PDF + text."""
     try:
         from suu.scrape.cli import run_gov
         from suu.scrape.gov import check_gov_docs, diff_gov_docs

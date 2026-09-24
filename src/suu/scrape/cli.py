@@ -233,7 +233,7 @@ def run_whatson(start: Optional[str], end: Optional[str], upload: bool) -> None:
 
 
 def run_gov(scope: str, output_dir: str, write_docs: bool) -> None:
-    """Fetch UCL SU governing documents (Bye-Laws, Code of Practice, Clubs & Societies Regulations) as PDF + text.
+    """Fetch the four current UCL SU governing documents as PDF + text.
 
     Deliberately doesn't tail-call run_plugins() like run_election/run_whatson
     do: the export-plugin system is built for tabular scrape data, and
@@ -264,9 +264,10 @@ def run_gov(scope: str, output_dir: str, write_docs: bool) -> None:
     doc_targets: list[Path] = []
     if write_docs:
         doc_targets.append(Path("docs/governing-documents"))
-        sibling_repo = Path("../ucl-tools")
-        if sibling_repo.is_dir():
-            doc_targets.append(sibling_repo / "docs" / "governing-documents")
+        for sibling_name in ("adams-campus-toolbox", "ucl-suu-pipeline"):
+            sibling_repo = Path("..") / sibling_name
+            if sibling_repo.is_dir() and sibling_repo.resolve() != Path.cwd().resolve():
+                doc_targets.append(sibling_repo / "docs" / "governing-documents")
 
     for result in results:
         (pdf_dir / f"{result.slug}.pdf").write_bytes(result.pdf_bytes)

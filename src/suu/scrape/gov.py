@@ -3,12 +3,10 @@
 These are static Drupal pages, not the React-driven What's On calendar, so
 plain ``requests`` + BeautifulSoup is enough — no Selenium involved.
 
-Only Bye-Laws and Code of Practice are wired up so far (the two named when
-this was built). The source page (``GOVERNING_DOCUMENTS_URL``) also lists a
-Memorandum & Articles of Association and Clubs & Societies Regulations —
-adding either later is a new ``_discover_<name>`` method plus a branch in
-``discover()``, following the shape of ``_discover_byelaws``/``_discover_cop``
-below, not a restructure.
+The four consolidated documents are discovered from the live index/Bye-Laws
+pages. Passed amendments are a separate chronological archive because one
+amendment can carry several files and must not be confused with a version of
+the current consolidated text.
 """
 
 from __future__ import annotations
@@ -16,6 +14,7 @@ from __future__ import annotations
 import re
 from collections import Counter
 from dataclasses import dataclass
+from datetime import datetime
 from io import BytesIO
 from typing import Literal, Optional
 from urllib.parse import urljoin, unquote
@@ -24,8 +23,14 @@ import requests
 from bs4 import BeautifulSoup
 from pypdf import PdfReader
 
+try:
+    import pymupdf
+except ImportError:  # Core installs do not carry the scrape extra.
+    pymupdf = None
+
 GOVERNING_DOCUMENTS_URL = "https://studentsunionucl.org/governing-documents"
 BYE_LAWS_URL = "https://studentsunionucl.org/bye-laws"
+AMENDMENTS_URL = "https://studentsunionucl.org/amendments-to-governing-documents"
 
 _HEADERS = {
     "User-Agent": (
@@ -34,7 +39,7 @@ _HEADERS = {
     )
 }
 
-Scope = Literal["byelaws", "cop", "csregs", "all"]
+Scope = Literal["memo", "byelaws", "cop", "csregs", "all"]
 
 
 @dataclass
@@ -62,6 +67,34 @@ class GovDocResult:
     formatted_text: str
 
 
+@dataclass
+class GovAmendmentAssetEntry:
+    slug: str
+    label: str
+    source_url: str
+
+
+@dataclass
+class GovAmendmentEntry:
+    reference: str
+    title: str
+    source_url: str
+    passed_label: Optional[str]
+    effective_label: Optional[str]
+    passed_at: Optional[str]
+    effective_at: Optional[str]
+    display_order: int
+    assets: list[GovAmendmentAssetEntry]
+
+
+@dataclass
+class GovAmendmentAssetResult:
+    entry: GovAmendmentAssetEntry
+    pdf_bytes: bytes
+    formatted_text: str
+    error: Optional[str] = None
+
+
 class GovDocsScraper:
     """Discovers and downloads UCL SU governing documents."""
 
@@ -79,6 +112,8 @@ class GovDocsScraper:
         year), so every run re-parses the live pages.
         """
         entries: list[GovDocEntry] = []
+        if scope in ("memo", "all"):
+            entries.extend(self._discover_memo())
         if scope in ("byelaws", "all"):
             entries.extend(self._discover_byelaws())
         if scope in ("cop", "all"):
@@ -86,6 +121,26 @@ class GovDocsScraper:
         if scope in ("csregs", "all"):
             entries.extend(self._discover_csregs())
         return entries
+
+    def _discover_memo(self) -> list[GovDocEntry]:
+        soup = self._get_soup(GOVERNING_DOCUMENTS_URL)
+        for a in soup.find_all("a", href=True):
+            text = a.get_text(" ", strip=True).lower()
+            if "memorandum" not in text or "article" not in text:
+                continue
+            href = a["href"]
+            if not href.lower().split("?")[0].endswith(".pdf"):
+                continue
+            pdf_url = urljoin(GOVERNING_DOCUMENTS_URL, href)
+            return [GovDocEntry(
+                slug="memorandum-and-articles",
+                category="memorandum-and-articles",
+                title="Memorandum & Articles of Association",
+                pdf_url=pdf_url,
+                version_label=self._version_from_filename(pdf_url),
+                source_page=GOVERNING_DOCUMENTS_URL,
+            )]
+        return []
 
     def _get_soup(self, url: str) -> BeautifulSoup:
         resp = self._session.get(url, timeout=30)
@@ -179,6 +234,48 @@ class GovDocsScraper:
             ]
         return []
 
+    def discover_amendments(self) -> list[GovAmendmentEntry]:
+        """Parse the passed-amendment archive without downloading its files."""
+        return parse_amendments_html(
+            str(self._get_soup(AMENDMENTS_URL)),
+            AMENDMENTS_URL,
+        )
+
+    def fetch_amendments(
+        self, entries: list[GovAmendmentEntry]
+    ) -> list[tuple[GovAmendmentEntry, list[GovAmendmentAssetResult]]]:
+        fetched = []
+        for amendment in entries:
+            assets = []
+            for asset in amendment.assets:
+                try:
+                    response = self._session.get(asset.source_url, timeout=60)
+                    response.raise_for_status()
+                    pseudo_entry = GovDocEntry(
+                        slug=asset.slug,
+                        category="amendment",
+                        title=asset.label,
+                        pdf_url=asset.source_url,
+                        source_page=amendment.source_url,
+                    )
+                    assets.append(GovAmendmentAssetResult(
+                        entry=asset,
+                        pdf_bytes=response.content,
+                        formatted_text=self._extract_text(pseudo_entry, response.content),
+                    ))
+                except Exception as exc:
+                    # The archive is historical and append-only. Returning a
+                    # failed asset lets the pipeline report it while retaining
+                    # the previously stored copy instead of aborting 87 entries.
+                    assets.append(GovAmendmentAssetResult(
+                        entry=asset,
+                        pdf_bytes=b"",
+                        formatted_text="",
+                        error=str(exc),
+                    ))
+            fetched.append((amendment, assets))
+        return fetched
+
     @staticmethod
     def _version_from_filename(url: str) -> Optional[str]:
         """Best-effort date guess from a filename like '..._5th_february_2014.pdf'."""
@@ -225,6 +322,10 @@ class GovDocsScraper:
     def _extract_text(entry: GovDocEntry, pdf_bytes: bytes) -> str:
         reader = PdfReader(BytesIO(pdf_bytes))
         pages = [page.extract_text() or "" for page in reader.pages]
+        if _needs_ocr(pages):
+            ocr_pages = _ocr_pages(pdf_bytes)
+            if sum(len(page.strip()) for page in ocr_pages) > sum(len(page.strip()) for page in pages):
+                pages = ocr_pages
         # Boilerplate stripping needs pypdf's original one-line-per-visual-line
         # shape (it matches on literal first/last lines), so it runs before
         # _join_wrapped_lines reflows those lines into paragraphs.
@@ -241,6 +342,27 @@ class GovDocsScraper:
 
 
 _LIST_MARKER_RE = re.compile(r"^(?:[ivxlcdm]+|[a-z]|[0-9]+)\.$", re.IGNORECASE)
+
+
+def _needs_ocr(pages: list[str]) -> bool:
+    """Flag image PDFs whose extraction contains headings/page furniture only."""
+    return sum(1 for page in pages for char in page if char.isalnum()) < max(500, len(pages) * 40)
+
+
+def _ocr_pages(pdf_bytes: bytes) -> list[str]:
+    """OCR every page when PyMuPDF and the host's Tesseract are available."""
+    if pymupdf is None:
+        return []
+    try:
+        document = pymupdf.open(stream=pdf_bytes, filetype="pdf")
+        return [
+            page.get_text("text", textpage=page.get_textpage_ocr(language="eng", dpi=200, full=True))
+            for page in document
+        ]
+    except Exception:
+        # Extraction remains best-effort: callers still receive the original
+        # PDF and the sparse pypdf text instead of losing the whole document.
+        return []
 
 
 def _join_wrapped_lines(page_text: str) -> str:
@@ -298,6 +420,101 @@ def _strip_repeated_boilerplate(pages: list[str]) -> list[str]:
         return pages
 
     return ["\n".join(l for l in lines if l.strip() not in boilerplate) for lines in line_lists]
+
+
+_AMENDMENT_HEADING_RE = re.compile(
+    r"\b((?:AGD|ADG|SR)\s*\d{4})\b\s*[-–—:]?\s*(.*)", re.IGNORECASE
+)
+
+
+def _archive_date(value: Optional[str]) -> Optional[str]:
+    if not value:
+        return None
+    cleaned = value.strip().rstrip(".")
+    for fmt in ("%d/%m/%Y", "%d/%m/%y", "%d %B %Y", "%d %b %Y"):
+        try:
+            return datetime.strptime(cleaned, fmt).date().isoformat()
+        except ValueError:
+            pass
+    return None
+
+
+def parse_amendments_html(
+    html: str, source_url: str = AMENDMENTS_URL
+) -> list[GovAmendmentEntry]:
+    """Recover archive metadata and PDF assets from Drupal's loose markup.
+
+    The archive uses a mixture of h3/h5 headings and ordinary paragraphs, and
+    older entries often say only "click here" on their links. Heading
+    boundaries therefore define an amendment; link labels are descriptive
+    when possible and fall back to the amendment title.
+    """
+    soup = BeautifulSoup(html, "html.parser")
+    headings = []
+    for heading in soup.find_all(["h1", "h2", "h3", "h4", "h5", "h6", "strong"]):
+        if heading.name == "strong" and getattr(heading.parent, "name", "") in {
+            "h1", "h2", "h3", "h4", "h5", "h6"
+        }:
+            continue
+        if _AMENDMENT_HEADING_RE.search(heading.get_text(" ", strip=True)):
+            headings.append(heading)
+    amendments: list[GovAmendmentEntry] = []
+    for order, heading in enumerate(headings):
+        match = _AMENDMENT_HEADING_RE.search(heading.get_text(" ", strip=True))
+        if not match:
+            continue
+        reference = re.sub(r"\s+", "", match.group(1)).upper()
+        title = match.group(2).strip() or reference
+        title = re.sub(r"\s+", " ", title)
+        block_text: list[str] = []
+        links: list[tuple[str, str]] = []
+        next_heading = headings[order + 1] if order + 1 < len(headings) else None
+        node = heading.next_element
+        while node is not None:
+            if node is next_heading:
+                break
+            name = getattr(node, "name", None)
+            if name == "a" and node.get("href"):
+                href = urljoin(source_url, node["href"])
+                if href.lower().split("?")[0].endswith(".pdf"):
+                    links.append((node.get_text(" ", strip=True), href))
+            elif name is None:
+                text = str(node).strip()
+                if text:
+                    block_text.append(text)
+            node = node.next_element
+
+        joined = "\n".join(block_text)
+        passed = re.search(r"Passed\s*:?[ \t]*([^\n]+)", joined, re.IGNORECASE)
+        effective = re.search(r"In effect from\s*:?[ \t]*([^\n]+)", joined, re.IGNORECASE)
+        passed_label = passed.group(1).strip() if passed else None
+        effective_label = effective.group(1).strip() if effective else None
+
+        seen: set[str] = set()
+        assets: list[GovAmendmentAssetEntry] = []
+        for asset_order, (label, href) in enumerate(links):
+            if href in seen:
+                continue
+            seen.add(href)
+            generic = not label or label.lower().startswith("click here") or label.lower() == "download"
+            assets.append(GovAmendmentAssetEntry(
+                slug=f"{reference.lower()}-{asset_order + 1}",
+                label=title if generic else re.sub(r"\s+", " ", label),
+                source_url=href,
+            ))
+
+        amendments.append(GovAmendmentEntry(
+            reference=reference,
+            title=title,
+            source_url=f"{source_url}#{reference.lower()}",
+            passed_label=passed_label,
+            effective_label=effective_label,
+            passed_at=_archive_date(passed_label),
+            effective_at=_archive_date(effective_label),
+            display_order=order,
+            assets=assets,
+        ))
+    return amendments
 
 
 def check_gov_docs(scope: Scope = "all", output_dir: str = "./gov-docs") -> list[dict]:

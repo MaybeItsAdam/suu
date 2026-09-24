@@ -34,7 +34,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-scrape = ["selenium", "beautifulsoup4", "requests", "supabase", "cuid", "openpyxl", "typing_extensions", "pypdf"]
+scrape = ["selenium", "beautifulsoup4", "requests", "supabase", "cuid", "openpyxl", "typing_extensions", "pypdf", "pymupdf"]
 forms = ["playwright", "httpx"]
 mcp = ["fastmcp>=0.3.0", "playwright", "httpx"]
 all = ["suu[scrape,forms,mcp]"]

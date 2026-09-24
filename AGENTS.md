@@ -14,6 +14,9 @@
    - Export options: `--csv`, `--xlsx`, `--json`, and `--sheets` (copies formatted text for Google Sheets).
 3. **`suu forms`**: Playwright browser automation for filling out SU financial forms (`payment_request`, `purchase_request`). Forms are **never submitted automatically** — they are pre-filled and left open for human review.
 4. **`suu scrape` & `suu whatson`**: Public data scrapers for Union election results and What's On events calendar.
+   - `suu.scrape.gov.GovDocsScraper` discovers the four current governing
+     documents, nests Bye-Law appendices through stable slugs, and parses the
+     separate passed-amendments archive (including multi-file amendments).
 5. **`suu seed`**: Non-interactive seeding of election winners directly into `society-tracker`'s `/accountability` tracker (`Officer` and `CommitteeMember` tables).
 6. **`suu mcp`**: Model Context Protocol (MCP) server over stdio, enabling AI assistants (Claude, Cursor, Antigravity) to fill forms or query committee data.
 7. **`suu poll`**: Background worker polling the web app receipt gatherer queue (`/api/receipts`) to pre-fill reimbursement forms.
