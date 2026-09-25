@@ -109,6 +109,7 @@ jobs:
       name: pypi
       url: https://pypi.org/project/suu/
     permissions:
+      contents: read           # the tag/version check below checks out the repo
       id-token: write          # required for OIDC trusted publishing
     steps:
       - uses: actions/checkout@v5
