@@ -288,6 +288,47 @@ def run_gov(scope: str, output_dir: str, write_docs: bool) -> None:
         click.echo("Also copied formatted text to: " + ", ".join(str(t) for t in doc_targets))
 
 
+def run_democracy(what: str, as_json: bool, details: bool = True) -> None:
+    """Print zone meetings (cards + archive) or the policy register.
+
+    Read-only and plain requests, like run_gov — no plugins, no driver.
+    """
+    import json
+
+    from suu.scrape.democracy import DemocracyScraper, to_jsonable
+
+    scraper = DemocracyScraper()
+    if what == "meetings":
+        cards = scraper.fetch_all_zone_cards()
+        archive = scraper.fetch_archive()
+        if as_json:
+            click.echo(json.dumps(to_jsonable({"cards": cards, "archive": archive}), indent=2))
+            return
+        click.echo(f"Upcoming meetings ({len(cards)}):")
+        for card in cards:
+            when = card.starts_at.strftime("%a %d %b %Y %H:%M") if card.starts_at else "date unknown"
+            click.echo(f"  {card.code}  {when}  {card.title}")
+        click.echo(f"\nArchive ({len(archive)} meetings):")
+        for entry in archive:
+            state = "cancelled" if entry.cancelled else (entry.papers_label or ("papers" if entry.papers_url else "no papers"))
+            click.echo(f"  {entry.code}  {state}" + (f"  — {entry.note}" if entry.note else ""))
+        return
+
+    if details:
+        results = scraper.fetch_policies()
+    else:
+        results = [(row, None, None) for row in scraper.fetch_policy_rows()]
+    if as_json:
+        click.echo(json.dumps(to_jsonable([
+            {"row": row, "page": page, "error": error} for row, page, error in results
+        ]), indent=2))
+        return
+    for row, page, error in results:
+        suffix = f"  [page error: {error}]" if error else ""
+        click.echo(f"  {row.code}  {row.status:<7}  {row.progress or '-':<14}  {row.title}{suffix}")
+    click.echo(f"\n{len(results)} policies")
+
+
 def run_plugins(data: dict[str, Any], context: dict[str, Any]) -> None:
     """Run every export plugin, honouring the --upload gate for Supabase."""
     base_dir = os.path.dirname(os.path.abspath(__file__))

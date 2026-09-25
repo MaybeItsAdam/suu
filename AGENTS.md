@@ -17,6 +17,17 @@
    - `suu.scrape.gov.GovDocsScraper` discovers the four current governing
      documents, nests Bye-Law appendices through stable slugs, and parses the
      separate passed-amendments archive (including multi-file amendments).
+   - `suu.scrape.democracy` (`suu democracy meetings|policies [--json]`) reads
+     zone meeting dates off the zone pages' inline directory JSON, papers off
+     the hand-edited minutes archive, and the policy register plus each
+     policy's page. Pure `parse_*` functions over fixtures in
+     `tests/fixtures/democracy/`; a login wall or a page missing its markers
+     raises `DemocracyPageError` rather than returning nothing. The archive's
+     known dirt (links to the wrong meeting, stale `data-id`s, year typos in
+     plain-text entries) is handled and pinned in `tests/test_democracy.py`.
+     The policy list checks the page's own status filter matches the one
+     asked for, so a renamed query parameter can't file lapsed policies as
+     current. `ucl-suu-pipeline`'s `democracy-collect` is the consumer.
 5. **`suu seed`**: Non-interactive seeding of election winners directly into `society-tracker`'s `/accountability` tracker (`Officer` and `CommitteeMember` tables).
 6. **`suu mcp`**: Model Context Protocol (MCP) server over stdio, enabling AI assistants (Claude, Cursor, Antigravity) to fill forms or query committee data.
 7. **`suu poll`**: Background worker polling the web app receipt gatherer queue (`/api/receipts`) to pre-fill reimbursement forms. **Being retired** in favour of the Toolbox Connector extension (see below); the removal is prepared on branch `chore/remove-poll-worker`.

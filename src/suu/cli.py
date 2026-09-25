@@ -158,6 +158,23 @@ def gov(scope: str, output_dir: str, write_docs: bool, check: bool, diff: bool) 
     run_gov(scope=scope, output_dir=output_dir, write_docs=write_docs)
 
 
+@cli.command()
+@click.argument("what", type=click.Choice(["meetings", "policies"]))
+@click.option("--json", "as_json", is_flag=True, help="Print JSON instead of a summary.")
+@click.option(
+    "--no-details",
+    is_flag=True,
+    help="[policies] Read the register table only, not each policy's own page.",
+)
+def democracy(what: str, as_json: bool, no_details: bool) -> None:
+    """Read UCL SU zone meetings and papers, or the policy register."""
+    try:
+        from suu.scrape.cli import run_democracy
+    except ModuleNotFoundError as e:
+        raise _need_extra("scrape", e)
+    run_democracy(what, as_json=as_json, details=not no_details)
+
+
 @cli.command("resolve")
 @click.option("--dry-run", is_flag=True, help="Calculate resolutions without writing changes.")
 @click.option("--days", default=180, help="Lookahead horizon in days.")
