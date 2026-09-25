@@ -23,6 +23,8 @@ import requests
 from bs4 import BeautifulSoup
 from pypdf import PdfReader
 
+from suu.scrape.gov_text import extract_structured_text
+
 try:
     import pymupdf
 except ImportError:  # Core installs do not carry the scrape extra.
@@ -320,6 +322,20 @@ class GovDocsScraper:
 
     @staticmethod
     def _extract_text(entry: GovDocEntry, pdf_bytes: bytes) -> str:
+        header = [f"# {entry.title}", "", f"Source: {entry.pdf_url}"]
+        if entry.version_label:
+            header.append(f"Version: {entry.version_label}")
+        header.append("")
+
+        # Layout-aware extraction first (see gov_text); pypdf below is the
+        # fallback for hosts without PyMuPDF, or a PDF it can't structure.
+        try:
+            structured = extract_structured_text(pdf_bytes)
+        except Exception:
+            structured = None
+        if structured and structured.strip():
+            return "\n".join(header) + "\n" + structured.strip() + "\n"
+
         reader = PdfReader(BytesIO(pdf_bytes))
         pages = [page.extract_text() or "" for page in reader.pages]
         if _needs_ocr(pages):
@@ -331,11 +347,6 @@ class GovDocsScraper:
         # _join_wrapped_lines reflows those lines into paragraphs.
         pages = _strip_repeated_boilerplate(pages)
         pages = [_join_wrapped_lines(p) for p in pages]
-
-        header = [f"# {entry.title}", "", f"Source: {entry.pdf_url}"]
-        if entry.version_label:
-            header.append(f"Version: {entry.version_label}")
-        header.append("")
 
         body = "\n\n".join(p.strip() for p in pages if p.strip())
         return "\n".join(header) + "\n" + body + "\n"
