@@ -3,12 +3,20 @@
 from __future__ import annotations
 
 import re
-from typing import Any, Dict, List, Optional
+from typing import Optional
 import click
 
-from suu.core.constants import BASE_URL
-from suu.retrieve.browser import check_authenticated, resolve_auth_file
-from suu.retrieve.export import export_data
+from suu.retrieve.common import (
+    Retrieved,
+    UnrecognisedPageError,
+    cell_at,
+    fetch_page_html,
+    has_next_page,
+    parse_html,
+    read_rows,
+    refuse_login_page,
+)
+from suu.retrieve.export import export_data, warn_first_page_only
 
 
 def slugify_group(group_name: str) -> str:
@@ -20,67 +28,45 @@ def slugify_group(group_name: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", group_name.lower()).strip("-")
 
 
+def parse_members(html: str) -> Retrieved:
+    """Read suu's guess at the members table: name, membership type, email, purchase date.
+
+    Uses the shared refusal rule (login page, unrelated page or wrong-shaped table is an
+    error). NOT the Connector's members parser: the Connector reads the verified
+    ``/clubs-societies/<slug>/members`` roster (``lib/roster.js``); this still reads the
+    unverified ``/group/<slug>/members``.
+    """
+    doc = parse_html(html)
+    refuse_login_page(doc)
+    if doc.select_one("table") is None:
+        raise UnrecognisedPageError("members")
+    rows = read_rows(
+        doc,
+        2,
+        lambda cells: {
+            "name": cells[0],
+            "email": cell_at(cells, 2),
+            "membership_type": cells[1],
+            "purchase_date": cell_at(cells, 3),
+        },
+        "members",
+    )
+    return Retrieved(rows=rows, has_more=has_next_page(doc))
+
+
 def fetch_members(
     group_name: str,
     auth_file: Optional[str] = None,
     headless: bool = True,
-) -> List[Dict[str, Any]]:
-    """Fetch official member roster for a club or society using Playwright session."""
-    check_authenticated(auth_file)
+) -> Retrieved:
+    """Fetch official member roster for a club or society using the saved login session."""
     slug = slugify_group(group_name)
-
-    try:
-        from playwright.sync_api import sync_playwright
-    except ModuleNotFoundError:
-        raise click.ClickException("Missing browser support. Run `pip install playwright && playwright install chromium`.")
-
-    state_path = resolve_auth_file(auth_file)
-    target_url = f"{BASE_URL}/group/{slug}/members"
-
-    click.echo(f"Fetching member roster for '{group_name}' ({target_url})...")
-
-    members: List[Dict[str, Any]] = []
-
-    from suu.core.browser import launch_browser_safe
-
-    with sync_playwright() as p:
-        browser = launch_browser_safe(p, headless=headless)
-        context = browser.new_context(storage_state=str(state_path))
-        page = context.new_page()
-
-        response = page.goto(target_url, wait_until="domcontentloaded")
-        if response and response.status in (403, 401):
-            browser.close()
-            raise click.ClickException(
-                f"Access denied (HTTP {response.status}). Ensure you have committee access for '{group_name}' "
-                "and your login session is active (run `suu login`)."
-            )
-
-        page.wait_for_selector("table, .view-content, .empty-message, body", timeout=10000)
-
-        # Parse table rows if present
-        rows = page.query_selector_all("table tbody tr")
-        for r in rows:
-            cols = r.query_selector_all("td")
-            if len(cols) >= 2:
-                name = cols[0].inner_text().strip()
-                membership_type = cols[1].inner_text().strip() if len(cols) > 1 else "Standard"
-                email = cols[2].inner_text().strip() if len(cols) > 2 else ""
-                purchase_date = cols[3].inner_text().strip() if len(cols) > 3 else ""
-
-                members.append(
-                    {
-                        "name": name,
-                        "email": email,
-                        "membership_type": membership_type,
-                        "purchase_date": purchase_date,
-                        "group": group_name,
-                    }
-                )
-
-        browser.close()
-
-    return members
+    click.echo(f"Fetching member roster for '{group_name}'...")
+    html = fetch_page_html(f"/group/{slug}/members", "members", auth_file=auth_file, headless=headless)
+    result = parse_members(html)
+    for row in result.rows:
+        row["group"] = group_name
+    return result
 
 
 def retrieve_members_cmd(
@@ -92,11 +78,13 @@ def retrieve_members_cmd(
     auth_file: Optional[str] = None,
 ) -> None:
     """CLI handler for `suu retrieve members`."""
-    members = fetch_members(group_name, auth_file=auth_file)
+    data = fetch_members(group_name, auth_file=auth_file)
+    if data.has_more:
+        warn_first_page_only("members")
     fieldnames = ["name", "email", "membership_type", "purchase_date", "group"]
     slug = slugify_group(group_name)
     export_data(
-        rows=members,
+        rows=data.rows,
         fieldnames=fieldnames,
         prefix=f"members_{slug}",
         as_csv=as_csv,

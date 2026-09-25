@@ -1,78 +1,73 @@
-"""Retrieve room & space booking request statuses from Students' Union UCL."""
+"""Retrieve room & space booking request statuses from Students' Union UCL.
+
+Kept in step with the Toolbox Connector's ``lib/retrieve/bookings.js``: same selectors,
+same refusals, same columns. Fix a parser in both places.
+
+UNVERIFIED against a real SU page. A real fixture must confirm:
+  - the page lives at ``/group/<slug>/room-bookings``, with the same slug as the members
+    page;
+  - the requests are a ``<table>`` (suu used to also wait for ``.booking-list``);
+  - every ``table tbody tr`` is one request, cells in the order reference, title, room,
+    date, status (date and status optional);
+  - no other table on the page, and whether the list is paged.
+"""
 
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+from typing import Optional
+
 import click
 
-from suu.core.constants import BASE_URL
-from suu.retrieve.browser import check_authenticated, resolve_auth_file
-from suu.retrieve.export import export_data
+from suu.retrieve.common import (
+    Retrieved,
+    UnrecognisedPageError,
+    cell_at,
+    fetch_page_html,
+    has_next_page,
+    parse_html,
+    read_rows,
+    refuse_login_page,
+)
+from suu.retrieve.export import export_data, warn_first_page_only
 from suu.retrieve.members import slugify_group
+
+BOOKINGS_FIELDS = ["booking_ref", "title", "room", "date", "status"]
+
+
+def parse_bookings(html: str) -> Retrieved:
+    """Read the room booking requests table; a missing status defaults to "Requested"."""
+    doc = parse_html(html)
+    refuse_login_page(doc)
+    if doc.select_one("table") is None:
+        raise UnrecognisedPageError("room bookings")
+    rows = read_rows(
+        doc,
+        3,
+        lambda cells: {
+            "booking_ref": cells[0],
+            "title": cells[1],
+            "room": cells[2],
+            "date": cell_at(cells, 3),
+            "status": cell_at(cells, 4, "Requested"),
+        },
+        "room bookings",
+    )
+    return Retrieved(rows=rows, has_more=has_next_page(doc))
 
 
 def fetch_bookings(
     group_name: str,
     auth_file: Optional[str] = None,
     headless: bool = True,
-) -> List[Dict[str, Any]]:
+) -> Retrieved:
     """Fetch room booking requests for a club or society."""
-    check_authenticated(auth_file)
     slug = slugify_group(group_name)
-
-    try:
-        from playwright.sync_api import sync_playwright
-    except ModuleNotFoundError:
-        raise click.ClickException("Missing browser support. Run `pip install playwright && playwright install chromium`.")
-
-    state_path = resolve_auth_file(auth_file)
-    target_url = f"{BASE_URL}/group/{slug}/room-bookings"
-
     click.echo(f"Fetching room booking requests for '{group_name}'...")
-
-    bookings: List[Dict[str, Any]] = []
-
-    from suu.core.browser import launch_browser_safe
-
-    with sync_playwright() as p:
-        browser = launch_browser_safe(p, headless=headless)
-        context = browser.new_context(storage_state=str(state_path))
-        page = context.new_page()
-
-        response = page.goto(target_url, wait_until="domcontentloaded")
-        if response and response.status in (403, 401):
-            browser.close()
-            raise click.ClickException(
-                f"Access denied (HTTP {response.status}). Ensure you have room booking permission "
-                f"for '{group_name}' and your login session is active (run `suu login`)."
-            )
-
-        page.wait_for_selector("table, .booking-list, body", timeout=10000)
-
-        rows = page.query_selector_all("table tbody tr")
-        for r in rows:
-            cols = r.query_selector_all("td")
-            if len(cols) >= 3:
-                ref = cols[0].inner_text().strip()
-                title = cols[1].inner_text().strip()
-                room = cols[2].inner_text().strip() if len(cols) > 2 else ""
-                date = cols[3].inner_text().strip() if len(cols) > 3 else ""
-                status = cols[4].inner_text().strip() if len(cols) > 4 else "Requested"
-
-                bookings.append(
-                    {
-                        "booking_ref": ref,
-                        "title": title,
-                        "room": room,
-                        "date": date,
-                        "status": status,
-                        "group": group_name,
-                    }
-                )
-
-        browser.close()
-
-    return bookings
+    html = fetch_page_html(f"/group/{slug}/room-bookings", "room bookings", auth_file=auth_file, headless=headless)
+    result = parse_bookings(html)
+    for row in result.rows:
+        row["group"] = group_name
+    return result
 
 
 def retrieve_bookings_cmd(
@@ -84,14 +79,13 @@ def retrieve_bookings_cmd(
     auth_file: Optional[str] = None,
 ) -> None:
     """CLI handler for `suu retrieve bookings`."""
-    bookings = fetch_bookings(group_name, auth_file=auth_file)
-    fieldnames = ["booking_ref", "title", "room", "date", "status", "group"]
-    slug = slugify_group(group_name)
-
+    data = fetch_bookings(group_name, auth_file=auth_file)
+    if data.has_more:
+        warn_first_page_only("room booking requests")
     export_data(
-        rows=bookings,
-        fieldnames=fieldnames,
-        prefix=f"bookings_{slug}",
+        rows=data.rows,
+        fieldnames=[*BOOKINGS_FIELDS, "group"],
+        prefix=f"bookings_{slugify_group(group_name)}",
         as_csv=as_csv,
         as_xlsx=as_xlsx,
         as_json=as_json,

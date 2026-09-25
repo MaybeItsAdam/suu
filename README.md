@@ -133,6 +133,16 @@ suu retrieve committee "Volunteering Society"
 
 Export options for `retrieve` commands: `--csv`, `--xlsx`, `--json`, and `--sheets` (copies formatted text ready to paste directly into Google Sheets).
 
+- A page that isn't the expected one (login page, error page, redesign) stops with an error instead of saving an empty file. If you see "not signed in", run `suu login`.
+- Only the first page of a paged list is read; suu warns when there are more.
+- A balance that isn't on the page is shown as "not shown on the page", never £0.00. `finance --json` saves `{summary, rows}` with the balances.
+- CSV is UTF-8 with a BOM and CRLF line endings, so it opens cleanly in Excel. In CSV, Sheets and XLSX output, cells that would run as formulas (`=`, `+`, `-`, `@`, tab, CR) are prefixed with `'`; signed amounts and phone numbers are left alone. JSON keeps raw values.
+- `--xlsx` needs openpyxl (included in `suu[all]` / `suu[scrape]`).
+
+Prefer not to install Python? The **Toolbox Connector** browser extension (Chrome, Edge,
+Firefox) runs the same retrievals in your own browser from its "Retrieve SU data" page, with
+the same CSV/JSON/Sheets columns. Nothing it reads leaves your computer.
+
 ---
 
 ## Filling forms (`forms`)
@@ -145,6 +155,10 @@ suu forms fill payment_request --data my_payment.json
 Built-in forms: `payment_request` (reimbursements) and `purchase_request` (paying invoices /
 asking the Union to buy something). suu **never submits** a form — it fills it in and leaves
 the browser open so you can review and submit yourself.
+
+If your society uses Adam's Campus Toolbox, you don't need suu for reimbursements: the
+Toolbox Connector extension fills the payment request from a receipt, in a window in your
+own browser, using these same form definitions — and likewise never submits.
 
 ---
 
@@ -163,6 +177,10 @@ stdio). `suu mcp setup` will print a copy-paste snippet if it can't find a known
 ---
 
 ## Running the form-filling worker (`poll`)
+
+> **Being retired.** The Toolbox Connector extension now fills forms in the treasurer's own
+> browser, so this shared-token worker is going away once the extension has handled a real
+> reimbursement cycle.
 
 For the receipt-gatherer web app: `suu poll` claims queued jobs and fills the form for each
 one. It needs a couple of environment variables (put them in a `.env` file — see

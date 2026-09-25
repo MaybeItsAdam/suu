@@ -1,93 +1,99 @@
-"""Retrieve financial account balances and payment request statuses from Students' Union UCL."""
+"""Retrieve financial account balances and payment request statuses from Students' Union UCL.
+
+Kept in step with the Toolbox Connector's ``lib/retrieve/finance.js``: same selectors,
+same refusals, same columns. Fix a parser in both places.
+
+UNVERIFIED against a real SU page. The selectors look guessed, and no one has captured
+this page yet. A real fixture must confirm:
+  - the page lives at ``/group/<slug>/finance``, with the same slug as the members page;
+  - the grant (account 10) balance is an element matching ``.grant-account-balance`` or
+    ``[data-account='grant']``;
+  - the subs (account 11) balance matches ``.subs-account-balance`` or
+    ``[data-account='subs']``;
+  - every ``table tbody tr`` on the page is a request, with cells in the order request
+    id, title, amount, status, date (status and date optional) — so no other table on
+    the page, and no header cells inside ``<tbody>``;
+  - whether the list is paged (only the first page is read).
+
+A balance that isn't on the page is ``None``, not "£0.00": a made-up zero would show an
+empty account where the truth is "couldn't read it".
+"""
 
 from __future__ import annotations
 
-import re
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
+
 import click
 
-from suu.core.constants import BASE_URL
-from suu.retrieve.browser import check_authenticated, resolve_auth_file
-from suu.retrieve.export import export_data
+from suu.retrieve.common import (
+    Retrieved,
+    UnrecognisedPageError,
+    cell_at,
+    fetch_page_html,
+    has_next_page,
+    parse_html,
+    read_rows,
+    refuse_login_page,
+    text,
+)
+from suu.retrieve.export import export_data, warn_first_page_only
 from suu.retrieve.members import slugify_group
+
+GRANT = ".grant-account-balance, [data-account='grant']"
+SUBS = ".subs-account-balance, [data-account='subs']"
+
+FINANCE_FIELDS = ["request_id", "title", "amount", "status", "date"]
+
+
+def parse_finance(html: str) -> Retrieved:
+    """Read the finance page: both balances (``summary``) and the submitted requests."""
+    doc = parse_html(html)
+    refuse_login_page(doc)
+    grant = doc.select_one(GRANT)
+    subs = doc.select_one(SUBS)
+    # Any page may carry a table; only a balance marks this as the finance page.
+    if grant is None and subs is None:
+        raise UnrecognisedPageError("finance")
+
+    rows = read_rows(
+        doc,
+        3,
+        lambda cells: {
+            "request_id": cells[0],
+            "title": cells[1],
+            "amount": cells[2],
+            "status": cell_at(cells, 3, "Submitted"),
+            "date": cell_at(cells, 4),
+        },
+        "finance",
+    )
+    return Retrieved(
+        rows=rows,
+        has_more=has_next_page(doc),
+        summary={
+            "grant_account_balance": text(grant) or None,
+            "subs_account_balance": text(subs) or None,
+        },
+    )
 
 
 def fetch_finance(
     group_name: str,
     auth_file: Optional[str] = None,
     headless: bool = True,
-) -> Dict[str, Any]:
+) -> Retrieved:
     """Fetch live balances and submitted financial requests for a club or society."""
-    check_authenticated(auth_file)
     slug = slugify_group(group_name)
-
-    try:
-        from playwright.sync_api import sync_playwright
-    except ModuleNotFoundError:
-        raise click.ClickException("Missing browser support. Run `pip install playwright && playwright install chromium`.")
-
-    state_path = resolve_auth_file(auth_file)
-    target_url = f"{BASE_URL}/group/{slug}/finance"
-
-    click.echo(f"Fetching financial balances and requests for '{group_name}' ({target_url})...")
-
-    result: Dict[str, Any] = {
-        "group": group_name,
-        "grant_account_balance": "£0.00",
-        "subs_account_balance": "£0.00",
-        "requests": [],
-    }
-
-    from suu.core.browser import launch_browser_safe
-
-    with sync_playwright() as p:
-        browser = launch_browser_safe(p, headless=headless)
-        context = browser.new_context(storage_state=str(state_path))
-        page = context.new_page()
-
-        response = page.goto(target_url, wait_until="domcontentloaded")
-        if response and response.status in (403, 401):
-            browser.close()
-            raise click.ClickException(
-                f"Access denied (HTTP {response.status}). Ensure you are a registered President/Treasurer "
-                f"for '{group_name}' and your login session is active (run `suu login`)."
-            )
-
-        page.wait_for_selector("table, .account-balance, .view-content, body", timeout=10000)
-
-        # Parse balance elements if found
-        grant_el = page.query_selector(".grant-account-balance, [data-account='grant']")
-        subs_el = page.query_selector(".subs-account-balance, [data-account='subs']")
-        if grant_el:
-            result["grant_account_balance"] = grant_el.inner_text().strip()
-        if subs_el:
-            result["subs_account_balance"] = subs_el.inner_text().strip()
-
-        # Parse submitted request table rows
-        rows = page.query_selector_all("table tbody tr")
-        for r in rows:
-            cols = r.query_selector_all("td")
-            if len(cols) >= 3:
-                req_id = cols[0].inner_text().strip()
-                title = cols[1].inner_text().strip()
-                amount = cols[2].inner_text().strip() if len(cols) > 2 else ""
-                status = cols[3].inner_text().strip() if len(cols) > 3 else "Submitted"
-                date = cols[4].inner_text().strip() if len(cols) > 4 else ""
-
-                result["requests"].append(
-                    {
-                        "request_id": req_id,
-                        "title": title,
-                        "amount": amount,
-                        "status": status,
-                        "date": date,
-                        "group": group_name,
-                    }
-                )
-
-        browser.close()
-
+    click.echo(f"Fetching financial balances and requests for '{group_name}'...")
+    html = fetch_page_html(f"/group/{slug}/finance", "finance", auth_file=auth_file, headless=headless)
+    result = parse_finance(html)
+    for row in result.rows:
+        row["group"] = group_name
     return result
+
+
+def _balance(value: Any) -> str:
+    return value if value is not None else "not shown on the page"
 
 
 def retrieve_finance_cmd(
@@ -100,23 +106,24 @@ def retrieve_finance_cmd(
 ) -> None:
     """CLI handler for `suu retrieve finance`."""
     data = fetch_finance(group_name, auth_file=auth_file)
+    summary: Dict[str, Any] = data.summary or {}
 
     click.echo("\n------------------------------------------------")
-    click.echo(f"  Financial Summary for: {data['group']}")
-    click.echo(f"  Account 10 (Grant Account):    {data['grant_account_balance']}")
-    click.echo(f"  Account 11 (Non-Grant Subs):  {data['subs_account_balance']}")
+    click.echo(f"  Financial Summary for: {group_name}")
+    click.echo(f"  Account 10 (Grant Account):    {_balance(summary.get('grant_account_balance'))}")
+    click.echo(f"  Account 11 (Non-Grant Subs):  {_balance(summary.get('subs_account_balance'))}")
     click.echo("------------------------------------------------\n")
 
-    requests = data.get("requests", [])
-    fieldnames = ["request_id", "title", "amount", "status", "date", "group"]
-    slug = slugify_group(group_name)
+    if data.has_more:
+        warn_first_page_only("finance requests")
 
     export_data(
-        rows=requests,
-        fieldnames=fieldnames,
-        prefix=f"finance_{slug}",
+        rows=data.rows,
+        fieldnames=[*FINANCE_FIELDS, "group"],
+        prefix=f"finance_{slugify_group(group_name)}",
         as_csv=as_csv,
         as_xlsx=as_xlsx,
         as_json=as_json,
         as_sheets=as_sheets,
+        summary={"group": group_name, **summary},
     )

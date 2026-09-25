@@ -35,8 +35,8 @@ dependencies = [
 
 [project.optional-dependencies]
 scrape = ["selenium", "beautifulsoup4", "requests", "supabase", "cuid", "openpyxl", "typing_extensions", "pypdf", "pymupdf"]
-forms = ["playwright", "httpx"]
-mcp = ["fastmcp>=0.3.0", "playwright", "httpx"]
+forms = ["playwright", "httpx", "beautifulsoup4"]
+mcp = ["fastmcp>=0.3.0", "playwright", "httpx", "beautifulsoup4"]
 all = ["suu[scrape,forms,mcp]"]
 dev = ["pytest", "pytest-asyncio", "pytest-playwright"]
 

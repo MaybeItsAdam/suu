@@ -1,14 +1,60 @@
-"""Retrieve ticket sales and door lists for Students' Union UCL events."""
+"""Retrieve ticket sales and door lists for Students' Union UCL events.
+
+Kept in step with the Toolbox Connector's ``lib/retrieve/sales.js``: same selectors,
+same refusals, same columns. Fix a parser in both places.
+
+UNVERIFIED against a real SU page, and the least likely of the retrievers to be right:
+it reads the *events list* URL (``/group/<slug>/events``) but parses its rows as ticket
+buyers. A real events list more plausibly lists events, with buyers on a per-event sales
+page. ``--event`` only labels the rows; it does not select an event. A real fixture must
+confirm:
+  - which page actually carries buyers — ``/group/<slug>/events`` or a per-event page,
+    and if the latter, how its URL is found;
+  - buyers are a ``<table>``, every ``table tbody tr`` one ticket, cells in the order
+    buyer name, ticket tier, email, ticket code (code optional);
+  - no other table on the page, and whether the list is paged.
+"""
 
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+from typing import Optional
+
 import click
 
-from suu.core.constants import BASE_URL
-from suu.retrieve.browser import check_authenticated, resolve_auth_file
-from suu.retrieve.export import export_data
+from suu.retrieve.common import (
+    Retrieved,
+    UnrecognisedPageError,
+    cell_at,
+    fetch_page_html,
+    has_next_page,
+    parse_html,
+    read_rows,
+    refuse_login_page,
+)
+from suu.retrieve.export import export_data, warn_first_page_only
 from suu.retrieve.members import slugify_group
+
+SALES_FIELDS = ["buyer_name", "ticket_tier", "email", "ticket_code"]
+
+
+def parse_sales(html: str) -> Retrieved:
+    """Read the buyer table: name, tier, email and optional ticket code per row."""
+    doc = parse_html(html)
+    refuse_login_page(doc)
+    if doc.select_one("table") is None:
+        raise UnrecognisedPageError("event sales")
+    rows = read_rows(
+        doc,
+        3,
+        lambda cells: {
+            "buyer_name": cells[0],
+            "ticket_tier": cells[1],
+            "email": cells[2],
+            "ticket_code": cell_at(cells, 3),
+        },
+        "event sales",
+    )
+    return Retrieved(rows=rows, has_more=has_next_page(doc))
 
 
 def fetch_sales(
@@ -16,63 +62,16 @@ def fetch_sales(
     event_name: Optional[str] = None,
     auth_file: Optional[str] = None,
     headless: bool = True,
-) -> List[Dict[str, Any]]:
+) -> Retrieved:
     """Fetch ticket purchaser / door list records for an event."""
-    check_authenticated(auth_file)
     slug = slugify_group(group_name)
-
-    try:
-        from playwright.sync_api import sync_playwright
-    except ModuleNotFoundError:
-        raise click.ClickException("Missing browser support. Run `pip install playwright && playwright install chromium`.")
-
-    state_path = resolve_auth_file(auth_file)
-    target_url = f"{BASE_URL}/group/{slug}/events"
-
     click.echo(f"Fetching sales and door list for '{group_name}'...")
-
-    tickets: List[Dict[str, Any]] = []
-
-    from suu.core.browser import launch_browser_safe
-
-    with sync_playwright() as p:
-        browser = launch_browser_safe(p, headless=headless)
-        context = browser.new_context(storage_state=str(state_path))
-        page = context.new_page()
-
-        response = page.goto(target_url, wait_until="domcontentloaded")
-        if response and response.status in (403, 401):
-            browser.close()
-            raise click.ClickException(
-                f"Access denied (HTTP {response.status}). Ensure you have event admin rights "
-                f"for '{group_name}' and your login session is active (run `suu login`)."
-            )
-
-        page.wait_for_selector("table, .event-list, body", timeout=10000)
-
-        rows = page.query_selector_all("table tbody tr")
-        for r in rows:
-            cols = r.query_selector_all("td")
-            if len(cols) >= 3:
-                buyer_name = cols[0].inner_text().strip()
-                ticket_tier = cols[1].inner_text().strip()
-                email = cols[2].inner_text().strip() if len(cols) > 2 else ""
-                code = cols[3].inner_text().strip() if len(cols) > 3 else ""
-
-                tickets.append(
-                    {
-                        "buyer_name": buyer_name,
-                        "ticket_tier": ticket_tier,
-                        "email": email,
-                        "ticket_code": code,
-                        "group": group_name,
-                        "event": event_name or "All Events",
-                    }
-                )
-
-        browser.close()
-
-    return tickets
+    html = fetch_page_html(f"/group/{slug}/events", "event sales", auth_file=auth_file, headless=headless)
+    result = parse_sales(html)
+    for row in result.rows:
+        row["group"] = group_name
+        row["event"] = event_name or "All Events"
+    return result
 
 
 def retrieve_sales_cmd(
@@ -85,14 +84,14 @@ def retrieve_sales_cmd(
     auth_file: Optional[str] = None,
 ) -> None:
     """CLI handler for `suu retrieve sales`."""
-    tickets = fetch_sales(group_name, event_name=event_name, auth_file=auth_file)
-    fieldnames = ["buyer_name", "ticket_tier", "email", "ticket_code", "group", "event"]
+    data = fetch_sales(group_name, event_name=event_name, auth_file=auth_file)
+    if data.has_more:
+        warn_first_page_only("ticket sales")
     slug = slugify_group(group_name)
     event_slug = slugify_group(event_name) if event_name else "all"
-
     export_data(
-        rows=tickets,
-        fieldnames=fieldnames,
+        rows=data.rows,
+        fieldnames=[*SALES_FIELDS, "group", "event"],
         prefix=f"sales_{slug}_{event_slug}",
         as_csv=as_csv,
         as_xlsx=as_xlsx,

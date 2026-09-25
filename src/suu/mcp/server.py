@@ -188,9 +188,9 @@ def retrieve_members(group_name: str) -> str:
     try:
         from suu.retrieve.members import fetch_members
         members = fetch_members(group_name)
-        if not members:
+        if not members.rows:
             return f"No member records found for '{group_name}'."
-        return json.dumps(members, indent=2)
+        return json.dumps(members.as_dict(), indent=2)
     except Exception as e:
         return f"Failed to retrieve members: {e}"
 
@@ -207,7 +207,7 @@ def retrieve_finance(group_name: str) -> str:
     try:
         from suu.retrieve.finance import fetch_finance
         finance = fetch_finance(group_name)
-        return json.dumps(finance, indent=2)
+        return json.dumps(finance.as_dict(), indent=2)
     except Exception as e:
         return f"Failed to retrieve financial data: {e}"
 
@@ -225,7 +225,11 @@ def retrieve_sales(group_name: str, event_name: str = "") -> str:
     try:
         from suu.retrieve.sales import fetch_sales
         sales = fetch_sales(group_name, event_name=event_name or None)
-        return json.dumps(sales, indent=2)
+        return json.dumps(sales.as_dict(), indent=2)
+    except Exception as e:
+        return f"Failed to retrieve sales: {e}"
+
+
 @mcp.tool()
 def find_free_rooms(building: str = "", min_capacity: int = 0) -> str:
     """

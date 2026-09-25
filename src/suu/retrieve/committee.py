@@ -1,74 +1,67 @@
-"""Retrieve registered committee roster for a Students' Union UCL club or society."""
+"""Retrieve registered committee roster for a Students' Union UCL club or society.
+
+Kept in step with the Toolbox Connector's ``lib/retrieve/committee.js``: same selectors,
+same refusals, same columns. Fix a parser in both places.
+
+UNVERIFIED against a real SU page. A real fixture must confirm:
+  - the page lives at ``/group/<slug>/committee``, with the same slug as the members page;
+  - the committee is a ``<table>`` (suu used to also wait for ``.committee-list``, which
+    suggests it may be a list instead — if so this parser refuses the page);
+  - every ``table tbody tr`` is one committee member, cells in the order role, name,
+    email (email optional);
+  - no other table on the page.
+"""
 
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+from typing import Optional
+
 import click
 
-from suu.core.constants import BASE_URL
-from suu.retrieve.browser import check_authenticated, resolve_auth_file
-from suu.retrieve.export import export_data
+from suu.retrieve.common import (
+    Retrieved,
+    UnrecognisedPageError,
+    cell_at,
+    fetch_page_html,
+    has_next_page,
+    parse_html,
+    read_rows,
+    refuse_login_page,
+)
+from suu.retrieve.export import export_data, warn_first_page_only
 from suu.retrieve.members import slugify_group
+
+COMMITTEE_FIELDS = ["role", "name", "email"]
+
+
+def parse_committee(html: str) -> Retrieved:
+    """Read the committee table: role, name and optional email per row."""
+    doc = parse_html(html)
+    refuse_login_page(doc)
+    if doc.select_one("table") is None:
+        raise UnrecognisedPageError("committee")
+    rows = read_rows(
+        doc,
+        2,
+        lambda cells: {"role": cells[0], "name": cells[1], "email": cell_at(cells, 2)},
+        "committee",
+    )
+    return Retrieved(rows=rows, has_more=has_next_page(doc))
 
 
 def fetch_committee(
     group_name: str,
     auth_file: Optional[str] = None,
     headless: bool = True,
-) -> List[Dict[str, Any]]:
+) -> Retrieved:
     """Fetch registered committee members for a club or society."""
-    check_authenticated(auth_file)
     slug = slugify_group(group_name)
-
-    try:
-        from playwright.sync_api import sync_playwright
-    except ModuleNotFoundError:
-        raise click.ClickException("Missing browser support. Run `pip install playwright && playwright install chromium`.")
-
-    state_path = resolve_auth_file(auth_file)
-    target_url = f"{BASE_URL}/group/{slug}/committee"
-
     click.echo(f"Fetching committee lineup for '{group_name}'...")
-
-    committee: List[Dict[str, Any]] = []
-
-    from suu.core.browser import launch_browser_safe
-
-    with sync_playwright() as p:
-        browser = launch_browser_safe(p, headless=headless)
-        context = browser.new_context(storage_state=str(state_path))
-        page = context.new_page()
-
-        response = page.goto(target_url, wait_until="domcontentloaded")
-        if response and response.status in (403, 401):
-            browser.close()
-            raise click.ClickException(
-                f"Access denied (HTTP {response.status}). Ensure you have committee view access "
-                f"for '{group_name}' and your login session is active (run `suu login`)."
-            )
-
-        page.wait_for_selector("table, .committee-list, body", timeout=10000)
-
-        rows = page.query_selector_all("table tbody tr")
-        for r in rows:
-            cols = r.query_selector_all("td")
-            if len(cols) >= 2:
-                role = cols[0].inner_text().strip()
-                name = cols[1].inner_text().strip()
-                email = cols[2].inner_text().strip() if len(cols) > 2 else ""
-
-                committee.append(
-                    {
-                        "role": role,
-                        "name": name,
-                        "email": email,
-                        "group": group_name,
-                    }
-                )
-
-        browser.close()
-
-    return committee
+    html = fetch_page_html(f"/group/{slug}/committee", "committee", auth_file=auth_file, headless=headless)
+    result = parse_committee(html)
+    for row in result.rows:
+        row["group"] = group_name
+    return result
 
 
 def retrieve_committee_cmd(
@@ -80,14 +73,13 @@ def retrieve_committee_cmd(
     auth_file: Optional[str] = None,
 ) -> None:
     """CLI handler for `suu retrieve committee`."""
-    committee = fetch_committee(group_name, auth_file=auth_file)
-    fieldnames = ["role", "name", "email", "group"]
-    slug = slugify_group(group_name)
-
+    data = fetch_committee(group_name, auth_file=auth_file)
+    if data.has_more:
+        warn_first_page_only("committee")
     export_data(
-        rows=committee,
-        fieldnames=fieldnames,
-        prefix=f"committee_{slug}",
+        rows=data.rows,
+        fieldnames=[*COMMITTEE_FIELDS, "group"],
+        prefix=f"committee_{slugify_group(group_name)}",
         as_csv=as_csv,
         as_xlsx=as_xlsx,
         as_json=as_json,

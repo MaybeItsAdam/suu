@@ -2506,10 +2506,12 @@ dev = [
     { name = "pytest-playwright" },
 ]
 forms = [
+    { name = "beautifulsoup4" },
     { name = "httpx" },
     { name = "playwright" },
 ]
 mcp = [
+    { name = "beautifulsoup4" },
     { name = "fastmcp" },
     { name = "httpx" },
     { name = "playwright" },
@@ -2528,6 +2530,8 @@ scrape = [
 
 [package.metadata]
 requires-dist = [
+    { name = "beautifulsoup4", marker = "extra == 'forms'" },
+    { name = "beautifulsoup4", marker = "extra == 'mcp'" },
     { name = "beautifulsoup4", marker = "extra == 'scrape'" },
     { name = "click" },
     { name = "cuid", marker = "extra == 'scrape'" },

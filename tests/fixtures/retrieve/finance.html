@@ -1,0 +1,20 @@
+<!doctype html>
+<html><body class="path-group">
+<main>
+  <h1>Finance</h1>
+  <div class="account-balance">
+    <span class="label">Account 10</span> <span class="grant-account-balance"> £1,234.56 </span>
+  </div>
+  <div class="account-balance">
+    <span class="label">Account 11</span> <span data-account="subs">£78.90</span>
+  </div>
+  <table class="views-table">
+    <thead><tr><th>ID</th><th>Title</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+    <tbody>
+      <tr><td>PR-1001</td><td>Room hire, "Welcome" social</td><td>£45.00</td><td>Approved</td><td>01/10/2026</td></tr>
+      <tr><td>PR-1002</td><td>Printing</td><td>-£12.50</td></tr>
+      <tr><td colspan="5">Subtotal row the parser should skip</td></tr>
+    </tbody>
+  </table>
+</main>
+</body></html>

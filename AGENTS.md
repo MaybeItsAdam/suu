@@ -8,7 +8,7 @@
 2. **`suu retrieve`**: Authenticated leadership & committee data retrieval for executive officers (Presidents, Treasurers, Vice Presidents):
    - `suu retrieve members <group>`: Official member roster (names, UPIs, emails, membership tiers).
    - `suu retrieve finance <group>`: Live account balances (Account 10 Grant / Account 11 Non-Grant) & reimbursement statuses.
-   - `suu retrieve sales <group> [--event <name>]`: Event ticket sales, revenue metrics, and door lists.
+   - `suu retrieve sales <group> [--event <name>]`: The buyer table (name, tier, email, code) — unverified; `--event` only labels the rows.
    - `suu retrieve bookings <group>`: Submitted Union room/space booking request statuses.
    - `suu retrieve committee <group>`: Official registered committee lineup.
    - Export options: `--csv`, `--xlsx`, `--json`, and `--sheets` (copies formatted text for Google Sheets).
@@ -19,7 +19,38 @@
      separate passed-amendments archive (including multi-file amendments).
 5. **`suu seed`**: Non-interactive seeding of election winners directly into `society-tracker`'s `/accountability` tracker (`Officer` and `CommitteeMember` tables).
 6. **`suu mcp`**: Model Context Protocol (MCP) server over stdio, enabling AI assistants (Claude, Cursor, Antigravity) to fill forms or query committee data.
-7. **`suu poll`**: Background worker polling the web app receipt gatherer queue (`/api/receipts`) to pre-fill reimbursement forms.
+7. **`suu poll`**: Background worker polling the web app receipt gatherer queue (`/api/receipts`) to pre-fill reimbursement forms. **Being retired** in favour of the Toolbox Connector extension (see below); the removal is prepared on branch `chore/remove-poll-worker`.
+
+## Kept in step with the Toolbox and the Connector
+
+The Toolbox Connector browser extension (`../adams-campus-toolbox-connector`, plan in its
+`MASTERPLAN.md`) does in the officer's own browser what `suu forms` and `suu retrieve` do
+here. Three things are shared, and **suu is the source of truth** for each:
+
+- **Form definitions** (`src/suu/forms/definitions/*.json`). Copied into the Toolbox by
+  `node scripts/sync-suu-forms.mjs` (run in `../adams-campus-toolbox`), which serves them to
+  the extension; the extension also bundles them in `forms/`. Toolbox tests fail on drift in
+  either copy. Definitions are data only — selectors and step types — and must never click
+  Submit (`tests/test_forms_payload.py` checks, as do the Toolbox's).
+- **The payload mapping** (`src/suu/forms/payload.py`) ↔ `buildPaymentRequestData` in the
+  Toolbox's `src/lib/suuForms/payload.ts`. Change both.
+- **Retrieval parsers and exports** (`src/suu/retrieve/`) ↔ the extension's
+  `lib/retrieve/*.js`: same selectors, same refusal rule (a page that isn't the expected one
+  is an error, never an empty result), same export columns and formula defusing, and shared
+  HTML fixtures under `tests/fixtures/retrieve/`. Capture real pages with the extension's
+  dev-build "Save this page as a fixture"; fix a parser in both places. Parsers are pure
+  `parse_<name>(html) -> Retrieved` functions; the Playwright fetch
+  (`common.fetch_page_html`) only navigates, checks where it landed and hands over
+  `page.content()`. Tests: `tests/test_retrieve_parsers.py` against
+  `tests/fixtures/retrieve/` (copied from the connector's `test/fixtures/retrieve/` —
+  recopy when a real page is captured there). Finance, committee, bookings and sales are
+  **unverified** against real SU pages (see each module's header); `members` still reads
+  the guessed `/group/<slug>/members`, not the connector's verified
+  `/clubs-societies/<slug>/members` roster parser.
+
+The executors differ on purpose: Playwright here presses real keys; the extension drives the
+Chosen dropdown by setting its hidden `<select>` and triggering `chosen:updated`, because
+synthetic key events carry no key code in Firefox.
 
 ## Environment & Testing
 
