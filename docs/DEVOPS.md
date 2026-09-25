@@ -98,7 +98,7 @@ If OIDC ever fails with a permissions error, confirm the publish job has `permis
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[all,dev]"      # everything + test tools
-playwright install chromium      # needed for forms/mcp/poll at runtime
+playwright install chromium      # needed for forms/mcp at runtime
 
 pytest                           # run the test suite
 suu --help                       # smoke-test the CLI
@@ -109,7 +109,7 @@ Extras (install only what you need):
 | Extra | Pulls in | For |
 | :--- | :--- | :--- |
 | `scrape` | selenium, bs4, openpyxl, supabase, … | `suu scrape`, `suu whatson` |
-| `forms` | playwright, httpx | `suu forms`, and the `suu poll` worker |
+| `forms` | playwright, httpx | `suu forms` |
 | `mcp` | fastmcp, playwright, httpx | `suu mcp` |
 | `all` | scrape + forms + mcp | everything |
 | `dev` | pytest, pytest-asyncio, pytest-playwright | running tests |
@@ -178,10 +178,7 @@ gcloud secrets versions access latest --secret=SUPABASE_KEY --project gen-lang-c
 ```
 
 Requires `gcloud` authenticated as an identity granted `roles/secretmanager.secretAccessor`
-on these three secrets. `WORKER_AUTH_TOKEN` (used by `suu poll` against
-`ucl-tools`'s worker route) is rotated independently in `ucl-tools` — after
-that rotation, copy the new value into `.env` here too; there's no automated
-sync for it.
+on these three secrets.
 
 ---
 

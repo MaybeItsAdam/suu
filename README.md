@@ -106,7 +106,7 @@ RLS) — see `.env.example`. See `suu seed election --help` for the full list of
 suu login
 ```
 
-Logging in saves your session state in `~/.suu` so that `suu retrieve`, `suu forms fill`, `suu poll`, and AI assistant tools can access authenticated Students' Union UCL pages on your behalf. To clear all saved logins at any time: `suu logout`.
+Logging in saves your session state in `~/.suu` so that `suu retrieve`, `suu forms fill`, and AI assistant tools can access authenticated Students' Union UCL pages on your behalf. To clear all saved logins at any time: `suu logout`.
 
 ---
 
@@ -173,26 +173,6 @@ tells you to restart your AI app. To disconnect later: `suu mcp setup --remove`.
 
 If you'd rather wire it up by hand, the server command is `suu mcp run` (it speaks MCP over
 stdio). `suu mcp setup` will print a copy-paste snippet if it can't find a known app.
-
----
-
-## Running the form-filling worker (`poll`)
-
-> **Being retired.** The Toolbox Connector extension now fills forms in the treasurer's own
-> browser, so this shared-token worker is going away once the extension has handled a real
-> reimbursement cycle.
-
-For the receipt-gatherer web app: `suu poll` claims queued jobs and fills the form for each
-one. It needs a couple of environment variables (put them in a `.env` file — see
-`.env.example`):
-
-| Variable | What it's for |
-| :--- | :--- |
-| `APP_URL` | Address of the receipt-gatherer web app (required) |
-| `WORKER_AUTH_TOKEN` | Shared secret the worker uses to read jobs |
-| `WORKER_DEFAULT_FORM_ID` | Form to use if a job doesn't say (default: `payment_request`) |
-
-The worker uses the same saved login as `suu forms` — run `suu forms login` first.
 
 ---
 

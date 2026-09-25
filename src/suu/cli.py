@@ -452,23 +452,6 @@ def mcp_setup(remove: bool) -> None:
 
 
 # ---------------------------------------------------------------------------
-# worker
-# ---------------------------------------------------------------------------
-
-
-@cli.command()
-def poll() -> None:
-    """Run as a background worker for the receipt-gatherer web app."""
-    import asyncio
-
-    try:
-        from suu.worker.poll import run_worker
-    except ModuleNotFoundError as e:
-        raise _need_extra("mcp", e)
-    asyncio.run(run_worker())
-
-
-# ---------------------------------------------------------------------------
 # logout  (clears every saved login)
 # ---------------------------------------------------------------------------
 

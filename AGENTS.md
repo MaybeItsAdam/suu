@@ -30,7 +30,6 @@
      current. `ucl-suu-pipeline`'s `democracy-collect` is the consumer.
 5. **`suu seed`**: Non-interactive seeding of election winners directly into `society-tracker`'s `/accountability` tracker (`Officer` and `CommitteeMember` tables).
 6. **`suu mcp`**: Model Context Protocol (MCP) server over stdio, enabling AI assistants (Claude, Cursor, Antigravity) to fill forms or query committee data.
-7. **`suu poll`**: Background worker polling the web app receipt gatherer queue (`/api/receipts`) to pre-fill reimbursement forms. **Being retired** in favour of the Toolbox Connector extension (see below); the removal is prepared on branch `chore/remove-poll-worker`.
 
 ## Kept in step with the Toolbox and the Connector
 
