@@ -127,6 +127,137 @@ def parse_event_tags(soup):
     return tags
 
 
+def parse_event_schedule(soup):
+    """When one listing happens, from its event page's own date field.
+
+    The list view is a calendar widget: it gives a clock only when it draws a
+    `.list-item--time` element, and an all-day listing gets none — so "no time
+    in the list" covers both "the SU didn't say" and "the SU said all day".
+    The page's `.field--name-field-date-range` (a Drupal smartdate) tells them
+    apart. A timed listing carries a full timestamp and its clocks:
+
+        <time datetime="2026-09-25T14:00:00+01:00"> ... Friday 25 September 2026
+        <div class="time-wrapper"> <span class="time">14:00</span> to
+                                   <span class="time">15:00</span>
+
+    while one the SU marked all day carries the date alone:
+
+        <time datetime="2026-09-20"> ... Sunday 20 September 2026
+
+    Returns `{"date", "start_time", "end_time", "all_day"}`, or None when the
+    field is missing or unreadable — which, like an empty tag list, says
+    nothing either way and must not be read as "all day".
+    """
+    field = soup.select_one(".field--name-field-date-range")
+    stamp = field.select_one("time[datetime]") if field else None
+    raw = (stamp.get("datetime") or "").strip() if stamp else ""
+    if not raw:
+        return None
+
+    if re.fullmatch(r"\d{4}-\d{2}-\d{2}", raw):
+        return {"date": raw, "start_time": None, "end_time": None, "all_day": True}
+
+    try:
+        start = datetime.fromisoformat(raw)
+    except ValueError:
+        return None
+    if start.tzinfo is None:
+        start = start.replace(tzinfo=UK_TZ)
+    start = start.astimezone(UK_TZ)
+
+    # A session running past midnight, or across days, names its end date as a
+    # second `.date`; otherwise the end is on the start's day.
+    end_day = start.date()
+    dates = [span.get_text(strip=True) for span in field.select(".date")]
+    if len(dates) > 1:
+        try:
+            end_day = datetime.strptime(dates[-1], "%A %d %B %Y").date()
+        except ValueError:
+            pass
+
+    end = None
+    clocks = [span.get_text(strip=True) for span in field.select(".time-wrapper .time")]
+    if len(clocks) > 1:
+        end = _parse_clock(clocks[-1], end_day)
+        if end is not None and end <= start:
+            end += timedelta(days=1)
+
+    return {
+        "date": start.date().isoformat(),
+        "start_time": start.isoformat(),
+        "end_time": end.isoformat() if end else None,
+        "all_day": False,
+    }
+
+
+def parse_event_host(soup):
+    """The group a listing's own page says hosts it ("Hosted by Hiking Club").
+
+    The list view's `.list-item--group` is often blank, and a blank host is
+    filed under the union, so a club's own walks ended up belonging to nobody
+    in particular. The page's owner-group field names the club every time.
+    """
+    link = soup.select_one(".field--name-field-event-owner-group a[href]")
+    name = link.get_text(strip=True) if link else ""
+    return name or None
+
+
+def apply_page_details(events):
+    """Fold what each listing's page said back into its list-view events.
+
+    Runs after enrichment, over every emitted event, and mutates the list in
+    place:
+
+    - A blank list-view host takes the page's owner group.
+    - A listing the list view gave no clock but whose page does gets the
+      page's times, when the page describes that same day.
+    - A listing the page marks all day is flagged `all_day`, so a consumer
+      can tell it from one whose time is simply unknown.
+    - The list view draws an all-day listing under the day *before* it too:
+      it holds the day as a UTC span, which in British Summer Time begins at
+      23:00 the evening before. That phantom occurrence is dropped — but only
+      when the real day is also present, so a recurring series sharing one
+      page never loses a genuine date.
+    """
+    real_days = {}
+    for event in events:
+        schedule = event.get("schedule")
+        if schedule and schedule.get("all_day"):
+            real_days.setdefault(event.get("link"), set()).add(event.get("date"))
+
+    kept = []
+    for event in events:
+        page_host = event.get("page_host_name")
+        if page_host and not (event.get("host_name") or "").strip():
+            event["host_name"] = page_host
+
+        schedule = event.get("schedule")
+        same_day = bool(schedule) and schedule.get("date") == event.get("date")
+
+        if schedule and schedule.get("all_day") and not event.get("time_known"):
+            if same_day:
+                event["all_day"] = True
+            else:
+                try:
+                    day = datetime.strptime(event.get("date") or "", "%Y-%m-%d").date()
+                except ValueError:
+                    day = None
+                next_day = (day + timedelta(days=1)).isoformat() if day else None
+                if next_day == schedule.get("date") and next_day in real_days.get(event.get("link"), set()):
+                    continue
+
+        elif schedule and not event.get("time_known") and same_day and schedule.get("start_time"):
+            event["start_time"] = schedule["start_time"]
+            event["end_time"] = schedule.get("end_time")
+            event["time_known"] = True
+            event["time_source"] = "event_page"
+
+        kept.append(event)
+
+    events[:] = kept
+    return events
+
+
 class WhatsOnScraper:
     def __init__(self, start_date=None, end_date=None):
         uk_now = datetime.now(UK_TZ)
@@ -175,6 +306,9 @@ class WhatsOnScraper:
             soup = BeautifulSoup(resp.text, 'html.parser')
 
             event['tags'] = parse_event_tags(soup)
+            # The page's own date field and host: see `apply_page_details`.
+            event['schedule'] = parse_event_schedule(soup)
+            event['page_host_name'] = parse_event_host(soup)
 
             # Strategy 1: Standard Body
             body = soup.select_one(".field--name-body")
@@ -234,6 +368,10 @@ class WhatsOnScraper:
             for sibling in group[1:]:
                 sibling['description'] = description
                 sibling['tags'] = list(tags)
+                sibling['schedule'] = group[0].get('schedule')
+                sibling['page_host_name'] = group[0].get('page_host_name')
+
+        apply_page_details(events)
 
     def scrape(self):
         print(f"Scraping What's On from {self.start_date} to {self.end_date}...")
