@@ -145,6 +145,77 @@ def test_the_page_never_overrides_a_clock_the_list_gave():
     assert "time_source" not in events[0]
 
 
+CLUB_NIGHT = """
+<div class="field field--name-field-date-range">
+  <time datetime="2026-10-28T23:00:00+00:00" class="datetime"> <span class="date">Wednesday 28 October 2026</span> </time>
+  <div class="time-wrapper"><time class="datetime">
+    <span class="time">23:00</span> <span class="to">to</span>
+    <span class="date">Thursday 29 October 2026</span> <span class="time">5:00</span>
+  </time></div>
+</div>
+"""
+
+WRISTBAND = """
+<div class="field field--name-field-date-range">
+  <time datetime="2026-09-27T22:00:00+01:00" class="datetime"> <span class="date">Sunday 27 September 2026</span> </time>
+  <div class="time-wrapper"><time class="datetime">
+    <span class="time">22:00</span> <span class="to">to</span>
+    <span class="date">Monday 5 October 2026</span> <span class="time">3:00</span>
+  </time></div>
+</div>
+"""
+
+
+def night(date, start, schedule):
+    return listing(
+        date,
+        start_time=f"{date}T{start}",
+        end_time=None,
+        time_known=True,
+        schedule=parse_event_schedule(soup(schedule)),
+    )
+
+
+def test_a_club_night_is_not_repeated_on_the_morning_it_ends():
+    events = [night("2026-10-28", "23:00:00+00:00", CLUB_NIGHT), night("2026-10-29", "23:00:00+00:00", CLUB_NIGHT)]
+
+    apply_page_details(events)
+
+    assert [event["date"] for event in events] == ["2026-10-28"]
+
+
+def test_the_copy_is_dropped_even_when_the_night_itself_fell_before_the_window():
+    events = [night("2026-10-29", "23:00:00+00:00", CLUB_NIGHT)]
+
+    apply_page_details(events)
+
+    assert events == []
+
+
+def test_a_listing_at_another_clock_on_the_end_day_is_kept():
+    events = [night("2026-10-29", "19:00:00+00:00", CLUB_NIGHT)]
+
+    apply_page_details(events)
+
+    assert len(events) == 1
+
+
+def test_a_week_long_pass_drawn_every_night_keeps_every_night():
+    events = [night(f"2026-09-{day}", "22:00:00+01:00", WRISTBAND) for day in (27, 28, 29)]
+
+    apply_page_details(events)
+
+    assert len(events) == 3
+
+
+def test_a_nightly_series_sharing_one_page_keeps_its_dates():
+    events = [night(f"2026-10-{day}", "23:00:00+00:00", CLUB_NIGHT) for day in (28, 29, 30)]
+
+    apply_page_details(events)
+
+    assert len(events) == 3
+
+
 def test_a_host_the_list_named_is_kept():
     events = [listing("2026-09-20", host_name="Mountaineering Club", page_host_name="Hiking Club")]
 

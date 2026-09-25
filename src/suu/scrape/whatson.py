@@ -218,12 +218,17 @@ def apply_page_details(events):
       23:00 the evening before. That phantom occurrence is dropped — but only
       when the real day is also present, so a recurring series sharing one
       page never loses a genuine date.
+    - A session running past midnight is drawn under both days with the same
+      clocks, so a club night on the 28th reappeared as a second one on the
+      29th. See `_is_overnight_copy`.
     """
     real_days = {}
+    listed_days = {}
     for event in events:
         schedule = event.get("schedule")
         if schedule and schedule.get("all_day"):
             real_days.setdefault(event.get("link"), set()).add(event.get("date"))
+        listed_days.setdefault(event.get("link"), set()).add(event.get("date"))
 
     kept = []
     for event in events:
@@ -252,10 +257,55 @@ def apply_page_details(events):
             event["time_known"] = True
             event["time_source"] = "event_page"
 
+        elif schedule and event.get("time_known") and _is_overnight_copy(
+            event, schedule, listed_days.get(event.get("link"), set())
+        ):
+            continue
+
         kept.append(event)
 
     events[:] = kept
     return events
+
+
+def _is_overnight_copy(event, schedule, listed_days):
+    """Whether a timed listing is the list view redrawing last night's session.
+
+    "TeamUCL Sports Night @ SCALA - Halloween Party! | 28 October" runs 23:00
+    to 05:00, and the list view draws it under the 28th *and* the 29th, both
+    at 23:00 — so it was written twice, the second a night late. The page
+    names one session, 28 Oct 23:00 to 29 Oct 05:00; a listing on its end day
+    at its start clock is that session again.
+
+    Only when the page's session is under a day long (the week-long "Nightlife
+    Wristband" is drawn every night on purpose) and its link lists no other
+    day: a series shares one page, which shows a single occurrence, and a
+    third date means the dates are real.
+    """
+    start = _parse_iso_london(schedule.get("start_time"))
+    end = _parse_iso_london(schedule.get("end_time"))
+    listed = _parse_iso_london(event.get("start_time"))
+    if not (start and end and listed):
+        return False
+    if end.date() != start.date() + timedelta(days=1) or end - start >= timedelta(days=1):
+        return False
+    if event.get("date") != end.date().isoformat():
+        return False
+    if (listed.hour, listed.minute) != (start.hour, start.minute):
+        return False
+    return listed_days <= {start.date().isoformat(), end.date().isoformat()}
+
+
+def _parse_iso_london(value):
+    try:
+        moment = datetime.fromisoformat(value) if value else None
+    except (TypeError, ValueError):
+        return None
+    if moment is None:
+        return None
+    if moment.tzinfo is None:
+        moment = moment.replace(tzinfo=UK_TZ)
+    return moment.astimezone(UK_TZ)
 
 
 class WhatsOnScraper:
