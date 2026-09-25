@@ -544,10 +544,11 @@ def extract_structured_text(pdf_bytes: bytes) -> Optional[str]:
     ocr = False
     if _needs_ocr(pages_rows):
         try:
-            pages_rows = []
+            ocr_rows = []
             for number, page in enumerate(document):
                 textpage = page.get_textpage_ocr(language="eng", dpi=300, full=True)
-                pages_rows.append(page_rows(page, number, textpage=textpage))
+                ocr_rows.append(page_rows(page, number, textpage=textpage))
+            pages_rows = ocr_rows
             ocr = True
         except Exception:
             # No Tesseract on this host: keep the sparse text layer rather
