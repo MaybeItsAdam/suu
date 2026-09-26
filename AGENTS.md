@@ -20,8 +20,8 @@
    - `suu.scrape.democracy` (`suu democracy meetings|policies [--json]`) reads
      zone meeting dates off the zone pages' inline directory JSON, papers off
      the hand-edited minutes archive, and the policy register plus each
-     policy's page. Pure `parse_*` functions over fixtures in
-     `tests/fixtures/democracy/`; a login wall or a page missing its markers
+     policy's page. Pure `parse_*` functions over saved pages in
+     `samples/su/democracy/`; a login wall or a page missing its markers
      raises `DemocracyPageError` rather than returning nothing. The archive's
      known dirt (links to the wrong meeting, stale `data-id`s, year typos in
      plain-text entries) is handled and pinned in `tests/test_democracy.py`.
@@ -47,13 +47,14 @@ here. Three things are shared, and **suu is the source of truth** for each:
 - **Retrieval parsers and exports** (`src/suu/retrieve/`) ↔ the extension's
   `lib/retrieve/*.js`: same selectors, same refusal rule (a page that isn't the expected one
   is an error, never an empty result), same export columns and formula defusing, and shared
-  HTML fixtures under `tests/fixtures/retrieve/`. Capture real pages with the extension's
-  dev-build "Save this page as a fixture"; fix a parser in both places. Parsers are pure
+  HTML fixtures under `samples/su/retrieve/` (the original; the connector's
+  `test/fixtures/retrieve/` is a synced copy). Capture real pages with the extension's
+  dev-build "Save this page as a fixture", save them here, then run
+  `node scripts/sync-samples.mjs` in the connector; fix a parser in both places. Parsers are pure
   `parse_<name>(html) -> Retrieved` functions; the Playwright fetch
   (`common.fetch_page_html`) only navigates, checks where it landed and hands over
   `page.content()`. Tests: `tests/test_retrieve_parsers.py` against
-  `tests/fixtures/retrieve/` (copied from the connector's `test/fixtures/retrieve/` —
-  recopy when a real page is captured there). Finance, committee, bookings and sales are
+  `samples/su/retrieve/`. Finance, committee, bookings and sales are
   **unverified** against real SU pages (see each module's header); `members` still reads
   the guessed `/group/<slug>/members`, not the connector's verified
   `/clubs-societies/<slug>/members` roster parser.
@@ -61,6 +62,16 @@ here. Three things are shared, and **suu is the source of truth** for each:
 The executors differ on purpose: Playwright here presses real keys; the extension drives the
 Chosen dropdown by setting its hidden `<select>` and triggering `chosen:updated`, because
 synthetic key events carry no key code in Firefox.
+
+## Samples
+
+`samples/` is the one home for saved SU pages (`samples/su/<page-kind>/`) and for
+samples of our own data shapes (`samples/native/<shape>/`), for all four repos. Tests
+here read it directly. The connector, pipeline and Toolbox keep synced copies in
+their own fixtures with a drift test that skips when `../suu` is absent — so edit a
+sample here, never a consumer's copy, then run that consumer's sync script.
+`samples/README.md` has the layout, capture procedure, redaction rule and the
+real-vs-synthetic labelling; each kind has its own README.
 
 ## Environment & Testing
 

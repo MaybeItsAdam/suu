@@ -4,7 +4,7 @@ Kept in step with the Toolbox Connector's ``lib/retrieve/common.js`` and ``run.j
 (``../adams-campus-toolbox-connector``). Fix a parser in both places.
 
 The parsers are pure functions of the page's HTML, so each one is tested against a
-fixture under ``tests/fixtures/retrieve/`` with no browser. The fetch only navigates,
+fixture under ``samples/su/retrieve/`` with no browser. The fetch only navigates,
 checks where it landed, and hands ``page.content()`` to the parser.
 
 The rule: a page that isn't the one expected is **refused** with an error, never read

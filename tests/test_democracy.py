@@ -1,4 +1,4 @@
-"""Democracy parsers against saved SU pages (tests/fixtures/democracy/, trimmed)."""
+"""Democracy parsers against saved SU pages (samples/su/democracy/, trimmed)."""
 
 from datetime import datetime, timezone
 from pathlib import Path
@@ -16,7 +16,7 @@ from suu.scrape.democracy import (
     sanitise_html,
 )
 
-FIXTURES = Path(__file__).parent / "fixtures" / "democracy"
+FIXTURES = Path(__file__).parent.parent / "samples" / "su" / "democracy"
 
 
 def _html(name: str) -> str:

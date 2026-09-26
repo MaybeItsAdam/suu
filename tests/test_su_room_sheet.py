@@ -1,6 +1,6 @@
 """SU room-booking Google Sheet parser (suu.rooms.su_room_sheet).
 
-Fixtures under tests/fixtures/su_room_sheet/ are the live Term 3 2025/26 sheet
+Fixtures under samples/su/su-room-sheet/ are the live Term 3 2025/26 sheet
 (10yIxgUm-WoIiSGk4w4OXicIMH46CUy2C2k-hm31lS7E) with scripts stripped; the week
 tab keeps its CSS and header rows but only three rooms of Monday and Tuesday
 (the day/date rowspans cut from 32 to 3 to match).
@@ -25,7 +25,7 @@ from suu.rooms.su_room_sheet import (
     room_labels,
 )
 
-FIXTURES = Path(__file__).parent / "fixtures" / "su_room_sheet"
+FIXTURES = Path(__file__).parent.parent / "samples" / "su" / "su-room-sheet"
 SHEET_ID = "10yIxgUm-WoIiSGk4w4OXicIMH46CUy2C2k-hm31lS7E"
 WEEK = date(2026, 4, 27)
 

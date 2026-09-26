@@ -1,7 +1,7 @@
 """Retrieval parsers and exports, mirroring the Connector's test/retrieve.test.mjs.
 
-The HTML fixtures under tests/fixtures/retrieve/ are copied from the Connector's
-test/fixtures/retrieve/ and are synthetic: each encodes suu's assumptions about a page
+The HTML fixtures under samples/su/retrieve/ are the originals (the Connector's
+test/fixtures/retrieve/ is a synced copy) and are synthetic: each encodes suu's assumptions about a page
 nobody has captured yet. See the UNVERIFIED block at the top of each parser.
 """
 
@@ -33,7 +33,7 @@ from suu.retrieve.finance import parse_finance
 from suu.retrieve.members import parse_members
 from suu.retrieve.sales import parse_sales
 
-FIXTURES = Path(__file__).parent / "fixtures" / "retrieve"
+FIXTURES = Path(__file__).parent.parent / "samples" / "su" / "retrieve"
 RETRIEVE_SRC = Path(__file__).parent.parent / "src" / "suu" / "retrieve"
 
 

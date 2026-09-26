@@ -1,0 +1,22 @@
+{
+  "club_society": "Volunteering Society",
+  "description": "Train tickets for the away match",
+  "payee_name": "A LOVELACE",
+  "phone_number": "07700900123",
+  "email": "ada.lovelace.24@ucl.ac.uk",
+  "account_number": "12345678",
+  "sort_code": "040004",
+  "receipts": [
+    {
+      "expenditure_type": "TRANSPORT",
+      "expenditure_type_search": "TRANSPORT",
+      "expenditure_type_select": "",
+      "grant": "N",
+      "cost": "12.50",
+      "file": {
+        "filename": "123-r1.png",
+        "mimeType": "image/png"
+      }
+    }
+  ]
+}
