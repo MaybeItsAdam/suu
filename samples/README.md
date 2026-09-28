@@ -42,12 +42,30 @@ from (URL pattern or the producing repo), when it was captured, whether it is
 
 ## Capturing a page
 
-- **Authenticated SU pages (retrievers)**: the Connector's development build.
-  Load `../adams-campus-toolbox-connector` unpacked, sign in to
-  studentsunionucl.org as a committee member, open **Retrieve SU data** from the
-  popup and run the retriever. Whether it parses or is refused, **Save this page as
-  a fixture** downloads the HTML exactly as the SU sent it
-  (`fixture-<retriever>-<slug>.html`; first page only for paged lists).
+- **Authenticated SU pages (retrievers)**: the Connector, unpacked/development
+  builds only (store builds have neither step). Load
+  `../adams-campus-toolbox-connector` unpacked, sign in to studentsunionucl.org as a
+  committee member, click the society's member count in the popup and run the
+  retriever.
+  - **Ticket sales** has no page the slug can predict, so link it first: open the
+    society's ticket-sales page on the SU site, pick **Ticket sales**, press **Use
+    the open SU tab** (or paste the address) and **Link and read**. The link is a
+    studentsunionucl.org path kept in that browser only; **Unlink** goes back to
+    the guess, Disconnect clears it.
+  - Whether it parses or is refused, **Save a redacted capture** downloads
+    `capture-<retriever>-<slug>-redacted.html` (first page only for paged lists),
+    masked in the browser before the file is written. Text is shape-masked (letters
+    `x`/`X`, digits `1`, punctuation kept: "£12.50" → "£11.11") except headings,
+    table headers, captions, labels, buttons, `<dt>`, the title and the Drupal
+    pager/tabs/breadcrumb — never inside a table body or Views row — and cells that
+    are only a status word (`Paid`, `Refunded`, `Checked in`…). Emails become
+    `buyer@example.invalid` everywhere. `class`/`id`/`name`/`type` and other
+    structural attributes stay (digits turned to `1`); every other attribute value
+    is masked; links keep word segments but lose ids, query values and fragments;
+    inline script bodies, comments, `on…` handlers and `data:` URLs go.
+  - The page then lists the **Text left readable**. Read it — a name in a heading
+    is the one case the rules can't catch — and still check the file by eye
+    against the redaction rule below before it goes anywhere near a commit.
 - **Public SU pages** (democracy, society pages, What's On): fetch them the way the
   consumer does — `curl -L <url>` or the scraper's own session — so the markup is the
   markup the code will see. Pages behind the login can also be saved from a
@@ -67,7 +85,8 @@ the structure it walks), save it under the right kind, update that kind's README
 phone number, amount, booking and ticket reference with made-up values of the same
 shape, and delete the `SSESS…`/`form_token`/`form_build_id` values and any user id
 in links. Keep the markup, classes and attributes exactly as they were — they are
-what the fixture is for.
+what the fixture is for. A Connector redacted capture does most of this, not all:
+mask anything personal it left by hand, same shape.
 
 Public pages the SU itself publishes (officer names in policy registers, society
 pages, governing documents) don't need redacting; anything only visible when signed
