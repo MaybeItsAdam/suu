@@ -46,12 +46,36 @@ _driver: Optional[webdriver.Chrome] = None
 _CHROME_BINARY_ENV = "SUU_CHROME_BINARY"
 _CHROMEDRIVER_ENV = "SUU_CHROMEDRIVER"
 
+# The zone every page is rendered in, whatever zone the host runs in.
+#
+# The SU's What's On list view is a React calendar that formats each listing's
+# clock with `toLocaleTimeString()` and no `timeZone`, i.e. in the *browser's*
+# zone. The scraper reads that text back and labels it Europe/London. On a
+# London laptop the two agree; on Cloud Run (UTC) a 17:00 BST listing is drawn
+# "16:00", stored as 16:00+01:00 = 15:00Z, and every BST event lands an hour
+# early. Pinning the browser to London makes the label true on every host.
+BROWSER_TIMEZONE = "Europe/London"
+
 
 def _chrome_service() -> "webdriver.ChromeService":
+    # Chrome inherits chromedriver's environment, so TZ here sets the zone of
+    # the whole browser process — including any tab opened later, which the
+    # per-tab CDP override in `_make_driver` would not reach.
+    env = {**os.environ, "TZ": BROWSER_TIMEZONE}
     driver_path = os.environ.get(_CHROMEDRIVER_ENV)
     if driver_path:
-        return webdriver.ChromeService(executable_path=os.path.expanduser(driver_path))
-    return webdriver.ChromeService()
+        return webdriver.ChromeService(
+            executable_path=os.path.expanduser(driver_path), env=env
+        )
+    return webdriver.ChromeService(env=env)
+
+
+def _pin_timezone(driver: webdriver.Chrome) -> None:
+    """Render this tab in `BROWSER_TIMEZONE`, belt and braces with the TZ the
+    service passes Chrome (an env var a platform could in principle ignore)."""
+    driver.execute_cdp_cmd(
+        "Emulation.setTimezoneOverride", {"timezoneId": BROWSER_TIMEZONE}
+    )
 
 
 def _make_driver(headless: bool) -> webdriver.Chrome:
@@ -75,6 +99,7 @@ def _make_driver(headless: bool) -> webdriver.Chrome:
     driver.execute_script(
         "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
     )
+    _pin_timezone(driver)
     return driver
 
 

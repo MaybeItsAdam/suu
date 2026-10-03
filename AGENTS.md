@@ -14,6 +14,14 @@
    - Export options: `--csv`, `--xlsx`, `--json`, and `--sheets` (copies formatted text for Google Sheets).
 3. **`suu forms`**: Playwright browser automation for filling out SU financial forms (`payment_request`, `purchase_request`). Forms are **never submitted automatically** — they are pre-filled and left open for human review.
 4. **`suu scrape` & `suu whatson`**: Public data scrapers for Union election results and What's On events calendar.
+   - What's On list-view clocks are drawn by the SU's React calendar in the
+     **browser's** timezone, and `_parse_time_range` labels them
+     Europe/London. `browser.py` therefore pins every Chrome it starts to
+     London (`TZ` on the service env plus a CDP `Emulation.setTimezoneOverride`).
+     Without it a UTC host (Cloud Run) read every BST listing an hour early;
+     `apply_page_details` also swaps in the event page's own offset-carrying
+     times when the list clock is exactly the UTC reading of them. Tests:
+     `tests/test_browser_timezone.py`, `tests/test_whatson_page_details.py`.
    - `suu.scrape.gov.GovDocsScraper` discovers the four current governing
      documents, nests Bye-Law appendices through stable slugs, and parses the
      separate passed-amendments archive (including multi-file amendments).

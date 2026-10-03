@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 import re
 import time
@@ -221,6 +221,8 @@ def apply_page_details(events):
     - A session running past midnight is drawn under both days with the same
       clocks, so a club night on the 28th reappeared as a second one on the
       29th. See `_is_overnight_copy`.
+    - A list clock drawn in UTC rather than London time is replaced by the
+      page's own times. See `_is_utc_list_clock`.
     """
     real_days = {}
     listed_days = {}
@@ -262,6 +264,13 @@ def apply_page_details(events):
         ):
             continue
 
+        elif schedule and event.get("time_known") and same_day and _is_utc_list_clock(
+            event, schedule
+        ):
+            event["start_time"] = schedule["start_time"]
+            event["end_time"] = schedule.get("end_time")
+            event["time_source"] = "event_page"
+
         kept.append(event)
 
     events[:] = kept
@@ -294,6 +303,27 @@ def _is_overnight_copy(event, schedule, listed_days):
     if (listed.hour, listed.minute) != (start.hour, start.minute):
         return False
     return listed_days <= {start.date().isoformat(), end.date().isoformat()}
+
+
+def _is_utc_list_clock(event, schedule):
+    """Whether the list view drew this listing's clock in UTC, not London time.
+
+    The list view formats clocks in the *browser's* zone, and the scraper
+    labels them London. A browser left in UTC (Cloud Run's default) draws a
+    17:00 BST listing as "16:00", which became 16:00+01:00 — an hour early.
+    `browser.py` pins the browser to London; this is the second line, for a
+    host where that pin didn't take. The page's `<time datetime>` carries its
+    own offset, so when the list clock *read as UTC* is exactly the page's
+    instant, and read as London is not, the list was drawn in UTC and the page
+    is right. A clock that differs any other way is left alone: a series
+    sharing one page shows a single occurrence, so a different clock can be a
+    different session. In GMT the two readings coincide and nothing changes.
+    """
+    start = _parse_iso_london(schedule.get("start_time"))
+    listed = _parse_iso_london(event.get("start_time"))
+    if not (start and listed) or listed == start:
+        return False
+    return listed.replace(tzinfo=timezone.utc) == start
 
 
 def _parse_iso_london(value):

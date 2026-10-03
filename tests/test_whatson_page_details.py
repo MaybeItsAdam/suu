@@ -222,3 +222,79 @@ def test_a_host_the_list_named_is_kept():
     apply_page_details(events)
 
     assert events[0]["host_name"] == "Mountaineering Club"
+
+
+# ── a list clock drawn in UTC ──────────────────────────────────────────────
+#
+# The list view formats clocks in the browser's zone. A browser in UTC (Cloud
+# Run's default) drew "Explore London's Social Enterprise Scene", 17:00-19:30
+# BST on its page, as 16:00, and it was stored at 15:00Z — an hour early.
+
+
+def _page(start_iso, date_text, start_clock, end_clock):
+    return parse_event_schedule(soup(f"""
+<div class="field field--name-field-date-range">
+  <time datetime="{start_iso}" class="datetime"> <span class="date">{date_text}</span> </time>
+  <div class="time-wrapper"><time class="datetime">
+    <span class="time">{start_clock}</span> <span class="to">to</span> <span class="time">{end_clock}</span>
+  </time></div>
+</div>
+"""))
+
+
+TOUR_BST = _page("2026-10-01T17:00:00+01:00", "Thursday 1 October 2026", "17:00", "19:30")
+FIRESIDE_GMT = _page("2026-10-29T18:00:00+00:00", "Thursday 29 October 2026", "18:00", "20:30")
+
+
+def test_a_bst_list_clock_drawn_in_utc_takes_the_pages_times():
+    events = [
+        listing(
+            "2026-10-01",
+            start_time="2026-10-01T16:00:00+01:00",
+            end_time="2026-10-01T18:30:00+01:00",
+            time_known=True,
+            schedule=TOUR_BST,
+        )
+    ]
+
+    apply_page_details(events)
+
+    assert events[0]["start_time"] == "2026-10-01T17:00:00+01:00"
+    assert events[0]["end_time"] == "2026-10-01T19:30:00+01:00"
+    assert events[0]["time_source"] == "event_page"
+
+
+def test_a_gmt_list_clock_is_already_right_and_left_alone():
+    # After 25 October London is UTC, so a UTC browser draws the right clock.
+    events = [
+        listing(
+            "2026-10-29",
+            start_time="2026-10-29T18:00:00+00:00",
+            end_time="2026-10-29T20:30:00+00:00",
+            time_known=True,
+            schedule=FIRESIDE_GMT,
+        )
+    ]
+
+    apply_page_details(events)
+
+    assert events[0]["start_time"] == "2026-10-29T18:00:00+00:00"
+    assert events[0]["end_time"] == "2026-10-29T20:30:00+00:00"
+    assert "time_source" not in events[0]
+
+
+def test_a_correct_bst_list_clock_is_left_alone():
+    events = [
+        listing(
+            "2026-10-01",
+            start_time="2026-10-01T17:00:00+01:00",
+            end_time="2026-10-01T19:30:00+01:00",
+            time_known=True,
+            schedule=TOUR_BST,
+        )
+    ]
+
+    apply_page_details(events)
+
+    assert events[0]["start_time"] == "2026-10-01T17:00:00+01:00"
+    assert "time_source" not in events[0]
