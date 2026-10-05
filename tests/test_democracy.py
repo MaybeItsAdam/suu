@@ -10,6 +10,7 @@ from suu.scrape.democracy import (
     DemocracyScraper,
     academic_year_of,
     parse_archive,
+    parse_event_papers,
     parse_policy_list,
     parse_policy_page,
     parse_zone_cards,
@@ -134,6 +135,71 @@ def test_archive_plain_text_entries_become_notes_with_the_year_corrected(archive
 def test_archive_login_wall_is_refused():
     with pytest.raises(DemocracyPageError):
         parse_archive(_html("login_wall.html"))
+
+
+# ── What's On event pages ───────────────────────────────────────────────
+
+_PDF = "/sites/default/files/inline-files/{}.pdf"
+
+
+def _event_body(*links: tuple[str, str]) -> str:
+    anchors = "".join(f'<p><a href="{href}">{text}</a></p>' for href, text in links)
+    return (
+        "<html><head><title>Union Executive: Meeting 1 | Students Union UCL</title></head>"
+        f'<body><div class="field--name-body"><p>Come along.</p>{anchors}</div></body></html>'
+    )
+
+
+def test_event_page_papers_ue2601():
+    # Real page: the archive had no 2026-27 UE entries yet, so this inline PDF
+    # was the only place UE2601's papers were published (5 Oct 2026).
+    url, label = parse_event_papers(_html("event_ue2601.html"), "UE2601")
+    assert url == (
+        "https://studentsunionucl.org/sites/default/files/inline-files/"
+        "UE2601%20Agenda%20and%20Papers.pdf"
+    )
+    assert label == "Agenda and Papers"
+
+
+def test_event_page_without_papers_is_none():
+    html = _html("event_ue2601.html").replace(".pdf", ".docx")
+    assert parse_event_papers(html, "UE2601") is None
+
+
+def test_event_page_prefers_this_meetings_code_and_skips_another_meetings():
+    html = _event_body(
+        (_PDF.format("UE2507%20Minutes"), "Last meeting's minutes"),
+        (_PDF.format("Accessibility%20guide"), "Accessibility guide"),
+        ("/index.php" + _PDF.format("UE%202601%20Papers"), "Papers"),
+    )
+    url, label = parse_event_papers(html, "ue2601")
+    assert url.endswith("/inline-files/UE%202601%20Papers.pdf")
+    assert "/index.php/" not in url
+    assert label == "Papers"
+    only_old = _event_body((_PDF.format("UE2507%20Minutes"), "Minutes"))
+    assert parse_event_papers(only_old, "UE2601") is None
+
+
+def test_event_page_uncoded_agenda_is_the_fallback():
+    html = _event_body(
+        (_PDF.format("Accessibility%20guide"), "Accessibility guide"),
+        (_PDF.format("Agenda%20and%20Papers"), "Agenda and papers"),
+    )
+    url, label = parse_event_papers(html, "UE2601")
+    assert url.endswith("/Agenda%20and%20Papers.pdf")
+    assert label == "Agenda and Papers"
+
+
+def test_event_page_login_wall_is_refused():
+    with pytest.raises(DemocracyPageError):
+        parse_event_papers(_html("login_wall.html"), "UE2601")
+
+
+def test_scraper_fetches_event_papers():
+    url = "https://studentsunionucl.org/whats-on/representation/union-executive-meeting-1?v=95616"
+    session = _Session({(url, "0"): _html("event_ue2601.html")})
+    found = DemocracyScraper(delay=0, session=session).fetch_event_papers(url, "UE2601")
+    assert found[0].endswith("UE2601%20Agenda%20and%20Papers.pdf")
 
 
 # ── policy register ─────────────────────────────────────────────────────

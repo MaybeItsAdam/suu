@@ -9,6 +9,9 @@ Three static Drupal sources, all readable with plain ``requests``:
 * **The archive** (``/democracy-minutes-and-papers-archive``) lists every
   meeting's papers by code (``AZ2501``) under one accordion per body and
   academic year. It is hand-maintained and dirty — see ``parse_archive``.
+  It also lags: an upcoming meeting's papers can sit only on its **What's On
+  event page** (the zone card's link) until the archive catches up — see
+  ``parse_event_papers``.
 * **The policy register** (``/policy``) is a Drupal Views table, filtered by
   status, with one node page per policy carrying its text and updates.
 
@@ -502,6 +505,47 @@ def _archive_entry(body: str, start_year: int, position: int, item: dict) -> Opt
 
 
 # ---------------------------------------------------------------------------
+# What's On event pages
+# ---------------------------------------------------------------------------
+
+_PAPERS_WORD_RE = re.compile(r"\b(agenda|papers?|minutes)\b", re.IGNORECASE)
+
+
+def parse_event_papers(html: str, code: str) -> Optional[tuple[str, Optional[str]]]:
+    """``(url, label)`` of the papers PDF linked from a meeting's What's On page.
+
+    The SU often posts an upcoming meeting's agenda on its event page
+    (``/sites/default/files/inline-files/UE2601%20Agenda%20and%20Papers.pdf``)
+    days before — or instead of — adding it to the archive. A PDF named for
+    this meeting's code wins; failing that, one whose name or link text says
+    agenda/papers/minutes, unless it is named for a *different* meeting (a
+    link back to last time's minutes is not this meeting's papers). ``None``
+    when the page links no papers yet.
+    """
+    code = code.upper()
+    soup = BeautifulSoup(html, "html.parser")
+    _refuse_wrong_page(soup, f"{code} event page")
+    root = soup.select_one(".field--name-body") or soup
+    fallback: Optional[str] = None
+    for link in root.find_all("a", href=True):
+        url = _absolute(link["href"])
+        if not url or not urlsplit(url).path.lower().endswith(".pdf"):
+            continue
+        name = unquote(urlsplit(url).path.rsplit("/", 1)[-1])
+        named = {
+            f"{m.group(1)}{m.group(2)}{m.group(3)}".upper()
+            for m in _CODE_RE.finditer(f"{name} {link.get_text(' ')}".replace("_", " "))
+        }
+        if code in named:
+            return url, _label_from_pdf(url)
+        if named or fallback:
+            continue
+        if _PAPERS_WORD_RE.search(name.replace("_", " ")) or _PAPERS_WORD_RE.search(link.get_text(" ")):
+            fallback = url
+    return (fallback, _label_from_pdf(fallback)) if fallback else None
+
+
+# ---------------------------------------------------------------------------
 # Policy register
 # ---------------------------------------------------------------------------
 
@@ -662,6 +706,10 @@ class DemocracyScraper:
 
     def fetch_archive(self) -> list[ArchiveEntry]:
         return parse_archive(self._get_html(ARCHIVE_URL))
+
+    def fetch_event_papers(self, event_url: str, code: str) -> Optional[tuple[str, Optional[str]]]:
+        """The papers PDF on a meeting's What's On page (``parse_event_papers``)."""
+        return parse_event_papers(self._get_html(event_url), code)
 
     def fetch_policy_list(self, status: str, max_pages: int = 20) -> list[PolicyRow]:
         status = status.upper()

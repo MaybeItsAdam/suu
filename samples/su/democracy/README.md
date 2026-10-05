@@ -8,6 +8,10 @@
   - `policy_{current,lapsed}_p0.html` — `https://studentsunionucl.org/policy` filtered
     by status, first page.
   - `policy_up<code>.html` — single policy pages (`UP1908`, `UP2301`, `UP2508`).
+  - `event_ue2601.html` — a meeting's What's On page
+    (`/whats-on/representation/union-executive-meeting-1?v=95616`), cut to its main
+    content block; it links `UE2601 Agenda and Papers.pdf` (captured 2026-10-05, when
+    the archive had no 2026-27 UE entries yet).
   - `login_wall.html` — what a signed-out request gets instead; must raise
     `DemocracyPageError`.
 - **Real or synthetic**: real, trimmed (large page chrome removed; the markers the
