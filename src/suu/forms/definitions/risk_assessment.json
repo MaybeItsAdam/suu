@@ -1,0 +1,21 @@
+{
+    "form_id": "risk_assessment",
+    "url": "https://studentsunionucl.org/forms/additional-risk-assessment-form",
+    "description": "UCL Student Union Additional Risk Assessment Form. SCAFFOLD: no fields are mapped yet, so filling it does nothing. For any new or one-off activity not covered by the club or society's core risk assessment, large activities involving the public, and any activity with an overnight stay or substantial travel. Presidents or treasurers only; submit at least 10 working days before the activity (8 weeks for activity outside the UK mainland). The core risk assessment is not this form: it is uploaded during re-registration.",
+    "login_required": true,
+    "_todo": {
+        "status": "scaffold",
+        "verified": [
+            "url: the Additional Risk Assessment Form page (node/136350), linked from studentsunionucl.org/committee-hub (checked 2026-10-12)",
+            "login_required: anonymous visitors get the guidance text and a log-in link, not the form"
+        ],
+        "unverified": "Every field. The form only renders for a signed-in president or treasurer, so no selector has been seen. Capture the page while signed in (see adams-campus-toolbox src/lib/suuForms/fixtures/README.md), then add fields here.",
+        "expected_fields": [
+            "club_society: probably the shared [data-drupal-selector='edit-webform-access-group'] autocomplete the payment and purchase forms use",
+            "activity name, dates and times",
+            "the completed risk assessment file (the SU's Club and Society Risk Assessment Template)",
+            "overnight stay and participant details sections, for trips with overnight stays"
+        ]
+    },
+    "fields": []
+}

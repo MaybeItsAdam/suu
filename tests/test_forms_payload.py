@@ -7,12 +7,13 @@ on its own.
 
 from __future__ import annotations
 
+import json
 import re
 from urllib.parse import urlparse
 
 import pytest
 
-from suu.forms.loader import list_form_ids, load_form_definition
+from suu.forms.loader import definitions_dir, list_form_ids, load_form_definition
 from suu.forms.payload import (
     format_cost,
     normalize_banking_number,
@@ -50,6 +51,27 @@ def test_definitions_are_keyed_by_id_and_point_at_the_su(form_id):
     definition = load_form_definition(form_id)
     assert definition.form_id == form_id
     assert urlparse(definition.url).hostname == "studentsunionucl.org"
+
+
+SCAFFOLDS = {"su_activity_registration", "risk_assessment", "room_booking"}
+
+
+@pytest.mark.parametrize("form_id", sorted(SCAFFOLDS))
+def test_scaffolds_load_and_say_what_is_unverified(form_id):
+    """A scaffold has its URL and no unverified selectors; `_todo` says what's left.
+
+    `_todo` is ignored by the schema (pydantic drops unknown keys), so it's read raw.
+    """
+    raw = json.loads((definitions_dir() / f"{form_id}.json").read_text(encoding="utf-8"))
+    assert raw["_todo"]["status"] == "scaffold"
+    assert raw["_todo"]["unverified"]
+    assert load_form_definition(form_id).login_required
+
+
+def test_every_form_without_fields_is_a_known_scaffold():
+    for form_id in list_form_ids():
+        if not load_form_definition(form_id).fields:
+            assert form_id in SCAFFOLDS, form_id
 
 
 def test_payload_keys_match_the_payment_request_fields():

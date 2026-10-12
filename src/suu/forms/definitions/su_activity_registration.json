@@ -1,0 +1,21 @@
+{
+    "form_id": "su_activity_registration",
+    "url": "https://studentsunionucl.org/webform/activity-registration-form",
+    "description": "UCL Student Union Activity Registration Form. SCAFFOLD: no fields are mapped yet, so filling it does nothing. Required for one-off or annual activities, charity fundraising, high-risk activity or any activity with £50+ expenditure; trips abroad need 8+ weeks' notice. Records the activity's expenditure and income (how each cost is covered), which must balance to £0. A payment request can link to a submission of this form.",
+    "login_required": true,
+    "_todo": {
+        "status": "scaffold",
+        "verified": [
+            "url: linked as the Activity Registration Form from studentsunionucl.org/committee-hub and /how-to/clubs-and-societies/organising-activities-events (checked 2026-10-12)",
+            "login_required: anonymous requests are redirected to the SU login page"
+        ],
+        "unverified": "Every field. The form only renders for a signed-in president or treasurer, so no selector has been seen. Capture the page while signed in (see adams-campus-toolbox src/lib/suuForms/fixtures/README.md), then add fields here.",
+        "expected_fields": [
+            "club_society: probably the shared [data-drupal-selector='edit-webform-access-group'] autocomplete the payment and purchase forms use",
+            "activity name, date(s), time and location",
+            "expenditure lines (type and amount) and income lines (how each cost is covered)",
+            "risk and overnight-stay details, or a pointer to an additional risk assessment"
+        ]
+    },
+    "fields": []
+}

@@ -1,0 +1,22 @@
+{
+    "form_id": "room_booking",
+    "url": "https://studentsunionucl.org/forms/club-society-ad-hoc-room-booking-request-form",
+    "description": "UCL Student Union Club & Society Ad-Hoc (one-off) Room Booking Request Form, for Union-managed rooms. SCAFFOLD: no fields are mapped yet, so filling it does nothing. Presidents or treasurers only. A booking stays provisional until the activity's other forms are approved. Not for UCL teaching rooms (those are booked in UCL's CMISGo) and not for weekly block bookings (a separate form the SU emails to presidents and treasurers). Union room availability is the public Google Sheet linked from this page (see suu.rooms.su_room_sheet).",
+    "login_required": true,
+    "_todo": {
+        "status": "scaffold",
+        "verified": [
+            "url: the Ad-Hoc Room Booking Request Form page (node/139269), linked from studentsunionucl.org/committee-hub (checked 2026-10-12)",
+            "the embedded webform is /webform/club-society-ad-hoc-room-booking, which redirects anonymous requests to the SU login page",
+            "login_required: anonymous visitors get the page title and a log-in link, not the form"
+        ],
+        "unverified": "Every field. The form only renders for a signed-in president or treasurer, so no selector has been seen. Capture the page while signed in (see adams-campus-toolbox src/lib/suuForms/fixtures/README.md), then add fields here.",
+        "expected_fields": [
+            "club_society: probably the shared [data-drupal-selector='edit-webform-access-group'] autocomplete the payment and purchase forms use",
+            "room (one of the Union rooms on /how-to/clubs-and-societies/booking-spaces-equipment)",
+            "date, start and end time",
+            "activity description and expected attendance"
+        ]
+    },
+    "fields": []
+}
