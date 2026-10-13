@@ -13,7 +13,7 @@
         },
         {
             "name": "description",
-            "selector": "textarea[id='edit-description']",
+            "selector": "textarea[data-drupal-selector='edit-description'], textarea[id='edit-description']",
             "type": "textarea",
             "description": "Description of the purchase",
             "required": true
@@ -34,7 +34,7 @@
         },
         {
             "name": "phone_number",
-            "selector": "[id='edit-payee-phone-number']",
+            "selector": "[data-drupal-selector='edit-payee-phone-number'], [id='edit-payee-phone-number']",
             "type": "text",
             "description": "Phone number of the payee",
             "required": true
@@ -48,21 +48,21 @@
         },
         {
             "name": "account_number",
-            "selector": "[id='edit-account-number']",
+            "selector": "[data-drupal-selector='edit-account-number'], [id='edit-account-number']",
             "type": "type_text",
             "description": "Bank account number",
             "required": true
         },
         {
             "name": "sort_code",
-            "selector": "[id='edit-sort-code']",
+            "selector": "[data-drupal-selector='edit-sort-code'], [id='edit-sort-code']",
             "type": "type_text",
             "description": "Bank sort code",
             "required": true
         },
         {
             "name": "payee_details_changed",
-            "selector": "[id='edit-payee-details-changed']",
+            "selector": "[data-drupal-selector='edit-payee-details-changed'], [id='edit-payee-details-changed']",
             "type": "select",
             "value": "No",
             "description": "Have payee details changed? (Default: No)",
@@ -134,7 +134,7 @@
                     "selector": "input[type='file'][data-drupal-selector^='edit-purchases-items-{i}-receipt-upload']",
                     "type": "file",
                     "description": "Receipt file upload",
-                    "validation_selector": "[data-drupal-selector^='edit-purchases-items-{i}-operations-remove']"
+                    "validation_selector": "[data-drupal-selector^='edit-purchases-items-{i}-receipt-remove-button']"
                 }
             ]
         }
