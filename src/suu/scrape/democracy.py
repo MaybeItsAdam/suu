@@ -75,6 +75,11 @@ _PROGRESS = {
     "pending update": "PENDING_UPDATE",
 }
 
+# One page fetch: a 30s read timeout, three tries, 2s then 4s between them.
+_FETCH_TIMEOUT = 30
+_FETCH_ATTEMPTS = 3
+_FETCH_BACKOFF = 2.0
+
 _HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
@@ -355,6 +360,15 @@ def parse_zone_cards(html: str, body: str) -> list[MeetingCard]:
 # ---------------------------------------------------------------------------
 
 
+# Papers come as PDF, and since WCZ2601 (Oct 2026) sometimes as a Word
+# "Agenda Pack" (``WCZ2601%20Agenda%20Pack.docx``).
+_PAPERS_EXT_RE = re.compile(r"\.(?:pdf|docx)$", re.IGNORECASE)
+
+
+def _is_papers_file(url: str) -> bool:
+    return bool(_PAPERS_EXT_RE.search(urlsplit(url).path))
+
+
 def _label_from_pdf(url: str) -> Optional[str]:
     """'…/2025-12/AZ2502%20Minutes%20%26%20Papers.pdf' -> 'Minutes & Papers'.
 
@@ -362,7 +376,7 @@ def _label_from_pdf(url: str) -> Optional[str]:
     rest of the name is the label either way.
     """
     stem = unquote(urlsplit(url).path.rsplit("/", 1)[-1])
-    stem = re.sub(r"\.pdf$", "", stem, flags=re.IGNORECASE)
+    stem = _PAPERS_EXT_RE.sub("", stem)
     stem = re.sub(r"_\d+$", "", stem)  # Drupal's duplicate-upload suffix
     stem = re.sub(r"^\s*(?:AZ|EZ|WCZ|UE)\s?\d{4}\b[\s_\-–:]*", "", stem, flags=re.IGNORECASE)
     stem = _clean(stem.replace("_", " "))
@@ -489,7 +503,7 @@ def _archive_entry(body: str, start_year: int, position: int, item: dict) -> Opt
     href = _absolute(item.get("href"))
     if href:
         entry.papers_url = href
-        if urlsplit(href).path.lower().endswith(".pdf"):
+        if _is_papers_file(href):
             entry.papers_label = _label_from_pdf(href)
         else:
             target = _CODE_RE.search(urlsplit(href).path.rsplit("/", 1)[-1].replace("-", " "))
@@ -512,7 +526,7 @@ _PAPERS_WORD_RE = re.compile(r"\b(agenda|papers?|minutes)\b", re.IGNORECASE)
 
 
 def parse_event_papers(html: str, code: str) -> Optional[tuple[str, Optional[str]]]:
-    """``(url, label)`` of the papers PDF linked from a meeting's What's On page.
+    """``(url, label)`` of the papers file linked from a meeting's What's On page.
 
     The SU often posts an upcoming meeting's agenda on its event page
     (``/sites/default/files/inline-files/UE2601%20Agenda%20and%20Papers.pdf``)
@@ -529,7 +543,7 @@ def parse_event_papers(html: str, code: str) -> Optional[tuple[str, Optional[str
     fallback: Optional[str] = None
     for link in root.find_all("a", href=True):
         url = _absolute(link["href"])
-        if not url or not urlsplit(url).path.lower().endswith(".pdf"):
+        if not url or not _is_papers_file(url):
             continue
         name = unquote(urlsplit(url).path.rsplit("/", 1)[-1])
         named = {
@@ -688,12 +702,34 @@ class DemocracyScraper:
         self._session.headers.update(_HEADERS)
 
     def _get_html(self, url: str, params: Optional[dict] = None) -> str:
-        resp = self._session.get(url, params=params, timeout=30)
+        resp = self._get_with_retry(url, params)
         if "/user/login" in resp.url:
             raise DemocracyPageError(f"{url}: redirected to the SU login page")
         if resp.status_code != 200:
             raise DemocracyPageError(f"{url}: HTTP {resp.status_code}")
         return resp.text
+
+    def _get_with_retry(self, url: str, params: Optional[dict]) -> requests.Response:
+        """GET, retrying a timeout, a dropped connection or a 5xx.
+
+        The SU's Drupal site has slow spells — a page that answers in 0.1s can
+        sit past the 30s read timeout a minute later — and a single stall used
+        to fail the whole collect. Three tries, backing off 2s then 4s.
+        """
+        for attempt in range(_FETCH_ATTEMPTS):
+            last = attempt == _FETCH_ATTEMPTS - 1
+            try:
+                resp = self._session.get(url, params=params, timeout=_FETCH_TIMEOUT)
+            except (requests.Timeout, requests.ConnectionError) as exc:
+                if last:
+                    raise
+                logger.warning("democracy: %s failed (%s), retrying", url, exc.__class__.__name__)
+            else:
+                if resp.status_code < 500 or last:
+                    return resp
+                logger.warning("democracy: %s HTTP %s, retrying", url, resp.status_code)
+            time.sleep(_FETCH_BACKOFF * 2**attempt)
+        raise AssertionError("unreachable")
 
     def fetch_zone_cards(self, body: str) -> list[MeetingCard]:
         return parse_zone_cards(self._get_html(ZONE_URLS[body]), body)

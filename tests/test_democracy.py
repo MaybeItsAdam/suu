@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
+import requests
 
 from suu.scrape.democracy import (
     DemocracyPageError,
@@ -162,7 +163,7 @@ def test_event_page_papers_ue2601():
 
 
 def test_event_page_without_papers_is_none():
-    html = _html("event_ue2601.html").replace(".pdf", ".docx")
+    html = _html("event_ue2601.html").replace(".pdf", ".png")
     assert parse_event_papers(html, "UE2601") is None
 
 
@@ -337,3 +338,51 @@ def test_scraper_treats_a_login_redirect_as_an_error():
 
     with pytest.raises(DemocracyPageError, match="login"):
         DemocracyScraper(delay=0, session=Redirecting({})).fetch_archive()
+
+
+class _Flaky(_Session):
+    """Fails the first `failures` GETs (with `error`, or a 503), then serves `pages`."""
+
+    def __init__(self, pages, failures, error=None):
+        super().__init__(pages)
+        self.failures, self.error = failures, error
+
+    def get(self, url, params=None, timeout=None):
+        if self.failures:
+            self.failures -= 1
+            self.calls.append((url, dict(params or {})))
+            if self.error:
+                raise self.error
+            return _Resp("", url, status=503)
+        return super().get(url, params, timeout)
+
+
+@pytest.fixture
+def no_backoff(monkeypatch):
+    monkeypatch.setattr("suu.scrape.democracy.time.sleep", lambda _s: None)
+
+
+@pytest.mark.parametrize("error", [requests.ReadTimeout("slow"), requests.ConnectionError("reset"), None])
+def test_scraper_retries_a_stalled_page(no_backoff, error):
+    url = "https://studentsunionucl.org/whats-on/representation/union-executive-meeting-1?v=95616"
+    session = _Flaky({(url, "0"): _html("event_ue2601.html")}, failures=2, error=error)
+    found = DemocracyScraper(delay=0, session=session).fetch_event_papers(url, "UE2601")
+    assert found is not None
+    assert len(session.calls) == 3
+
+
+def test_scraper_gives_up_after_three_timeouts(no_backoff):
+    url = "https://studentsunionucl.org/whats-on/representation/union-executive-meeting-1?v=95616"
+    session = _Flaky({}, failures=3, error=requests.ReadTimeout("slow"))
+    with pytest.raises(requests.ReadTimeout):
+        DemocracyScraper(delay=0, session=session).fetch_event_papers(url, "UE2601")
+    assert len(session.calls) == 3
+
+
+def test_event_page_word_agenda_pack_is_the_papers():
+    html = _event_body(
+        ("/sites/default/files/inline-files/WCZ2601%20Agenda%20Pack.docx", "Find the full agenda and papers here."),
+    )
+    url, label = parse_event_papers(html, "WCZ2601")
+    assert url.endswith("/WCZ2601%20Agenda%20Pack.docx")
+    assert label == "Agenda Pack"
