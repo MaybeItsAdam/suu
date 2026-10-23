@@ -15,6 +15,9 @@ class FormField(BaseModel):
     add_button_selector: Optional[str] = Field(None, description="Selector for the button to add new items (if type='list')")
     validation_selector: Optional[str] = Field(None, description="Selector that must appear to confirm success (e.g. 'Remove' button)")
     default: Optional[Any] = Field(None, description="Default value to use if input data is missing")
+    # Scaffold metadata. The executors ignore both; they say how far to trust the rest.
+    confirmed: bool = Field(True, description="False while this field's selector (and often its label, type and options) is inferred from SU guidance or Drupal naming and hasn't been seen on a signed-in capture")
+    shown_when: Optional[str] = Field(None, description="When the SU shows this field (Drupal #states), in words. Executors skip an optional field that's hidden, so this is documentation, not logic")
 
 FormField.model_rebuild()
 

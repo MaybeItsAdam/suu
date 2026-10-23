@@ -1,0 +1,35 @@
+{
+    "event": {
+        "id": "ckexample000winterball",
+        "title": "Volunteering Society Winter Ball",
+        "society": "Volunteering Society",
+        "description": "Three-course dinner and a ceilidh band to close the term.",
+        "startTime": "2026-12-04T19:00:00.000Z",
+        "endTime": "2026-12-04T23:30:00.000Z",
+        "timeKnown": true,
+        "location": "Old Refectory, Wilkins Building",
+        "locationUrl": null,
+        "imageUrl": "https://images.example.invalid/winter-ball.jpg",
+        "expectedAttendance": 120,
+        "contactEmail": "volunteering.society@ucl.ac.uk",
+        "online": false,
+        "tags": ["Social", "Free"],
+        "charity": false,
+        "highRisk": true,
+        "externalSpeaker": false,
+        "overnightOrAbroad": false,
+        "cashDoorSales": true,
+        "whoCanAttend": "UCL students",
+        "ticketTiers": [
+            { "name": "Early Bird - Members", "price": 25, "quantity": 40 },
+            { "name": "Standard", "price": "30.00", "quantity": 80, "projectedSales": 60, "audience": "UCL students" },
+            { "name": "Committee helpers", "price": 0, "quantity": 10 }
+        ]
+    },
+    "costs": [
+        { "category": "Facility Hire", "vendor": "UCL Venues", "notes": "Old Refectory hire", "amount": 1200 },
+        { "category": "Coach/Instructor", "vendor": "Ceilidh Band Ltd", "notes": "", "amount": "450.00" },
+        { "description": "Printed tickets and posters", "amount": 35.5 },
+        { "category": "Publicity Costs", "vendor": "No amount yet", "amount": null }
+    ]
+}

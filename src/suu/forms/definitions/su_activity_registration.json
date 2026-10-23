@@ -1,21 +1,214 @@
 {
     "form_id": "su_activity_registration",
     "url": "https://studentsunionucl.org/webform/activity-registration-form",
-    "description": "UCL Student Union Activity Registration Form. SCAFFOLD: no fields are mapped yet, so filling it does nothing. Required for one-off or annual activities, charity fundraising, high-risk activity or any activity with £50+ expenditure; trips abroad need 8+ weeks' notice. Records the activity's expenditure and income (how each cost is covered), which must balance to £0. A payment request can link to a submission of this form.",
+    "description": "UCL Student Union Activity Registration Form (ARF). SCAFFOLD: every field below is drafted from the SU's public guidance and has an unconfirmed selector (confirmed: false), so a fill finds little or nothing until a signed-in capture confirms them. The president or treasurer must submit one at least 10 working days ahead, and earlier for bigger activity (8 weeks for tours, trips abroad and large campus events; 6 for balls and large off-campus events; 4 for spectator sport, controversial speakers and catered events; 2 for socials and workshops), when the activity spends over £350, raises money for charity, is high-risk, is run with an external organisation, UCL department or non-affiliated group, staff have asked for one, or it isn't regularly-held activity. Nothing else for the activity is approved, and it can't be promoted, until the ARF is. It records a budget: expenditure lines and income lines (how each cost is covered), which must make a profit or break even and include a 15% contingency; ticket income is a breakdown of price x projected sales, never more than 50% of capacity. A payment request can link to a submission of this form.",
     "login_required": true,
     "_todo": {
         "status": "scaffold",
         "verified": [
-            "url: linked as the Activity Registration Form from studentsunionucl.org/committee-hub and /how-to/clubs-and-societies/organising-activities-events (checked 2026-10-12)",
-            "login_required: anonymous requests are redirected to the SU login page"
+            "url: linked as the Activity Registration Form from studentsunionucl.org/committee-hub and /how-to/clubs-and-societies/organising-activities-events (checked 2026-10-23)",
+            "login_required: anonymous requests are redirected to /user/login?destination=/webform/activity-registration-form (checked 2026-10-23)",
+            "when it's needed, the deadlines, the budget rules and the six registration criteria: the public guide /how-to/clubs-and-societies/organising-activities-events (checked 2026-10-23; the threshold is now £350, not £50)",
+            "income lines say how each cost is covered, and a BUCS event's budget totals £0: /how-to/clubs-and-societies/completing-activity-registration-form-for-bucs-event (checked 2026-10-23)"
         ],
-        "unverified": "Every field. The form only renders for a signed-in president or treasurer, so no selector has been seen. Capture the page while signed in (see adams-campus-toolbox src/lib/suuForms/fixtures/README.md), then add fields here.",
-        "expected_fields": [
-            "club_society: probably the shared [data-drupal-selector='edit-webform-access-group'] autocomplete the payment and purchase forms use",
-            "activity name, date(s), time and location",
-            "expenditure lines (type and amount) and income lines (how each cost is covered)",
-            "risk and overnight-stay details, or a pointer to an additional risk assessment"
+        "unverified": "Every selector, and whether each drafted field exists at all: the form renders only for a signed-in president or treasurer. Capture it (docs/capturing-forms.md), then replace each guessed selector with the real data-drupal-selector, set confirmed: true and drop it from here. Also unknown: whether it is a multi-page webform (wizard), whether the budget is two repeating tables or fixed rows, the activity-type options, and how the risk and overnight sections branch.",
+        "sources": [
+            "https://studentsunionucl.org/how-to/clubs-and-societies/organising-activities-events",
+            "https://studentsunionucl.org/how-to/clubs-and-societies/completing-activity-registration-form-for-bucs-event"
         ]
     },
-    "fields": []
+    "fields": [
+        {
+            "name": "club_society",
+            "selector": "[data-drupal-selector='edit-webform-access-group']",
+            "type": "autocomplete",
+            "description": "Club or Society Name (type to search, Enter to select). The payment and purchase forms share this element; assumed here too.",
+            "required": true,
+            "confirmed": false
+        },
+        {
+            "name": "activity_name",
+            "selector": "input[data-drupal-selector*='activity-name'], input[data-drupal-selector*='name-of-activity'], input[data-drupal-selector*='event-name']",
+            "type": "text",
+            "description": "Name of the activity or event",
+            "required": true,
+            "confirmed": false
+        },
+        {
+            "name": "activity_description",
+            "selector": "textarea[data-drupal-selector*='description']",
+            "type": "textarea",
+            "description": "What the activity is and what will happen",
+            "required": true,
+            "confirmed": false
+        },
+        {
+            "name": "reason_expenditure_over_350",
+            "selector": "input[type='checkbox'][data-drupal-selector*='350']",
+            "type": "checkbox",
+            "description": "Registration criterion: the activity's expenditure is over £350",
+            "required": false,
+            "confirmed": false
+        },
+        {
+            "name": "reason_charity",
+            "selector": "input[type='checkbox'][data-drupal-selector*='charity']",
+            "type": "checkbox",
+            "description": "Registration criterion: raising money for a charity (tickets then need an approved Charity Permission Letter)",
+            "required": false,
+            "confirmed": false
+        },
+        {
+            "name": "reason_high_risk",
+            "selector": "input[type='checkbox'][data-drupal-selector*='high-risk']",
+            "type": "checkbox",
+            "description": "Registration criterion: high-risk activity (overnight stays, trips outside London or abroad, contact sport, naked flames, 100+ attendees, alcohol, controversial speakers, under-18s, the public, external catering, power tools, sharp implements, live animals). Also needs an Additional Risk Assessment.",
+            "required": false,
+            "confirmed": false
+        },
+        {
+            "name": "reason_external_collaboration",
+            "selector": "input[type='checkbox'][data-drupal-selector*='external']",
+            "type": "checkbox",
+            "description": "Registration criterion: collaborating with an external organisation, UCL department or other non-affiliated group",
+            "required": false,
+            "confirmed": false
+        },
+        {
+            "name": "reason_staff_request",
+            "selector": "input[type='checkbox'][data-drupal-selector*='staff']",
+            "type": "checkbox",
+            "description": "Registration criterion: Union staff asked for this form",
+            "required": false,
+            "confirmed": false
+        },
+        {
+            "name": "reason_not_regular",
+            "selector": "input[type='checkbox'][data-drupal-selector*='regular']",
+            "type": "checkbox",
+            "description": "Registration criterion: not regularly-held activity covered by the core risk assessment (annual events count as not regular)",
+            "required": false,
+            "confirmed": false
+        },
+        {
+            "name": "start_date",
+            "selector": "input[type='date'][data-drupal-selector*='start'], input[type='date'][data-drupal-selector*='date']",
+            "type": "text",
+            "description": "First day of the activity, YYYY-MM-DD (Europe/London)",
+            "required": true,
+            "confirmed": false
+        },
+        {
+            "name": "start_time",
+            "selector": "input[type='time'][data-drupal-selector*='start']",
+            "type": "text",
+            "description": "Start time, HH:MM (Europe/London)",
+            "required": true,
+            "confirmed": false
+        },
+        {
+            "name": "end_date",
+            "selector": "input[type='date'][data-drupal-selector*='end']",
+            "type": "text",
+            "description": "Last day, YYYY-MM-DD; the start date for a one-evening event (a run of performances is several dates, not one long span)",
+            "required": false,
+            "confirmed": false
+        },
+        {
+            "name": "end_time",
+            "selector": "input[type='time'][data-drupal-selector*='end'], input[type='time'][data-drupal-selector*='finish']",
+            "type": "text",
+            "description": "Finish time, HH:MM (Europe/London)",
+            "required": false,
+            "confirmed": false
+        },
+        {
+            "name": "location",
+            "selector": "input[data-drupal-selector*='location'], input[data-drupal-selector*='venue']",
+            "type": "text",
+            "description": "Where it happens: room or venue name and address",
+            "required": true,
+            "confirmed": false
+        },
+        {
+            "name": "expected_attendance",
+            "selector": "input[data-drupal-selector*='attend'], input[data-drupal-selector*='participants']",
+            "type": "text",
+            "description": "How many people are expected",
+            "required": false,
+            "confirmed": false
+        },
+        {
+            "name": "overnight_or_abroad",
+            "selector": "select[data-drupal-selector*='overnight'], select[data-drupal-selector*='abroad']",
+            "type": "select",
+            "description": "Does the activity involve an overnight stay or travel abroad? (8 weeks' notice abroad; the Additional Risk Assessment's overnight section then needs an itinerary, travel and participant details)",
+            "required": false,
+            "default": "No",
+            "options": ["No", "Yes"],
+            "confirmed": false
+        },
+        {
+            "name": "external_speaker",
+            "selector": "select[data-drupal-selector*='speaker']",
+            "type": "select",
+            "description": "Is there an external speaker? (needs an approved External Speaker Request Form, 10 working days)",
+            "required": false,
+            "default": "No",
+            "options": ["No", "Yes"],
+            "confirmed": false
+        },
+        {
+            "name": "expenditure",
+            "type": "list",
+            "description": "Budget: what will be spent, one line per cost, including a 15% contingency line",
+            "required": true,
+            "add_button_selector": "[data-drupal-selector*='expenditure'][data-drupal-selector$='add-submit']",
+            "confirmed": false,
+            "fields": [
+                {
+                    "name": "description",
+                    "selector": "input[data-drupal-selector^='edit-expenditure-items-{i}-'][data-drupal-selector*='description']",
+                    "type": "text",
+                    "description": "What the cost is (venue hire, DJ, decorations, food, printing, contingency)",
+                    "required": true,
+                    "confirmed": false
+                },
+                {
+                    "name": "amount",
+                    "selector": "input[data-drupal-selector^='edit-expenditure-items-{i}-'][data-drupal-selector*='amount']",
+                    "type": "text",
+                    "description": "Cost in GBP, e.g. 50.00",
+                    "required": true,
+                    "confirmed": false
+                }
+            ]
+        },
+        {
+            "name": "income",
+            "type": "list",
+            "description": "Budget: how each cost is covered, one line per source: grant or non-grant account contribution, sponsorship, ticket sales broken down by price ('Early Bird Ticket - £10 x 15 = £150.00', never budgeting over 50% sales), membership contributions, bar or food sales, merchandise. Income minus expenditure must be zero or more.",
+            "required": true,
+            "add_button_selector": "[data-drupal-selector*='income'][data-drupal-selector$='add-submit']",
+            "confirmed": false,
+            "fields": [
+                {
+                    "name": "description",
+                    "selector": "input[data-drupal-selector^='edit-income-items-{i}-'][data-drupal-selector*='description']",
+                    "type": "text",
+                    "description": "Where the money comes from",
+                    "required": true,
+                    "confirmed": false
+                },
+                {
+                    "name": "amount",
+                    "selector": "input[data-drupal-selector^='edit-income-items-{i}-'][data-drupal-selector*='amount']",
+                    "type": "text",
+                    "description": "Amount in GBP, e.g. 150.00",
+                    "required": true,
+                    "confirmed": false
+                }
+            ]
+        }
+    ]
 }

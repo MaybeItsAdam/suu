@@ -1,0 +1,170 @@
+{
+    "form_id": "su_ticket_request",
+    "url": "https://studentsunionucl.org/forms/ticket-request-form",
+    "description": "UCL Student Union Ticket Request Form (TRF): asks the Union to put paid tickets (or a product such as kit) on sale on the SU website. SCAFFOLD: every field below is drafted from the SU's public guidance and has an unconfirmed selector (confirmed: false). The president or treasurer submits it at least 10 working days before the event (or the products' on-sale date), and only after the event has a What's On listing, because the form asks for that page's URL. Prerequisites the Union checks: an approved Activity Registration Form if the event spends £350 or more (the TRF's breakdown must match the ARF's); an approved Additional Risk Assessment for one-off or high-risk events; an approved External Speaker Request Form for an external speaker; an approved Charity Permission Letter for charity fundraising; an approved design for kit or merchandise; an approved Coach/Instructor Registration and Contract for coached sessions. Prices can differ for UCL students, concessions, members and external attendees, with optional early-bird tiers. Free tickets don't need this form: the society creates them itself on the SU website. Cash door sales are only allowed when a ticket costs £10 or less. Tickets must never be sold through third-party sites such as Eventbrite.",
+    "login_required": true,
+    "_todo": {
+        "status": "scaffold",
+        "verified": [
+            "url: linked as the Ticket Request Form from studentsunionucl.org/committee-hub; the guide's /forms/ticket-request-form-0 redirects here (checked 2026-10-23)",
+            "login_required: anonymous visitors get the page title and 'You need to log in in to complete this form.', not the form (checked 2026-10-23)",
+            "the form asks for the What's On event page URL, and the prerequisites, prices, cash-sales and deadline rules: /how-to/clubs-and-societies/sell-event-tickets-or-products and /how-to/clubs-and-societies/organising-activities-events (checked 2026-10-23)"
+        ],
+        "unverified": "Every selector, and whether each drafted field exists at all: the form renders only for a signed-in president or treasurer. Capture it (docs/capturing-forms.md). Also unknown: how event tickets and products branch (a type select, or separate sections), whether tiers are a repeating table, the audience options a tier can be restricted to, and whether the ARF is referenced by submission number or picked from a list.",
+        "sources": [
+            "https://studentsunionucl.org/how-to/clubs-and-societies/sell-event-tickets-or-products",
+            "https://studentsunionucl.org/how-to/clubs-and-societies/organising-activities-events"
+        ]
+    },
+    "fields": [
+        {
+            "name": "club_society",
+            "selector": "[data-drupal-selector='edit-webform-access-group']",
+            "type": "autocomplete",
+            "description": "Club or Society Name (type to search, Enter to select). The payment and purchase forms share this element; assumed here too.",
+            "required": true,
+            "confirmed": false
+        },
+        {
+            "name": "request_type",
+            "selector": "select[data-drupal-selector*='ticket'][data-drupal-selector*='type'], select[data-drupal-selector*='product']",
+            "type": "select",
+            "description": "Event tickets, or a product such as kit or merchandise (Default: Event tickets)",
+            "required": false,
+            "default": "Event tickets",
+            "options": ["Event tickets", "Product"],
+            "confirmed": false
+        },
+        {
+            "name": "whats_on_url",
+            "selector": "input[type='url'], input[data-drupal-selector*='url'], input[data-drupal-selector*='link']",
+            "type": "text",
+            "description": "URL of the event's What's On page (studentsunionucl.org/whats-on/...). Create the listing first.",
+            "required": true,
+            "shown_when": "event tickets, not a product",
+            "confirmed": false
+        },
+        {
+            "name": "event_name",
+            "selector": "input[data-drupal-selector*='event-name'], input[data-drupal-selector*='name-of-event'], input[data-drupal-selector*='title']",
+            "type": "text",
+            "description": "Event (or product) name, as it should appear on the ticket",
+            "required": true,
+            "confirmed": false
+        },
+        {
+            "name": "event_date",
+            "selector": "input[type='date'][data-drupal-selector*='date']",
+            "type": "text",
+            "description": "Date of the event, YYYY-MM-DD (Europe/London)",
+            "required": true,
+            "shown_when": "event tickets, not a product",
+            "confirmed": false
+        },
+        {
+            "name": "start_time",
+            "selector": "input[type='time'][data-drupal-selector*='start']",
+            "type": "text",
+            "description": "Start time, HH:MM",
+            "required": true,
+            "shown_when": "event tickets, not a product",
+            "confirmed": false
+        },
+        {
+            "name": "end_time",
+            "selector": "input[type='time'][data-drupal-selector*='end'], input[type='time'][data-drupal-selector*='finish']",
+            "type": "text",
+            "description": "Finish time, HH:MM",
+            "required": true,
+            "shown_when": "event tickets, not a product",
+            "confirmed": false
+        },
+        {
+            "name": "venue",
+            "selector": "input[data-drupal-selector*='venue'], input[data-drupal-selector*='location']",
+            "type": "text",
+            "description": "Venue; any college or Union room or bar must already be booked",
+            "required": true,
+            "shown_when": "event tickets, not a product",
+            "confirmed": false
+        },
+        {
+            "name": "activity_registration_form",
+            "selector": "input[data-drupal-selector*='activity-registration']",
+            "type": "type_and_enter",
+            "description": "The approved Activity Registration Form submission. Needed when the event spends £350 or more; its budget must match this form's ticket breakdown.",
+            "required": false,
+            "shown_when": "the event spends £350 or more",
+            "confirmed": false
+        },
+        {
+            "name": "who_can_attend",
+            "selector": "select[data-drupal-selector*='attend'], select[data-drupal-selector*='who']",
+            "type": "select",
+            "description": "Who may come: members only, UCL students, alumni, members of the public",
+            "required": false,
+            "confirmed": false
+        },
+        {
+            "name": "cash_door_sales",
+            "selector": "select[data-drupal-selector*='cash']",
+            "type": "select",
+            "description": "Will tickets also be sold for cash on the door? Only allowed at £10 or less; keep a record of each buyer and deposit the cash at Activities Reception. (Default: No)",
+            "required": false,
+            "default": "No",
+            "options": ["No", "Yes"],
+            "shown_when": "every ticket costs £10 or less",
+            "confirmed": false
+        },
+        {
+            "name": "ticket_tiers",
+            "type": "list",
+            "description": "One line per ticket type: name, price and how many. Different prices for UCL students, concessions, members and externals are allowed, and early-bird tiers.",
+            "required": true,
+            "add_button_selector": "[data-drupal-selector*='ticket'][data-drupal-selector$='add-submit']",
+            "confirmed": false,
+            "fields": [
+                {
+                    "name": "name",
+                    "selector": "input[data-drupal-selector*='-items-{i}-'][data-drupal-selector*='name'], input[data-drupal-selector*='-items-{i}-'][data-drupal-selector*='type']",
+                    "type": "text",
+                    "description": "Ticket name, e.g. 'Early Bird - Members'",
+                    "required": true,
+                    "confirmed": false
+                },
+                {
+                    "name": "price",
+                    "selector": "input[data-drupal-selector*='-items-{i}-'][data-drupal-selector*='price']",
+                    "type": "text",
+                    "description": "Price in GBP, e.g. 10.00",
+                    "required": true,
+                    "confirmed": false
+                },
+                {
+                    "name": "quantity",
+                    "selector": "input[data-drupal-selector*='-items-{i}-'][data-drupal-selector*='quantity'], input[data-drupal-selector*='-items-{i}-'][data-drupal-selector*='number']",
+                    "type": "text",
+                    "description": "How many of this ticket to sell",
+                    "required": true,
+                    "confirmed": false
+                },
+                {
+                    "name": "audience",
+                    "selector": "select[data-drupal-selector*='-items-{i}-']",
+                    "type": "select",
+                    "description": "Who can buy this ticket (members, UCL students, concessions, anyone)",
+                    "required": false,
+                    "confirmed": false
+                }
+            ]
+        },
+        {
+            "name": "additional_information",
+            "selector": "textarea[data-drupal-selector*='additional'], textarea[data-drupal-selector*='notes'], textarea[data-drupal-selector*='comments']",
+            "type": "textarea",
+            "description": "Anything else the Union needs (on-sale and off-sale dates, restrictions)",
+            "required": false,
+            "confirmed": false
+        }
+    ]
+}

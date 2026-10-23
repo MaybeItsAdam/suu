@@ -1,0 +1,170 @@
+{
+    "form_id": "su_event_listing",
+    "url": "https://studentsunionucl.org/whats-on",
+    "description": "UCL Student Union What's On listing ('Create event'): a club or society event on the What's On calendar. SCAFFOLD, and a field probe rather than a filler: the url is the calendar, because the 'Create event' form it links to (top left, shown only to signed-in presidents and treasurers) hasn't been seen, and every selector is inferred from the field names the public event pages carry (confirmed: false). The SU's own steps: sign in, open What's On, click 'Create event', fill in as much as possible, pick the club or society the event belongs to, prefer an existing venue over creating a duplicate, and leave the optional sections ('Access to event and sales') blank if they don't apply. Promote only once every required form (ARF, risk assessment, TRF) is approved. Free tickets are created by the society on the SU website itself; paid tickets go through the Ticket Request Form, which asks for this listing's URL. Never press Save, Publish or Preview from a definition.",
+    "login_required": true,
+    "_todo": {
+        "status": "scaffold",
+        "verified": [
+            "how to reach it: 'Sign in ... head to the What's On Calendar ... click on Create event in the top left hand corner to bring you to a webform', /how-to/clubs-and-societies/organising-activities-events, Promotion section (checked 2026-10-23)",
+            "an anonymous /whats-on has no Create event link (checked 2026-10-23)",
+            "the event content type's fields, from the field classes on a public event page (/whats-on/clubs-societies/pub-social-mullys, checked 2026-10-23): body, field_date_range (smartdate), field_event_venue, field_event_owner_group, field_event_online, field_event_tags, field_contact_email, field_access_family, field_access_wheelchair, price (commerce price, the ticket block)",
+            "a ticket is a Drupal Commerce product shown in the event page's add-to-cart block; the committee's ticket page is /whats-on/clubs-societies/<event>/tickets (Connector lib/retrieve/su-events.js, checked 2026-10-06)"
+        ],
+        "unverified": "The form's URL (replace url once seen), every selector, the widget for each field (smartdate's date/time/duration inputs, the venue's autocomplete or inline 'create new venue', the owner group as autocomplete or select, tags as checkboxes or autocomplete, the body as CKEditor), the image field's name and whether it exists, the options of field_access_family and field_access_wheelchair, and everything in 'Access to event and sales' (who can see the event and buy, and whether free ticket tiers are made here). Body and description are CKEditor in most Drupal node forms, which a plain fill into the hidden textarea doesn't reach.",
+        "sources": [
+            "https://studentsunionucl.org/how-to/clubs-and-societies/organising-activities-events",
+            "https://studentsunionucl.org/how-to/clubs-and-societies/sell-event-tickets-or-products",
+            "https://studentsunionucl.org/whats-on/clubs-societies/pub-social-mullys"
+        ]
+    },
+    "fields": [
+        {
+            "name": "title",
+            "selector": "[data-drupal-selector='edit-title-0-value']",
+            "type": "text",
+            "description": "Event title (the Drupal node title; its path alias becomes /whats-on/clubs-societies/<slugified title>)",
+            "required": true,
+            "confirmed": false
+        },
+        {
+            "name": "owner_group",
+            "selector": "[data-drupal-selector^='edit-field-event-owner-group']",
+            "type": "autocomplete",
+            "description": "The club or society the event belongs to (field_event_owner_group). Must be picked, or the event isn't associated with the society.",
+            "required": true,
+            "confirmed": false
+        },
+        {
+            "name": "start_date",
+            "selector": "input[data-drupal-selector='edit-field-date-range-0-value-date']",
+            "type": "text",
+            "description": "Start date, YYYY-MM-DD (field_date_range, a smartdate, Europe/London)",
+            "required": true,
+            "confirmed": false
+        },
+        {
+            "name": "start_time",
+            "selector": "input[data-drupal-selector='edit-field-date-range-0-value-time']",
+            "type": "text",
+            "description": "Start time, HH:MM. Leave empty only when the time genuinely isn't known (never midnight as a placeholder).",
+            "required": true,
+            "confirmed": false
+        },
+        {
+            "name": "end_date",
+            "selector": "input[data-drupal-selector='edit-field-date-range-0-end-value-date']",
+            "type": "text",
+            "description": "End date, YYYY-MM-DD; the start date for a one-evening event. A run of performances is several listings or dates, never one long span.",
+            "required": true,
+            "confirmed": false
+        },
+        {
+            "name": "end_time",
+            "selector": "input[data-drupal-selector='edit-field-date-range-0-end-value-time']",
+            "type": "text",
+            "description": "End time, HH:MM",
+            "required": true,
+            "confirmed": false
+        },
+        {
+            "name": "online",
+            "selector": "input[type='checkbox'][data-drupal-selector^='edit-field-event-online']",
+            "type": "checkbox",
+            "description": "Online event (field_event_online)",
+            "required": false,
+            "confirmed": false
+        },
+        {
+            "name": "venue",
+            "selector": "input[data-drupal-selector^='edit-field-event-venue']",
+            "type": "autocomplete",
+            "description": "Venue (field_event_venue). Pick an existing venue to avoid duplicates; the form can create a new one, which is then reusable.",
+            "required": false,
+            "shown_when": "not an online event",
+            "confirmed": false
+        },
+        {
+            "name": "body",
+            "selector": "textarea[data-drupal-selector='edit-body-0-value']",
+            "type": "textarea",
+            "description": "Event description (body). Probably a CKEditor, which a fill into the textarea doesn't reach; confirm.",
+            "required": false,
+            "confirmed": false
+        },
+        {
+            "name": "image",
+            "selector": "input[type='file'][data-drupal-selector*='image']",
+            "type": "file",
+            "description": "Event image, a local file path. The field's name and whether the form has one are unconfirmed.",
+            "required": false,
+            "confirmed": false
+        },
+        {
+            "name": "contact_email",
+            "selector": "input[data-drupal-selector='edit-field-contact-email-0-value']",
+            "type": "text",
+            "description": "Contact email shown on the listing (field_contact_email); the society's @ucl.ac.uk address, not a person's",
+            "required": false,
+            "confirmed": false
+        },
+        {
+            "name": "tags",
+            "selector": "[data-drupal-selector^='edit-field-event-tags']",
+            "type": "autocomplete",
+            "description": "What's On tags (field_event_tags, taxonomy terms such as 'Free', 'Social Impact', 'Volunteering', 'Under 18 Friendly'). Widget unconfirmed.",
+            "required": false,
+            "confirmed": false
+        },
+        {
+            "name": "family_friendly",
+            "selector": "select[data-drupal-selector^='edit-field-access-family']",
+            "type": "select",
+            "description": "Family friendly (field_access_family, a list); options unconfirmed",
+            "required": false,
+            "confirmed": false
+        },
+        {
+            "name": "wheelchair_access",
+            "selector": "select[data-drupal-selector^='edit-field-access-wheelchair']",
+            "type": "select",
+            "description": "Wheelchair accessible (field_access_wheelchair, a list); options unconfirmed",
+            "required": false,
+            "confirmed": false
+        },
+        {
+            "name": "ticket_tiers",
+            "type": "list",
+            "description": "'Access to event and sales': free ticket tiers the society can create itself (paid tickets go through the Ticket Request Form instead). The SU says to leave this section blank if it doesn't apply. Whether tiers are made here at all is unconfirmed.",
+            "required": false,
+            "add_button_selector": "[data-drupal-selector*='ticket'][data-drupal-selector$='add-more'], [data-drupal-selector*='variation'][data-drupal-selector*='add']",
+            "confirmed": false,
+            "fields": [
+                {
+                    "name": "name",
+                    "selector": "input[data-drupal-selector*='-{i}-'][data-drupal-selector*='title']",
+                    "type": "text",
+                    "description": "Ticket name",
+                    "required": true,
+                    "confirmed": false
+                },
+                {
+                    "name": "price",
+                    "selector": "input[data-drupal-selector*='-{i}-'][data-drupal-selector*='price']",
+                    "type": "text",
+                    "description": "Price in GBP; 0.00 for a free ticket",
+                    "required": true,
+                    "confirmed": false
+                },
+                {
+                    "name": "quantity",
+                    "selector": "input[data-drupal-selector*='-{i}-'][data-drupal-selector*='stock'], input[data-drupal-selector*='-{i}-'][data-drupal-selector*='quantity']",
+                    "type": "text",
+                    "description": "How many are available",
+                    "required": false,
+                    "confirmed": false
+                }
+            ]
+        }
+    ]
+}
