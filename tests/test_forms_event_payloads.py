@@ -84,49 +84,79 @@ def test_activity_registration_budget_breaks_even_with_contingency(sample):
     data = build_activity_registration_data(sample["event"], sample["costs"])
 
     assert data["expenditure"] == [
-        {"description": "Facility hire - Old Refectory hire", "amount": "1200.00"},
-        {"description": "Coach/instructors - Ceilidh Band Ltd", "amount": "450.00"},
-        {"description": "Printed tickets and posters", "amount": "35.50"},
+        {"type": "Facility hire", "description": "Facility hire - Old Refectory hire", "amount": "1200.00"},
+        {"type": "Coach/instructors", "description": "Coach/instructors - Ceilidh Band Ltd", "amount": "450.00"},
+        {"type": "Printed tickets and posters", "description": "Printed tickets and posters", "amount": "35.50"},
         # The receipt with no amount is left out; 15% of 1685.50.
-        {"description": "Contingency (15%)", "amount": "252.82"},
+        {"type": "Contingency", "description": "Contingency (15%)", "amount": "252.82"},
     ]
     assert data["income"] == [
-        {"description": "Early Bird - Members - £25.00 x 20 = £500.00", "amount": "500.00"},
-        {"description": "Standard - £30.00 x 40 = £1200.00", "amount": "1200.00"},
-        {"description": ARF_ACCOUNT_LINE, "amount": "238.32"},
+        {"type": "Ticket sales", "description": "Early Bird - Members - £25.00 x 20 = £500.00", "amount": "500.00"},
+        {"type": "Ticket sales", "description": "Standard - £30.00 x 40 = £1200.00", "amount": "1200.00"},
+        {"type": "Non-Grant Funds", "description": ARF_ACCOUNT_LINE, "amount": "238.32"},
     ]
     spend = sum(float(line["amount"]) for line in data["expenditure"])
     income = sum(float(line["amount"]) for line in data["income"])
     assert round(income - spend, 2) == 0
+    assert data["total_expenditure"] == "1938.32"
+    assert data["total_income"] == "1938.32"
+    assert data["costs_money_yes"] is True and data["costs_money_no"] is False
+    assert data["generates_income_yes"] is True and data["generates_income_no"] is False
 
 
 def test_activity_registration_fields(sample):
     data = build_activity_registration_data(sample["event"], sample["costs"])
     assert data["club_society"] == "Volunteering Society"
     assert data["activity_name"] == "Volunteering Society Winter Ball"
-    assert (data["start_date"], data["start_time"], data["end_date"], data["end_time"]) == (
-        "2026-12-04", "19:00", "2026-12-04", "23:30",
-    )
-    assert data["location"] == "Old Refectory, Wilkins Building"
+    assert data["proposed_dates"] == [
+        {
+            "date": "2026-12-04",
+            "start_time": "19:00",
+            "end_time": "23:30",
+            "location": "Old Refectory, Wilkins Building",
+        }
+    ]
     assert data["expected_attendance"] == "120"
-    assert data["reason_expenditure_over_350"] is True
-    assert data["reason_not_regular"] is True
-    assert data["reason_high_risk"] is True
-    assert data["reason_charity"] is False
-    assert data["overnight_or_abroad"] == "No"
-    assert data["external_speaker"] == "No"
-    # Not known about this event, so not sent: the staff-request criterion
-    # (nothing records it) and external collaboration (absent from the sample).
-    assert keys_fit("su_activity_registration", data) == {"reason_staff_request", "reason_external_collaboration"}
+    assert data["risk_assessment_additional"] is True
+    assert data["raising_for_charity_no"] is True
+    assert data["external_speaker_no"] is True
+    # Only the fields for the unchosen radio branches or unknown answers are left unfed.
+    unfed = keys_fit("su_activity_registration", data)
+    assert unfed == {
+        "on_campus_yes",
+        "on_campus_no",
+        "on_campus_na",
+        "raising_for_charity_yes",
+        "charity_name",
+        "charity_registration_number",
+        "fundraising_detail",
+        "charity_permission_letter",
+        "previous_event_yes",
+        "previous_event_no",
+        "risk_assessment_core",
+        "under_18s_yes",
+        "under_18s_no",
+        "under_18s_na",
+        "external_speaker_yes",
+        "external_speaker_form",
+    }
 
 
 def test_activity_registration_with_nothing_known_sends_no_guesses():
     data = build_activity_registration_data({"title": "Picnic", "society": "Hiking Club"})
     assert data["expenditure"] == [] and data["income"] == []
-    assert data["reason_expenditure_over_350"] is False
-    for unknown in ("reason_charity", "reason_high_risk", "overnight_or_abroad", "external_speaker"):
+    assert data["costs_money_yes"] is False and data["costs_money_no"] is True
+    assert data["generates_income_yes"] is False and data["generates_income_no"] is True
+    for unknown in (
+        "raising_for_charity_yes",
+        "raising_for_charity_no",
+        "risk_assessment_core",
+        "risk_assessment_additional",
+        "external_speaker_yes",
+        "external_speaker_no",
+    ):
         assert unknown not in data
-    assert data["start_date"] == "" and data["expected_attendance"] == ""
+    assert data["proposed_dates"][0]["date"] == "" and data["expected_attendance"] == ""
 
 
 def test_activity_registration_surplus_needs_no_account_line():
@@ -143,28 +173,54 @@ def test_ticket_request_sends_paid_tiers_and_the_listing(sample):
     url = "https://studentsunionucl.org/whats-on/clubs-societies/volunteering-society-winter-ball"
     data = build_ticket_request_data(sample["event"], whats_on_url=url, activity_registration_ref="12345")
     assert data["whats_on_url"] == url
-    assert data["request_type"] == "Event tickets"
-    assert (data["event_date"], data["start_time"], data["end_time"]) == ("2026-12-04", "19:00", "23:30")
+    assert data["selling_for_event"] is True
+    assert data["expenditure_over_200_yes"] is True
     assert data["activity_registration_form"] == "12345"
+    assert data["total_tickets"] == "120"
     assert data["ticket_tiers"] == [
-        {"name": "Early Bird - Members", "price": "25.00", "quantity": "40", "audience": ""},
-        {"name": "Standard", "price": "30.00", "quantity": "80", "audience": "UCL students"},
+        {
+            "name": "Early Bird - Members",
+            "audience": "",
+            "quantity": "40",
+            "price": "25.00",
+            "on_sale_date": "",
+            "on_sale_time": "",
+            "off_sale_date": "",
+            "off_sale_time": "",
+        },
+        {
+            "name": "Standard",
+            "audience": "UCL students",
+            "quantity": "80",
+            "price": "30.00",
+            "on_sale_date": "",
+            "on_sale_time": "",
+            "off_sale_date": "",
+            "off_sale_time": "",
+        },
     ]
-    # Cash on the door was asked for, but the tickets cost more than £10.
-    assert data["cash_door_sales"] == "No"
-    assert keys_fit("su_ticket_request", data) == {"additional_information"}
-
-
-def test_ticket_request_allows_cash_only_at_ten_pounds_or_less():
-    event = {"cashDoorSales": True, "ticketTiers": [{"name": "Entry", "price": 10, "quantity": 50}]}
-    assert build_ticket_request_data(event)["cash_door_sales"] == "Yes"
-    event["cashDoorSales"] = False
-    assert build_ticket_request_data(event)["cash_door_sales"] == "No"
+    assert data["raising_for_charity_no"] is True
+    assert data["linked_to_external_speaker_no"] is True
+    unfed = keys_fit("su_ticket_request", data)
+    assert unfed == {
+        "selling_for_product",
+        "raising_for_charity_yes",
+        "charity_name",
+        "linked_to_external_speaker_yes",
+        "expenditure_over_200_no",
+        "ticket_description",
+        "total_items",
+        "clothing_or_kit_yes",
+        "clothing_or_kit_no",
+        "involves_coach_yes",
+        "involves_coach_no",
+    }
 
 
 def test_ticket_request_leaves_out_an_arf_reference_it_doesnt_have(sample):
     data = build_ticket_request_data(sample["event"])
     assert "activity_registration_form" not in data
+    assert "expenditure_over_200_yes" not in data
     assert data["whats_on_url"] == ""
 
 
@@ -177,25 +233,33 @@ def test_event_listing_fields(sample, tmp_path):
     data = build_event_listing_data(sample["event"], image)
     assert data["title"] == "Volunteering Society Winter Ball"
     assert data["owner_group"] == "Volunteering Society"
+    assert data["event_category"] == "Clubs & Societies"
     assert (data["start_date"], data["start_time"], data["end_date"], data["end_time"]) == (
         "2026-12-04", "19:00", "2026-12-04", "23:30",
     )
     assert data["online"] is False
     assert data["venue"] == "Old Refectory, Wilkins Building"
-    assert data["image"] == str(image)
+    assert data["banner_image"] == str(image)
+    assert data["card_image"] == str(image)
     assert data["contact_email"] == "volunteering.society@ucl.ac.uk"
     assert data["tags"] == "Social, Free"
+    assert data["ticketing_type"] == "Club & Society event as part of a Ticket Request Form submission"
     # Only the free tier: paid tickets are the TRF's.
     assert data["ticket_tiers"] == [{"name": "Committee helpers", "price": "0.00", "quantity": "10"}]
     # No source for the access lists yet.
-    assert keys_fit("su_event_listing", data) == {"family_friendly", "wheelchair_access"}
+    assert keys_fit("su_event_listing", data) == {
+        "postgraduate",
+        "family_friendly",
+        "wheelchair_access_yes",
+        "wheelchair_access_no",
+    }
 
 
 def test_event_listing_carries_no_url_for_a_file(sample):
     """Like a receipt, the image is a local file the caller downloaded; never the Toolbox's URL."""
     data = build_event_listing_data(sample["event"])
-    assert data["image"] == ""
-    assert "imageUrl" not in json.dumps(data) and "http" not in data["image"]
+    assert data["banner_image"] == "" and data["card_image"] == ""
+    assert "imageUrl" not in json.dumps(data) and "http" not in data["banner_image"]
 
 
 def test_online_event_has_no_venue(sample):

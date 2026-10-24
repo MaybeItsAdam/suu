@@ -1,17 +1,18 @@
 {
     "form_id": "su_activity_registration",
     "url": "https://studentsunionucl.org/webform/activity-registration-form",
-    "description": "UCL Student Union Activity Registration Form (ARF). SCAFFOLD: every field below is drafted from the SU's public guidance and has an unconfirmed selector (confirmed: false), so a fill finds little or nothing until a signed-in capture confirms them. The president or treasurer must submit one at least 10 working days ahead, and earlier for bigger activity (8 weeks for tours, trips abroad and large campus events; 6 for balls and large off-campus events; 4 for spectator sport, controversial speakers and catered events; 2 for socials and workshops), when the activity spends over £350, raises money for charity, is high-risk, is run with an external organisation, UCL department or non-affiliated group, staff have asked for one, or it isn't regularly-held activity. Nothing else for the activity is approved, and it can't be promoted, until the ARF is. It records a budget: expenditure lines and income lines (how each cost is covered), which must make a profit or break even and include a 15% contingency; ticket income is a breakdown of price x projected sales, never more than 50% of capacity. A payment request can link to a submission of this form.",
+    "description": "UCL Student Union Activity Registration Form (ARF). The president or treasurer must submit one at least 10 working days ahead, and earlier for bigger activity (8 weeks for tours, trips abroad and large campus events; 6 for balls and large off-campus events; 4 for spectator sport, controversial speakers and catered events; 2 for socials and workshops), when the activity spends over £350, raises money for charity, is high-risk, is run with an external organisation, UCL department or non-affiliated group, staff have asked for one, or it isn't regularly-held activity. Nothing else for the activity is approved, and it can't be promoted, until the ARF is. It records proposed dates/times/locations and a budget: expenditure lines and income lines (how each cost is covered), which must make a profit or break even and include a 15% contingency; ticket income is a breakdown of price x projected sales, never more than 50% of capacity. A payment request or ticket request can link to a submission of this form.",
     "login_required": true,
     "_todo": {
-        "status": "scaffold",
+        "status": "captured",
         "verified": [
             "url: linked as the Activity Registration Form from studentsunionucl.org/committee-hub and /how-to/clubs-and-societies/organising-activities-events (checked 2026-10-23)",
             "login_required: anonymous requests are redirected to /user/login?destination=/webform/activity-registration-form (checked 2026-10-23)",
             "when it's needed, the deadlines, the budget rules and the six registration criteria: the public guide /how-to/clubs-and-societies/organising-activities-events (checked 2026-10-23; the threshold is now £350, not £50)",
-            "income lines say how each cost is covered, and a BUCS event's budget totals £0: /how-to/clubs-and-societies/completing-activity-registration-form-for-bucs-event (checked 2026-10-23)"
+            "income lines say how each cost is covered, and a BUCS event's budget totals £0: /how-to/clubs-and-societies/completing-activity-registration-form-for-bucs-event (checked 2026-10-23)",
+            "selectors confirmed from signed-in capture of /webform/activity-registration-form (samples/su/forms/su_activity_registration, captured 2026-10-24): single-page webform (webform-submission-activity-registration-form-add-form), proposed_date_s_and_time_s_ repeating table, expenditure_details_3 and incomings_details 3-column repeating tables (type, details, amount)"
         ],
-        "unverified": "Every selector, and whether each drafted field exists at all: the form renders only for a signed-in president or treasurer. Capture it (docs/capturing-forms.md), then replace each guessed selector with the real data-drupal-selector, set confirmed: true and drop it from here. Also unknown: whether it is a multi-page webform (wizard), whether the budget is two repeating tables or fixed rows, the activity-type options, and how the risk and overnight sections branch.",
+        "unverified": "Not yet end-to-end filled on the live SU form.",
         "sources": [
             "https://studentsunionucl.org/how-to/clubs-and-societies/organising-activities-events",
             "https://studentsunionucl.org/how-to/clubs-and-societies/completing-activity-registration-form-for-bucs-event"
@@ -20,195 +21,386 @@
     "fields": [
         {
             "name": "club_society",
-            "selector": "[data-drupal-selector='edit-webform-access-group']",
+            "selector": "input[data-drupal-selector='edit-webform-access-group']",
             "type": "autocomplete",
-            "description": "Club or Society Name (type to search, Enter to select). The payment and purchase forms share this element; assumed here too.",
+            "description": "Club/Society (type to search, select from the autocomplete menu)",
             "required": true,
-            "confirmed": false
+            "confirmed": true
+        },
+        {
+            "name": "lead_name",
+            "selector": "input[data-drupal-selector='edit-event-lead-name']",
+            "type": "text",
+            "description": "Activity Lead Name",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "lead_email",
+            "selector": "input[data-drupal-selector='edit-e-mail']",
+            "type": "text",
+            "description": "Activity Lead Email Address",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "lead_phone",
+            "selector": "input[data-drupal-selector='edit-event-lead-phone']",
+            "type": "text",
+            "description": "Activity Lead Phone Number",
+            "required": true,
+            "confirmed": true
         },
         {
             "name": "activity_name",
-            "selector": "input[data-drupal-selector*='activity-name'], input[data-drupal-selector*='name-of-activity'], input[data-drupal-selector*='event-name']",
+            "selector": "input[data-drupal-selector='edit-event-name']",
             "type": "text",
-            "description": "Name of the activity or event",
+            "description": "Activity Name — a short name for the event, e.g. Online Hackathon 2023",
             "required": true,
-            "confirmed": false
+            "confirmed": true
         },
         {
             "name": "activity_description",
-            "selector": "textarea[data-drupal-selector*='description']",
-            "type": "textarea",
-            "description": "What the activity is and what will happen",
+            "selector": "input[data-drupal-selector='edit-event-description']",
+            "type": "text",
+            "description": "Activity Description (an input[type=text] on the webform)",
             "required": true,
-            "confirmed": false
+            "confirmed": true
         },
         {
-            "name": "reason_expenditure_over_350",
-            "selector": "input[type='checkbox'][data-drupal-selector*='350']",
-            "type": "checkbox",
-            "description": "Registration criterion: the activity's expenditure is over £350",
-            "required": false,
-            "confirmed": false
-        },
-        {
-            "name": "reason_charity",
-            "selector": "input[type='checkbox'][data-drupal-selector*='charity']",
-            "type": "checkbox",
-            "description": "Registration criterion: raising money for a charity (tickets then need an approved Charity Permission Letter)",
-            "required": false,
-            "confirmed": false
-        },
-        {
-            "name": "reason_high_risk",
-            "selector": "input[type='checkbox'][data-drupal-selector*='high-risk']",
-            "type": "checkbox",
-            "description": "Registration criterion: high-risk activity (overnight stays, trips outside London or abroad, contact sport, naked flames, 100+ attendees, alcohol, controversial speakers, under-18s, the public, external catering, power tools, sharp implements, live animals). Also needs an Additional Risk Assessment.",
-            "required": false,
-            "confirmed": false
-        },
-        {
-            "name": "reason_external_collaboration",
-            "selector": "input[type='checkbox'][data-drupal-selector*='external']",
-            "type": "checkbox",
-            "description": "Registration criterion: collaborating with an external organisation, UCL department or other non-affiliated group",
-            "required": false,
-            "confirmed": false
-        },
-        {
-            "name": "reason_staff_request",
-            "selector": "input[type='checkbox'][data-drupal-selector*='staff']",
-            "type": "checkbox",
-            "description": "Registration criterion: Union staff asked for this form",
-            "required": false,
-            "confirmed": false
-        },
-        {
-            "name": "reason_not_regular",
-            "selector": "input[type='checkbox'][data-drupal-selector*='regular']",
-            "type": "checkbox",
-            "description": "Registration criterion: not regularly-held activity covered by the core risk assessment (annual events count as not regular)",
-            "required": false,
-            "confirmed": false
-        },
-        {
-            "name": "start_date",
-            "selector": "input[type='date'][data-drupal-selector*='start'], input[type='date'][data-drupal-selector*='date']",
-            "type": "text",
-            "description": "First day of the activity, YYYY-MM-DD (Europe/London)",
+            "name": "proposed_dates",
+            "type": "list",
+            "description": "Proposed Date(s) and Time(s): one row per date/session of the activity (proposed_date_s_and_time_s_)",
             "required": true,
-            "confirmed": false
+            "add_button_selector": "[data-drupal-selector='edit-proposed-date-s-and-time-s-add-submit']",
+            "confirmed": true,
+            "fields": [
+                {
+                    "name": "date",
+                    "selector": "input[data-drupal-selector='edit-proposed-date-s-and-time-s-items-{i}-dateandtimeproposed']",
+                    "type": "text",
+                    "description": "Proposed Date(s), YYYY-MM-DD (Europe/London)",
+                    "required": true,
+                    "confirmed": true
+                },
+                {
+                    "name": "start_time",
+                    "selector": "input[data-drupal-selector='edit-proposed-date-s-and-time-s-items-{i}-start']",
+                    "type": "text",
+                    "description": "Start Time, HH:MM (Europe/London)",
+                    "required": true,
+                    "confirmed": true
+                },
+                {
+                    "name": "end_time",
+                    "selector": "input[data-drupal-selector='edit-proposed-date-s-and-time-s-items-{i}-end']",
+                    "type": "text",
+                    "description": "End Time, HH:MM (Europe/London)",
+                    "required": true,
+                    "confirmed": true
+                },
+                {
+                    "name": "location",
+                    "selector": "input[data-drupal-selector='edit-proposed-date-s-and-time-s-items-{i}-proposedlocation']",
+                    "type": "text",
+                    "description": "Location: room or venue name and address",
+                    "required": true,
+                    "confirmed": true
+                }
+            ]
         },
         {
-            "name": "start_time",
-            "selector": "input[type='time'][data-drupal-selector*='start']",
+            "name": "member_attendance",
+            "selector": "input[data-drupal-selector='edit-how-many-members-will-be-taking-part-in-this-activity-']",
             "type": "text",
-            "description": "Start time, HH:MM (Europe/London)",
-            "required": true,
-            "confirmed": false
-        },
-        {
-            "name": "end_date",
-            "selector": "input[type='date'][data-drupal-selector*='end']",
-            "type": "text",
-            "description": "Last day, YYYY-MM-DD; the start date for a one-evening event (a run of performances is several dates, not one long span)",
+            "description": "How many members will be taking part in this activity? (approximate figure)",
             "required": false,
-            "confirmed": false
-        },
-        {
-            "name": "end_time",
-            "selector": "input[type='time'][data-drupal-selector*='end'], input[type='time'][data-drupal-selector*='finish']",
-            "type": "text",
-            "description": "Finish time, HH:MM (Europe/London)",
-            "required": false,
-            "confirmed": false
-        },
-        {
-            "name": "location",
-            "selector": "input[data-drupal-selector*='location'], input[data-drupal-selector*='venue']",
-            "type": "text",
-            "description": "Where it happens: room or venue name and address",
-            "required": true,
-            "confirmed": false
+            "confirmed": true
         },
         {
             "name": "expected_attendance",
-            "selector": "input[data-drupal-selector*='attend'], input[data-drupal-selector*='participants']",
+            "selector": "input[data-drupal-selector='edit-how-many-people-will-be-attending-in-total-']",
             "type": "text",
-            "description": "How many people are expected",
+            "description": "How many people will be attending in total? (members and non-members)",
             "required": false,
-            "confirmed": false
+            "confirmed": true
         },
         {
-            "name": "overnight_or_abroad",
-            "selector": "select[data-drupal-selector*='overnight'], select[data-drupal-selector*='abroad']",
-            "type": "select",
-            "description": "Does the activity involve an overnight stay or travel abroad? (8 weeks' notice abroad; the Additional Risk Assessment's overnight section then needs an itinerary, travel and participant details)",
+            "name": "on_campus_yes",
+            "selector": "input[data-drupal-selector='edit-is-your-activity-happening-on-campus-1']",
+            "type": "checkbox",
+            "description": "Is your activity happening on campus? — Yes",
             "required": false,
-            "default": "No",
-            "options": ["No", "Yes"],
-            "confirmed": false
+            "confirmed": true
         },
         {
-            "name": "external_speaker",
-            "selector": "select[data-drupal-selector*='speaker']",
-            "type": "select",
-            "description": "Is there an external speaker? (needs an approved External Speaker Request Form, 10 working days)",
+            "name": "on_campus_no",
+            "selector": "input[data-drupal-selector='edit-is-your-activity-happening-on-campus-2']",
+            "type": "checkbox",
+            "description": "Is your activity happening on campus? — No",
             "required": false,
-            "default": "No",
-            "options": ["No", "Yes"],
-            "confirmed": false
+            "confirmed": true
+        },
+        {
+            "name": "on_campus_na",
+            "selector": "input[data-drupal-selector='edit-is-your-activity-happening-on-campus-3']",
+            "type": "checkbox",
+            "description": "Is your activity happening on campus? — N/A",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "raising_for_charity_yes",
+            "selector": "input[data-drupal-selector='edit-will-you-be-raising-money-for-a-charity-1']",
+            "type": "checkbox",
+            "description": "Will you be raising money for a charity? — Yes",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "raising_for_charity_no",
+            "selector": "input[data-drupal-selector='edit-will-you-be-raising-money-for-a-charity-2']",
+            "type": "checkbox",
+            "description": "Will you be raising money for a charity? — No",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "charity_name",
+            "selector": "input[data-drupal-selector='edit-name-of-organisation-you-are-raising-money-for']",
+            "type": "text",
+            "description": "Name of organisation you are raising money for",
+            "required": false,
+            "shown_when": "raising_for_charity_yes is selected",
+            "confirmed": true
+        },
+        {
+            "name": "charity_registration_number",
+            "selector": "input[data-drupal-selector='edit-charity-registration-number']",
+            "type": "text",
+            "description": "Charity Registration Number",
+            "required": false,
+            "shown_when": "raising_for_charity_yes is selected",
+            "confirmed": true
+        },
+        {
+            "name": "fundraising_detail",
+            "selector": "textarea[data-drupal-selector='edit-please-provide-the-detail-of-your-fundraising']",
+            "type": "textarea",
+            "description": "Please provide the detail of your fundraising",
+            "required": false,
+            "shown_when": "raising_for_charity_yes is selected",
+            "confirmed": true
+        },
+        {
+            "name": "charity_permission_letter",
+            "selector": "input[data-drupal-selector='edit-charity-permission-letter-upload']",
+            "type": "file",
+            "description": "Charity Permission Letter upload",
+            "required": false,
+            "shown_when": "raising_for_charity_yes is selected",
+            "confirmed": true
+        },
+        {
+            "name": "previous_event_yes",
+            "selector": "input[data-drupal-selector='edit-previous-event-1']",
+            "type": "checkbox",
+            "description": "Has this activity been held previously? — Yes",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "previous_event_no",
+            "selector": "input[data-drupal-selector='edit-previous-event-2']",
+            "type": "checkbox",
+            "description": "Has this activity been held previously? — No",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "costs_money_yes",
+            "selector": "input[data-drupal-selector='edit-will-this-activity-cost-money-to-run-yes']",
+            "type": "checkbox",
+            "description": "Will this activity cost money to run? — Yes (reveals expenditure_details_3)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "costs_money_no",
+            "selector": "input[data-drupal-selector='edit-will-this-activity-cost-money-to-run-no']",
+            "type": "checkbox",
+            "description": "Will this activity cost money to run? — No",
+            "required": false,
+            "confirmed": true
         },
         {
             "name": "expenditure",
             "type": "list",
-            "description": "Budget: what will be spent, one line per cost, including a 15% contingency line",
-            "required": true,
-            "add_button_selector": "[data-drupal-selector*='expenditure'][data-drupal-selector$='add-submit']",
-            "confirmed": false,
+            "description": "Budget expenditure lines (expenditure_details_3): what will be spent, one line per cost including VAT and a 15% contingency line",
+            "required": false,
+            "shown_when": "costs_money_yes is selected",
+            "add_button_selector": "[data-drupal-selector='edit-expenditure-details-3-add-submit']",
+            "confirmed": true,
             "fields": [
                 {
-                    "name": "description",
-                    "selector": "input[data-drupal-selector^='edit-expenditure-items-{i}-'][data-drupal-selector*='description']",
+                    "name": "type",
+                    "selector": "input[data-drupal-selector='edit-expenditure-details-3-items-{i}-type']",
                     "type": "text",
-                    "description": "What the cost is (venue hire, DJ, decorations, food, printing, contingency)",
+                    "description": "Expenditure Type (e.g. Venue hire, Catering, Equipment, Contingency)",
                     "required": true,
-                    "confirmed": false
+                    "confirmed": true
+                },
+                {
+                    "name": "description",
+                    "selector": "input[data-drupal-selector='edit-expenditure-details-3-items-{i}-details']",
+                    "type": "text",
+                    "description": "Details of the cost",
+                    "required": true,
+                    "confirmed": true
                 },
                 {
                     "name": "amount",
-                    "selector": "input[data-drupal-selector^='edit-expenditure-items-{i}-'][data-drupal-selector*='amount']",
+                    "selector": "input[data-drupal-selector='edit-expenditure-details-3-items-{i}-amount']",
                     "type": "text",
-                    "description": "Cost in GBP, e.g. 50.00",
+                    "description": "Amount (£), e.g. 50.00",
                     "required": true,
-                    "confirmed": false
+                    "confirmed": true
                 }
             ]
         },
         {
+            "name": "total_expenditure",
+            "selector": "input[data-drupal-selector='edit-total-expenditure']",
+            "type": "text",
+            "description": "Total predicted expenditure (£)",
+            "required": false,
+            "shown_when": "costs_money_yes is selected",
+            "confirmed": true
+        },
+        {
+            "name": "generates_income_yes",
+            "selector": "input[data-drupal-selector='edit-will-this-event-generate-income-yes']",
+            "type": "checkbox",
+            "description": "Will this event generate income? — Yes (reveals incomings_details)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "generates_income_no",
+            "selector": "input[data-drupal-selector='edit-will-this-event-generate-income-no']",
+            "type": "checkbox",
+            "description": "Will this event generate income? — No",
+            "required": false,
+            "confirmed": true
+        },
+        {
             "name": "income",
             "type": "list",
-            "description": "Budget: how each cost is covered, one line per source: grant or non-grant account contribution, sponsorship, ticket sales broken down by price ('Early Bird Ticket - £10 x 15 = £150.00', never budgeting over 50% sales), membership contributions, bar or food sales, merchandise. Income minus expenditure must be zero or more.",
-            "required": true,
-            "add_button_selector": "[data-drupal-selector*='income'][data-drupal-selector$='add-submit']",
-            "confirmed": false,
+            "description": "Budget income lines (incomings_details): how each cost is covered, one line per source (Ticket sales broken down by price x projected sales at <=50% capacity, Sponsorship, Non-Grant Funds, Grant Funds, Donations). Income minus expenditure must be zero or more.",
+            "required": false,
+            "shown_when": "costs_money_yes or generates_income_yes is selected",
+            "add_button_selector": "[data-drupal-selector='edit-incomings-details-add-submit']",
+            "confirmed": true,
             "fields": [
                 {
-                    "name": "description",
-                    "selector": "input[data-drupal-selector^='edit-income-items-{i}-'][data-drupal-selector*='description']",
+                    "name": "type",
+                    "selector": "input[data-drupal-selector='edit-incomings-details-items-{i}-type']",
                     "type": "text",
-                    "description": "Where the money comes from",
+                    "description": "Type of Income (e.g. Ticket sales, Sponsorship, Non-Grant Funds, Grant Funds)",
                     "required": true,
-                    "confirmed": false
+                    "confirmed": true
+                },
+                {
+                    "name": "description",
+                    "selector": "input[data-drupal-selector='edit-incomings-details-items-{i}-details']",
+                    "type": "text",
+                    "description": "Details (e.g. Early Bird Ticket - £10 x 15 = £150.00)",
+                    "required": true,
+                    "confirmed": true
                 },
                 {
                     "name": "amount",
-                    "selector": "input[data-drupal-selector^='edit-income-items-{i}-'][data-drupal-selector*='amount']",
+                    "selector": "input[data-drupal-selector='edit-incomings-details-items-{i}-amount']",
                     "type": "text",
-                    "description": "Amount in GBP, e.g. 150.00",
+                    "description": "Amount (£), e.g. 150.00",
                     "required": true,
-                    "confirmed": false
+                    "confirmed": true
                 }
             ]
+        },
+        {
+            "name": "total_income",
+            "selector": "input[data-drupal-selector='edit-total-predicted-income']",
+            "type": "text",
+            "description": "Total predicted income (£)",
+            "required": false,
+            "shown_when": "costs_money_yes or generates_income_yes is selected",
+            "confirmed": true
+        },
+        {
+            "name": "risk_assessment_core",
+            "selector": "input[data-drupal-selector='edit-is-this-activity-covered-by-a-risk-assessment-1']",
+            "type": "checkbox",
+            "description": "Is this activity covered by a Risk Assessment? — Core Risk Assessment",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "risk_assessment_additional",
+            "selector": "input[data-drupal-selector='edit-is-this-activity-covered-by-a-risk-assessment-2']",
+            "type": "checkbox",
+            "description": "Is this activity covered by a Risk Assessment? — Additional Risk Assessment",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "under_18s_yes",
+            "selector": "input[data-drupal-selector='edit-will-there-be-under-18s-in-attendance-at-this-event-1']",
+            "type": "checkbox",
+            "description": "Will there be under 18s in attendance at this event? — Yes",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "under_18s_no",
+            "selector": "input[data-drupal-selector='edit-will-there-be-under-18s-in-attendance-at-this-event-2']",
+            "type": "checkbox",
+            "description": "Will there be under 18s in attendance at this event? — No",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "under_18s_na",
+            "selector": "input[data-drupal-selector='edit-will-there-be-under-18s-in-attendance-at-this-event-3']",
+            "type": "checkbox",
+            "description": "Will there be under 18s in attendance at this event? — N/A",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "external_speaker_yes",
+            "selector": "input[data-drupal-selector='edit-will-you-have-an-external-speaker-at-this-activity-1']",
+            "type": "checkbox",
+            "description": "Will you have an external speaker at this activity? — Yes",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "external_speaker_no",
+            "selector": "input[data-drupal-selector='edit-will-you-have-an-external-speaker-at-this-activity-2']",
+            "type": "checkbox",
+            "description": "Will you have an external speaker at this activity? — No",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "external_speaker_form",
+            "selector": "input[data-drupal-selector='edit-if-you-have-already-submitted-an-external-speaker-request-form-p']",
+            "type": "autocomplete",
+            "description": "If you have already submitted an External Speaker Request form, select it here",
+            "required": false,
+            "shown_when": "external_speaker_yes is selected",
+            "confirmed": true
         }
     ]
 }

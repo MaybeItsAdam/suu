@@ -1,0 +1,4177 @@
+{
+  "capturedAt": "2026-10-24",
+  "url": "https://studentsunionucl.org/product/add/event",
+  "title": "Add Event | Students Union UCL",
+  "forms": [
+    {
+      "id": "commerce-product-event-add-form",
+      "selector": "commerce-product-event-add-form",
+      "action": "/product/add/event",
+      "method": "post",
+      "fields": [
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "title[0][value]",
+          "id": "edit-title-0-value",
+          "selector": "edit-title-0-value",
+          "label": "Title",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "date",
+          "name": "field_date_range[0][value][date]",
+          "id": "edit-field-date-range-0-value-date",
+          "selector": "edit-field-date-range-0-value-date",
+          "label": "Date",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "time",
+          "name": "field_date_range[0][value][time]",
+          "id": "edit-field-date-range-0-value-time",
+          "selector": "edit-field-date-range-0-value-time",
+          "label": "Time",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "date",
+          "name": "field_date_range[0][end_value][date]",
+          "id": "edit-field-date-range-0-end-value-date",
+          "selector": "edit-field-date-range-0-end-value-date",
+          "label": "Date",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "time",
+          "name": "field_date_range[0][end_value][time]",
+          "id": "edit-field-date-range-0-end-value-time",
+          "selector": "edit-field-date-range-0-end-value-time",
+          "label": "Time",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "All day",
+          "required": false,
+          "hidden": false,
+          "wrapperSelector": "edit-field-date-range-0"
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "field_date_range[0][duration]",
+          "id": "edit-field-date-range-0-duration",
+          "selector": "edit-field-date-range-0-duration",
+          "label": "Duration",
+          "required": false,
+          "hidden": true,
+          "options": [
+            {
+              "value": "custom",
+              "text": "Custom"
+            },
+            {
+              "value": "30",
+              "text": "30 minutes"
+            },
+            {
+              "value": "60",
+              "text": "1 hour"
+            },
+            {
+              "value": "90",
+              "text": "90 minutes"
+            },
+            {
+              "value": "120",
+              "text": "2 hours"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "field_date_range[0][timezone]",
+          "id": "",
+          "selector": "edit-field-date-range-0-timezone",
+          "label": "Date range",
+          "required": false,
+          "hidden": true,
+          "wrapperSelector": "edit-field-date-range-0"
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "field_event_category",
+          "id": "edit-field-event-category",
+          "selector": "edit-field-event-category",
+          "label": "Category",
+          "required": true,
+          "hidden": true,
+          "options": [
+            {
+              "value": "_none",
+              "text": "- Select a value -"
+            },
+            {
+              "value": "5032",
+              "text": "Bars"
+            },
+            {
+              "value": "4877",
+              "text": "Clubs & Societies"
+            },
+            {
+              "value": "4860",
+              "text": "Events & Activities"
+            },
+            {
+              "value": "16571",
+              "text": "Give it a Go"
+            },
+            {
+              "value": "5078",
+              "text": "Jobs & Skills"
+            },
+            {
+              "value": "5014",
+              "text": "Meetings"
+            },
+            {
+              "value": "4866",
+              "text": "Representation"
+            },
+            {
+              "value": "4861",
+              "text": "Sport"
+            },
+            {
+              "value": "4858",
+              "text": "Volunteering"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Event info",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "textarea",
+          "type": "textarea",
+          "name": "body[0][value]",
+          "id": "edit-body-0-value",
+          "selector": "edit-body-0-value",
+          "label": "Event description",
+          "required": true,
+          "hidden": true
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Event info",
+          "required": false,
+          "hidden": false,
+          "text": "Bold"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Event info",
+          "required": false,
+          "hidden": false,
+          "text": "Italic"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Event info",
+          "required": false,
+          "hidden": false,
+          "text": "Strikethrough"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Event info",
+          "required": false,
+          "hidden": false,
+          "text": "Block quote"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Event info",
+          "required": false,
+          "hidden": false,
+          "text": "Horizontal line"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Event info",
+          "required": false,
+          "hidden": false,
+          "text": "Insert table"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Event info",
+          "required": false,
+          "hidden": false,
+          "text": "Accordion"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Event info",
+          "required": false,
+          "hidden": false,
+          "text": "Link"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Event info",
+          "required": false,
+          "hidden": false,
+          "text": "Bulleted List"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Event info",
+          "required": false,
+          "hidden": false,
+          "text": "Bulleted List"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Event info",
+          "required": false,
+          "hidden": false,
+          "text": "Numbered List"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Event info",
+          "required": false,
+          "hidden": false,
+          "text": "Numbered List"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Event info",
+          "required": false,
+          "hidden": false,
+          "text": "Upload image from computer"
+        },
+        {
+          "tag": "input",
+          "type": "file",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Event info",
+          "required": false,
+          "hidden": false,
+          "multiple": true
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Event info",
+          "required": false,
+          "hidden": false,
+          "text": "Insert Media"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Event info",
+          "required": false,
+          "hidden": false,
+          "text": "Insert file"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Paragraph, Heading",
+          "required": false,
+          "hidden": false,
+          "text": "Paragraph"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Event info",
+          "required": false,
+          "hidden": false,
+          "text": "Remove Format"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Event info",
+          "required": false,
+          "hidden": false,
+          "text": "Source"
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "body[0][format]",
+          "id": "edit-body-0-format--2",
+          "selector": "edit-body-0-format",
+          "label": "Text format",
+          "required": false,
+          "hidden": false,
+          "options": [
+            {
+              "value": "basic_html",
+              "text": "Basic HTML"
+            },
+            {
+              "value": "e_mail_html",
+              "text": "E-mail HTML"
+            },
+            {
+              "value": "very_basic_html",
+              "text": "Very basic HTML (only basic text formatting, links and lists)"
+            },
+            {
+              "value": "restricted_html",
+              "text": "Restricted HTML"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][41037]",
+          "id": "edit-field-event-tags-target-id-checked-41037",
+          "selector": "edit-field-event-tags-target-id-checked-41037",
+          "label": "Volunteering",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][41039]",
+          "id": "edit-field-event-tags-target-id-checked-41039",
+          "selector": "edit-field-event-tags-target-id-checked-41039",
+          "label": "Project Active",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][41215]",
+          "id": "edit-field-event-tags-target-id-checked-41215",
+          "selector": "edit-field-event-tags-target-id-checked-41215",
+          "label": "artsUCL",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][41241]",
+          "id": "edit-field-event-tags-target-id-checked-41241",
+          "selector": "edit-field-event-tags-target-id-checked-41241",
+          "label": "Nightlife",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][41272]",
+          "id": "edit-field-event-tags-target-id-checked-41272",
+          "selector": "edit-field-event-tags-target-id-checked-41272",
+          "label": "Fitness",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][41278]",
+          "id": "edit-field-event-tags-target-id-checked-41278",
+          "selector": "edit-field-event-tags-target-id-checked-41278",
+          "label": "Beginner Friendly",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][41466]",
+          "id": "edit-field-event-tags-target-id-checked-41466",
+          "selector": "edit-field-event-tags-target-id-checked-41466",
+          "label": "Free",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][43030]",
+          "id": "edit-field-event-tags-target-id-checked-43030",
+          "selector": "edit-field-event-tags-target-id-checked-43030",
+          "label": "Sport",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][43360]",
+          "id": "edit-field-event-tags-target-id-checked-43360",
+          "selector": "edit-field-event-tags-target-id-checked-43360",
+          "label": "Careers",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][44137]",
+          "id": "edit-field-event-tags-target-id-checked-44137",
+          "selector": "edit-field-event-tags-target-id-checked-44137",
+          "label": "Postgraduate Summer",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][44160]",
+          "id": "edit-field-event-tags-target-id-checked-44160",
+          "selector": "edit-field-event-tags-target-id-checked-44160",
+          "label": "Representation",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][44185]",
+          "id": "edit-field-event-tags-target-id-checked-44185",
+          "selector": "edit-field-event-tags-target-id-checked-44185",
+          "label": "Wellbeing",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][44220]",
+          "id": "edit-field-event-tags-target-id-checked-44220",
+          "selector": "edit-field-event-tags-target-id-checked-44220",
+          "label": "Alcohol Free",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][44234]",
+          "id": "edit-field-event-tags-target-id-checked-44234",
+          "selector": "edit-field-event-tags-target-id-checked-44234",
+          "label": "UCL East",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][44320]",
+          "id": "edit-field-event-tags-target-id-checked-44320",
+          "selector": "edit-field-event-tags-target-id-checked-44320",
+          "label": "Culture",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][46796]",
+          "id": "edit-field-event-tags-target-id-checked-46796",
+          "selector": "edit-field-event-tags-target-id-checked-46796",
+          "label": "Money & Budgeting",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][47049]",
+          "id": "edit-field-event-tags-target-id-checked-47049",
+          "selector": "edit-field-event-tags-target-id-checked-47049",
+          "label": "Welcome",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][47087]",
+          "id": "edit-field-event-tags-target-id-checked-47087",
+          "selector": "edit-field-event-tags-target-id-checked-47087",
+          "label": "Discover London",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][47195]",
+          "id": "edit-field-event-tags-target-id-checked-47195",
+          "selector": "edit-field-event-tags-target-id-checked-47195",
+          "label": "Under 18 Friendly",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][47200]",
+          "id": "edit-field-event-tags-target-id-checked-47200",
+          "selector": "edit-field-event-tags-target-id-checked-47200",
+          "label": "Club and Society Taster",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][48427]",
+          "id": "edit-field-event-tags-target-id-checked-48427",
+          "selector": "edit-field-event-tags-target-id-checked-48427",
+          "label": "Black History Month",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][48597]",
+          "id": "edit-field-event-tags-target-id-checked-48597",
+          "selector": "edit-field-event-tags-target-id-checked-48597",
+          "label": "Postgrads only",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][49267]",
+          "id": "edit-field-event-tags-target-id-checked-49267",
+          "selector": "edit-field-event-tags-target-id-checked-49267",
+          "label": "Make a Difference",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][49276]",
+          "id": "edit-field-event-tags-target-id-checked-49276",
+          "selector": "edit-field-event-tags-target-id-checked-49276",
+          "label": "Commuters",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][50053]",
+          "id": "edit-field-event-tags-target-id-checked-50053",
+          "selector": "edit-field-event-tags-target-id-checked-50053",
+          "label": "Lowkey",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_tags[target_id][checked][50417]",
+          "id": "edit-field-event-tags-target-id-checked-50417",
+          "selector": "edit-field-event-tags-target-id-checked-50417",
+          "label": "Distance Leaners",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "field_event_tags[target_id][textfield]",
+          "id": "autocomplete-deluxe-input",
+          "selector": "edit-field-event-tags-target-id-textfield",
+          "label": "Tags",
+          "required": false,
+          "hidden": false,
+          "wrapperSelector": "edit-field-event-tags-wrapper",
+          "description": "These checkboxes are featured tags that are currently used for our public directory pages and What's On calendar. Selecting any relevant ones will help visitors discover your event."
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "field_event_tags[target_id][value_field]",
+          "id": "edit-field-event-tags-target-id-value-field",
+          "selector": "edit-field-event-tags-target-id-value-field",
+          "label": "Event info",
+          "required": false,
+          "hidden": true,
+          "description": "You can add additional tags if desired, for example to include your event in other pages or for reporting purposes."
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "field_event_venue[0][target_id]",
+          "id": "edit-field-event-venue-0-target-id",
+          "selector": "edit-field-event-venue-0-target-id",
+          "label": "Venue",
+          "required": false,
+          "hidden": false,
+          "description": "Start typing to search and select a venue.",
+          "autocomplete": true
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_online[value]",
+          "id": "edit-field-event-online-value",
+          "selector": "edit-field-event-online-value",
+          "label": "Online event",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_access_pg[value]",
+          "id": "edit-field-access-pg-value",
+          "selector": "edit-field-access-pg-value",
+          "label": "Postgraduate event",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "field_event_owner_group[target_id][0][target_id]",
+          "id": "edit-field-event-owner-group-target-id-0-target-id",
+          "selector": "edit-field-event-owner-group-target-id-0-target-id",
+          "label": "Owning group",
+          "required": true,
+          "hidden": false,
+          "options": [
+            {
+              "value": "",
+              "text": "- None -"
+            },
+            {
+              "value": "100001",
+              "text": "Example Society"
+            },
+            {
+              "value": "100002",
+              "text": "Example Club"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "changed",
+          "id": "",
+          "selector": "edit-changed",
+          "label": "",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "form_build_id",
+          "id": "",
+          "selector": "",
+          "label": "",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "form_token",
+          "id": "",
+          "selector": "edit-commerce-product-event-add-form-form-token",
+          "label": "",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "form_id",
+          "id": "",
+          "selector": "edit-commerce-product-event-add-form",
+          "label": "",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "field_ticketing_type",
+          "id": "edit-field-ticketing-type",
+          "selector": "edit-field-ticketing-type",
+          "label": "Event tickets",
+          "required": true,
+          "hidden": true,
+          "description": "Select the sort of ticketing this event will have, or none.",
+          "options": [
+            {
+              "value": "none",
+              "text": "No tickets"
+            },
+            {
+              "value": "free",
+              "text": "Free tickets bookable on this website"
+            },
+            {
+              "value": "paid",
+              "text": "Paid tickets sold on this website"
+            },
+            {
+              "value": "external",
+              "text": "Tickets booked or sold on external website"
+            },
+            {
+              "value": "clubsoc",
+              "text": "Club & Society event as part of a Ticket Request Form submission"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Tickets",
+          "required": false,
+          "hidden": false,
+          "description": "Select the sort of ticketing this event will have, or none."
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "tabledrag-toggle-weight",
+          "label": "Tickets",
+          "required": false,
+          "hidden": false,
+          "wrapperSelector": "edit-variations",
+          "description": "Format: 9.99",
+          "text": "Show row weights"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Tickets",
+          "required": false,
+          "hidden": true,
+          "wrapperSelector": "edit-variations",
+          "description": "Format: 9.99",
+          "text": "Hide lower priority columns"
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "variations[0][inline_entity_form][is_ticket][value]",
+          "id": "edit-variations-0-inline-entity-form-is-ticket-value",
+          "selector": "edit-variations-0-inline-entity-form-is-ticket-value",
+          "label": "This ticket type is bookable",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "variations[0][inline_entity_form][price][0][number]",
+          "id": "edit-variations-0-inline-entity-form-price-0-number",
+          "selector": "edit-variations-0-inline-entity-form-price-0-number",
+          "label": "Price",
+          "required": true,
+          "hidden": true,
+          "description": "Format: 9.99"
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "variations[0][inline_entity_form][price][0][currency_code]",
+          "id": "",
+          "selector": "edit-variations-0-inline-entity-form-price-0-currency-code",
+          "label": "Date and ticket variations",
+          "required": false,
+          "hidden": true,
+          "wrapperSelector": "edit-variations-0-inline-entity-form-price-0",
+          "description": "Format: 9.99"
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "variations[0][inline_entity_form][field_stock][0][adjustment]",
+          "id": "edit-variations-0-inline-entity-form-field-stock-0-adjustment",
+          "selector": "edit-variations-0-inline-entity-form-field-stock-0-adjustment",
+          "label": "Stock level adjustment",
+          "required": false,
+          "hidden": false,
+          "description": "A positive number will add stock, a negative number will remove stock."
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "variations[0][inline_entity_form][field_stock][0][stock_transaction_note]",
+          "id": "edit-variations-0-inline-entity-form-field-stock-0-stock-transaction-note",
+          "selector": "edit-variations-0-inline-entity-form-field-stock-0-stock-transaction-note",
+          "label": "Transaction note",
+          "required": false,
+          "hidden": false,
+          "description": "Default note for transactions. Configurable in the field widget settings."
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "variations[0][inline_entity_form][commerce_stock_always_in_stock][value]",
+          "id": "edit-variations-0-inline-entity-form-commerce-stock-always-in-stock-value",
+          "selector": "edit-variations-0-inline-entity-form-commerce-stock-always-in-stock-value",
+          "label": "Unlimited tickets available?",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "variations[0][inline_entity_form][field_event_external_link][0][uri]",
+          "id": "edit-variations-0-inline-entity-form-field-event-external-link-0-uri",
+          "selector": "edit-variations-0-inline-entity-form-field-event-external-link-0-uri",
+          "label": "URL",
+          "required": false,
+          "hidden": true,
+          "states": {
+            "required": {
+              ":input[name=\"variations[0][inline_entity_form][field_event_external_link][0][title]\"]": {
+                "filled": true
+              }
+            }
+          },
+          "description": "Start typing the title of a piece of content to select it. You can also enter an internal path such as /node/add or an external URL such as https://example.com. Enter <front> to link to the front page. Enter <nolink> to display link text only. Enter <button> to display keyboard-accessible link text ",
+          "autocomplete": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "variations[0][inline_entity_form][field_event_external_link][0][title]",
+          "id": "edit-variations-0-inline-entity-form-field-event-external-link-0-title",
+          "selector": "edit-variations-0-inline-entity-form-field-event-external-link-0-title",
+          "label": "Link text",
+          "required": false,
+          "hidden": true,
+          "states": {
+            "required": {
+              ":input[name=\"variations[0][inline_entity_form][field_event_external_link][0][uri]\"]": {
+                "filled": true
+              }
+            }
+          }
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "variations[0][inline_entity_form][field_event_reminder_24h][value]",
+          "id": "edit-variations-0-inline-entity-form-field-event-reminder-24h-value",
+          "selector": "edit-variations-0-inline-entity-form-field-event-reminder-24h-value",
+          "label": "Send reminder e-mail 24 hours before",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "variations[0][inline_entity_form][field_event_feedback_request][value]",
+          "id": "edit-variations-0-inline-entity-form-field-event-feedback-request-value",
+          "selector": "edit-variations-0-inline-entity-form-field-event-feedback-request-value",
+          "label": "Send automated event feedback request",
+          "required": false,
+          "hidden": false,
+          "description": "If you check this box, an automatic e-mail will be sent 24 hours after the event's end time, requesting feedback from the ticketholder. The feedback will be available to anyone with sales access, on the \"Feedback\" tab on the event page. Note you can enable this on individual product variations, or f"
+        },
+        {
+          "tag": "textarea",
+          "type": "textarea",
+          "name": "variations[0][inline_entity_form][field_event_ticketholder_info][0][value]",
+          "id": "edit-variations-0-inline-entity-form-field-event-ticketholder-info-0-value",
+          "selector": "edit-variations-0-inline-entity-form-field-event-ticketholder-info-0-value",
+          "label": "Information for ticketholders",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Date and ticket variations",
+          "required": false,
+          "hidden": false,
+          "text": "Bold"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Date and ticket variations",
+          "required": false,
+          "hidden": false,
+          "text": "Italic"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Date and ticket variations",
+          "required": false,
+          "hidden": false,
+          "text": "Strikethrough"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Date and ticket variations",
+          "required": false,
+          "hidden": false,
+          "text": "Block quote"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Date and ticket variations",
+          "required": false,
+          "hidden": false,
+          "text": "Horizontal line"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Date and ticket variations",
+          "required": false,
+          "hidden": false,
+          "text": "Insert table"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Date and ticket variations",
+          "required": false,
+          "hidden": false,
+          "text": "Accordion"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Date and ticket variations",
+          "required": false,
+          "hidden": false,
+          "text": "Link"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Date and ticket variations",
+          "required": false,
+          "hidden": false,
+          "text": "Bulleted List"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Date and ticket variations",
+          "required": false,
+          "hidden": false,
+          "text": "Bulleted List"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Date and ticket variations",
+          "required": false,
+          "hidden": false,
+          "text": "Numbered List"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Date and ticket variations",
+          "required": false,
+          "hidden": false,
+          "text": "Numbered List"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Date and ticket variations",
+          "required": false,
+          "hidden": false,
+          "text": "Upload image from computer"
+        },
+        {
+          "tag": "input",
+          "type": "file",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Date and ticket variations",
+          "required": false,
+          "hidden": false,
+          "multiple": true
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Date and ticket variations",
+          "required": false,
+          "hidden": false,
+          "text": "Insert Media"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Date and ticket variations",
+          "required": false,
+          "hidden": false,
+          "text": "Show more items"
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "variations[0][inline_entity_form][field_event_ticketholder_info][0][format]",
+          "id": "edit-variations-0-inline-entity-form-field-event-ticketholder-info-0-format--2",
+          "selector": "edit-variations-0-inline-entity-form-field-event-ticketholder-info-0-format",
+          "label": "Text format",
+          "required": false,
+          "hidden": false,
+          "options": [
+            {
+              "value": "basic_html",
+              "text": "Basic HTML"
+            },
+            {
+              "value": "e_mail_html",
+              "text": "E-mail HTML"
+            },
+            {
+              "value": "very_basic_html",
+              "text": "Very basic HTML (only basic text formatting, links and lists)"
+            },
+            {
+              "value": "restricted_html",
+              "text": "Restricted HTML"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "variations[0][inline_entity_form][status][value]",
+          "id": "edit-variations-0-inline-entity-form-status-value",
+          "selector": "edit-variations-0-inline-entity-form-status-value",
+          "label": "Published",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "variations[0][inline_entity_form][title][0][value]",
+          "id": "edit-variations-0-inline-entity-form-title-0-value",
+          "selector": "edit-variations-0-inline-entity-form-title-0-value",
+          "label": "Variation title",
+          "required": false,
+          "hidden": false,
+          "description": "Optional. If left blank, the event title will be used. Set a custom title if you have multiple ticket types, e.g. \"Online\" and \"In-person\"."
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "variations[0][inline_entity_form][field_event_hide_on_whatson][value]",
+          "id": "edit-variations-0-inline-entity-form-field-event-hide-on-whatson-value",
+          "selector": "edit-variations-0-inline-entity-form-field-event-hide-on-whatson-value",
+          "label": "Hide from What's On calendar",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "variations[0][inline_entity_form][sku][0][value]",
+          "id": "edit-variations-0-inline-entity-form-sku-0-value",
+          "selector": "edit-variations-0-inline-entity-form-sku-0-value",
+          "label": "SKU",
+          "required": false,
+          "hidden": false,
+          "description": "The unique, machine-readable identifier for a variation."
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "variations[0][inline_entity_form][field_date_range_override][value]",
+          "id": "edit-variations-0-inline-entity-form-field-date-range-override-value",
+          "selector": "edit-variations-0-inline-entity-form-field-date-range-override-value",
+          "label": "Date range override",
+          "required": false,
+          "hidden": false,
+          "description": "Check this box to have this ticket variation show on a different date to the overall event. (The date specified here is used for the What's On calendar and shown on the event tickets)."
+        },
+        {
+          "tag": "input",
+          "type": "date",
+          "name": "variations[0][inline_entity_form][field_date_range][0][time_wrapper][value][date]",
+          "id": "edit-variations-0-inline-entity-form-field-date-range-0-time-wrapper-value-date",
+          "selector": "edit-variations-0-inline-entity-form-field-date-range-0-time-wrapper-value-date",
+          "label": "Date",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "time",
+          "name": "variations[0][inline_entity_form][field_date_range][0][time_wrapper][value][time]",
+          "id": "edit-variations-0-inline-entity-form-field-date-range-0-time-wrapper-value-time",
+          "selector": "edit-variations-0-inline-entity-form-field-date-range-0-time-wrapper-value-time",
+          "label": "Time",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "date",
+          "name": "variations[0][inline_entity_form][field_date_range][0][time_wrapper][end_value][date]",
+          "id": "edit-variations-0-inline-entity-form-field-date-range-0-time-wrapper-end-value-date",
+          "selector": "edit-variations-0-inline-entity-form-field-date-range-0-time-wrapper-end-value-date",
+          "label": "Date",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "time",
+          "name": "variations[0][inline_entity_form][field_date_range][0][time_wrapper][end_value][time]",
+          "id": "edit-variations-0-inline-entity-form-field-date-range-0-time-wrapper-end-value-time",
+          "selector": "edit-variations-0-inline-entity-form-field-date-range-0-time-wrapper-end-value-time",
+          "label": "Time",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "All day",
+          "required": false,
+          "hidden": false,
+          "wrapperSelector": "edit-variations-0-inline-entity-form-field-date-range-0"
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "variations[0][inline_entity_form][field_date_range][0][duration]",
+          "id": "edit-variations-0-inline-entity-form-field-date-range-0-duration",
+          "selector": "edit-variations-0-inline-entity-form-field-date-range-0-duration",
+          "label": "Duration",
+          "required": false,
+          "hidden": true,
+          "options": [
+            {
+              "value": "15",
+              "text": "15 minutes"
+            },
+            {
+              "value": "30",
+              "text": "30 minutes"
+            },
+            {
+              "value": "60",
+              "text": "1 hour"
+            },
+            {
+              "value": "90",
+              "text": "90 minutes"
+            },
+            {
+              "value": "120",
+              "text": "2 hours"
+            },
+            {
+              "value": "custom",
+              "text": "Custom"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Date range",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "variations[0][inline_entity_form][field_date_range][0][timezone]",
+          "id": "edit-variations-0-inline-entity-form-field-date-range-0-timezone",
+          "selector": "edit-variations-0-inline-entity-form-field-date-range-0-timezone",
+          "label": "Time zone",
+          "required": false,
+          "hidden": true,
+          "options": [
+            {
+              "value": "",
+              "text": "- default: Europe/London -"
+            },
+            {
+              "value": "Africa/Abidjan",
+              "text": "Abidjan"
+            },
+            {
+              "value": "Africa/Accra",
+              "text": "Accra"
+            },
+            {
+              "value": "Africa/Addis_Ababa",
+              "text": "Addis Ababa"
+            },
+            {
+              "value": "Africa/Algiers",
+              "text": "Algiers"
+            },
+            {
+              "value": "Africa/Asmara",
+              "text": "Asmara"
+            },
+            {
+              "value": "Africa/Bamako",
+              "text": "Bamako"
+            },
+            {
+              "value": "Africa/Bangui",
+              "text": "Bangui"
+            },
+            {
+              "value": "Africa/Banjul",
+              "text": "Banjul"
+            },
+            {
+              "value": "Africa/Bissau",
+              "text": "Bissau"
+            },
+            {
+              "value": "Africa/Blantyre",
+              "text": "Blantyre"
+            },
+            {
+              "value": "Africa/Brazzaville",
+              "text": "Brazzaville"
+            },
+            {
+              "value": "Africa/Bujumbura",
+              "text": "Bujumbura"
+            },
+            {
+              "value": "Africa/Cairo",
+              "text": "Cairo"
+            },
+            {
+              "value": "Africa/Casablanca",
+              "text": "Casablanca"
+            },
+            {
+              "value": "Africa/Ceuta",
+              "text": "Ceuta"
+            },
+            {
+              "value": "Africa/Conakry",
+              "text": "Conakry"
+            },
+            {
+              "value": "Africa/Dakar",
+              "text": "Dakar"
+            },
+            {
+              "value": "Africa/Dar_es_Salaam",
+              "text": "Dar es Salaam"
+            },
+            {
+              "value": "Africa/Djibouti",
+              "text": "Djibouti"
+            },
+            {
+              "value": "Africa/Douala",
+              "text": "Douala"
+            },
+            {
+              "value": "Africa/El_Aaiun",
+              "text": "El Aaiun"
+            },
+            {
+              "value": "Africa/Freetown",
+              "text": "Freetown"
+            },
+            {
+              "value": "Africa/Gaborone",
+              "text": "Gaborone"
+            },
+            {
+              "value": "Africa/Harare",
+              "text": "Harare"
+            },
+            {
+              "value": "Africa/Johannesburg",
+              "text": "Johannesburg"
+            },
+            {
+              "value": "Africa/Juba",
+              "text": "Juba"
+            },
+            {
+              "value": "Africa/Kampala",
+              "text": "Kampala"
+            },
+            {
+              "value": "Africa/Khartoum",
+              "text": "Khartoum"
+            },
+            {
+              "value": "Africa/Kigali",
+              "text": "Kigali"
+            },
+            {
+              "value": "Africa/Kinshasa",
+              "text": "Kinshasa"
+            },
+            {
+              "value": "Africa/Lagos",
+              "text": "Lagos"
+            },
+            {
+              "value": "Africa/Libreville",
+              "text": "Libreville"
+            },
+            {
+              "value": "Africa/Lome",
+              "text": "Lome"
+            },
+            {
+              "value": "Africa/Luanda",
+              "text": "Luanda"
+            },
+            {
+              "value": "Africa/Lubumbashi",
+              "text": "Lubumbashi"
+            },
+            {
+              "value": "Africa/Lusaka",
+              "text": "Lusaka"
+            },
+            {
+              "value": "Africa/Malabo",
+              "text": "Malabo"
+            },
+            {
+              "value": "Africa/Maputo",
+              "text": "Maputo"
+            },
+            {
+              "value": "Africa/Maseru",
+              "text": "Maseru"
+            },
+            {
+              "value": "Africa/Mbabane",
+              "text": "Mbabane"
+            },
+            {
+              "value": "Africa/Mogadishu",
+              "text": "Mogadishu"
+            },
+            {
+              "value": "Africa/Monrovia",
+              "text": "Monrovia"
+            },
+            {
+              "value": "Africa/Nairobi",
+              "text": "Nairobi"
+            },
+            {
+              "value": "Africa/Ndjamena",
+              "text": "Ndjamena"
+            },
+            {
+              "value": "Africa/Niamey",
+              "text": "Niamey"
+            },
+            {
+              "value": "Africa/Nouakchott",
+              "text": "Nouakchott"
+            },
+            {
+              "value": "Africa/Ouagadougou",
+              "text": "Ouagadougou"
+            },
+            {
+              "value": "Africa/Porto-Novo",
+              "text": "Porto-Novo"
+            },
+            {
+              "value": "Africa/Sao_Tome",
+              "text": "Sao Tome"
+            },
+            {
+              "value": "Africa/Tripoli",
+              "text": "Tripoli"
+            },
+            {
+              "value": "Africa/Tunis",
+              "text": "Tunis"
+            },
+            {
+              "value": "Africa/Windhoek",
+              "text": "Windhoek"
+            },
+            {
+              "value": "America/Adak",
+              "text": "Adak"
+            },
+            {
+              "value": "America/Anchorage",
+              "text": "Anchorage"
+            },
+            {
+              "value": "America/Anguilla",
+              "text": "Anguilla"
+            },
+            {
+              "value": "America/Antigua",
+              "text": "Antigua"
+            },
+            {
+              "value": "America/Araguaina",
+              "text": "Araguaina"
+            },
+            {
+              "value": "America/Aruba",
+              "text": "Aruba"
+            },
+            {
+              "value": "America/Asuncion",
+              "text": "Asuncion"
+            },
+            {
+              "value": "America/Atikokan",
+              "text": "Atikokan"
+            },
+            {
+              "value": "America/Bahia",
+              "text": "Bahia"
+            },
+            {
+              "value": "America/Bahia_Banderas",
+              "text": "Bahia Banderas"
+            },
+            {
+              "value": "America/Barbados",
+              "text": "Barbados"
+            },
+            {
+              "value": "America/Belem",
+              "text": "Belem"
+            },
+            {
+              "value": "America/Belize",
+              "text": "Belize"
+            },
+            {
+              "value": "America/North_Dakota/Beulah",
+              "text": "Beulah (North Dakota)"
+            },
+            {
+              "value": "America/Blanc-Sablon",
+              "text": "Blanc-Sablon"
+            },
+            {
+              "value": "America/Boa_Vista",
+              "text": "Boa Vista"
+            },
+            {
+              "value": "America/Bogota",
+              "text": "Bogota"
+            },
+            {
+              "value": "America/Boise",
+              "text": "Boise"
+            },
+            {
+              "value": "America/Argentina/Buenos_Aires",
+              "text": "Buenos Aires (Argentina)"
+            },
+            {
+              "value": "America/Cambridge_Bay",
+              "text": "Cambridge Bay"
+            },
+            {
+              "value": "America/Campo_Grande",
+              "text": "Campo Grande"
+            },
+            {
+              "value": "America/Cancun",
+              "text": "Cancun"
+            },
+            {
+              "value": "America/Caracas",
+              "text": "Caracas"
+            },
+            {
+              "value": "America/Argentina/Catamarca",
+              "text": "Catamarca (Argentina)"
+            },
+            {
+              "value": "America/Cayenne",
+              "text": "Cayenne"
+            },
+            {
+              "value": "America/Cayman",
+              "text": "Cayman"
+            },
+            {
+              "value": "America/North_Dakota/Center",
+              "text": "Center (North Dakota)"
+            },
+            {
+              "value": "America/Chicago",
+              "text": "Chicago"
+            },
+            {
+              "value": "America/Chihuahua",
+              "text": "Chihuahua"
+            },
+            {
+              "value": "America/Ciudad_Juarez",
+              "text": "Ciudad Juarez"
+            },
+            {
+              "value": "America/Argentina/Cordoba",
+              "text": "Cordoba (Argentina)"
+            },
+            {
+              "value": "America/Costa_Rica",
+              "text": "Costa Rica"
+            },
+            {
+              "value": "America/Coyhaique",
+              "text": "Coyhaique"
+            },
+            {
+              "value": "America/Creston",
+              "text": "Creston"
+            },
+            {
+              "value": "America/Cuiaba",
+              "text": "Cuiaba"
+            },
+            {
+              "value": "America/Curacao",
+              "text": "Curacao"
+            },
+            {
+              "value": "America/Danmarkshavn",
+              "text": "Danmarkshavn"
+            },
+            {
+              "value": "America/Dawson",
+              "text": "Dawson"
+            },
+            {
+              "value": "America/Dawson_Creek",
+              "text": "Dawson Creek"
+            },
+            {
+              "value": "America/Denver",
+              "text": "Denver"
+            },
+            {
+              "value": "America/Detroit",
+              "text": "Detroit"
+            },
+            {
+              "value": "America/Dominica",
+              "text": "Dominica"
+            },
+            {
+              "value": "America/Edmonton",
+              "text": "Edmonton"
+            },
+            {
+              "value": "America/Eirunepe",
+              "text": "Eirunepe"
+            },
+            {
+              "value": "America/El_Salvador",
+              "text": "El Salvador"
+            },
+            {
+              "value": "America/Fort_Nelson",
+              "text": "Fort Nelson"
+            },
+            {
+              "value": "America/Fortaleza",
+              "text": "Fortaleza"
+            },
+            {
+              "value": "America/Glace_Bay",
+              "text": "Glace Bay"
+            },
+            {
+              "value": "America/Goose_Bay",
+              "text": "Goose Bay"
+            },
+            {
+              "value": "America/Grand_Turk",
+              "text": "Grand Turk"
+            },
+            {
+              "value": "America/Grenada",
+              "text": "Grenada"
+            },
+            {
+              "value": "America/Guadeloupe",
+              "text": "Guadeloupe"
+            },
+            {
+              "value": "America/Guatemala",
+              "text": "Guatemala"
+            },
+            {
+              "value": "America/Guayaquil",
+              "text": "Guayaquil"
+            },
+            {
+              "value": "America/Guyana",
+              "text": "Guyana"
+            },
+            {
+              "value": "America/Halifax",
+              "text": "Halifax"
+            },
+            {
+              "value": "America/Havana",
+              "text": "Havana"
+            },
+            {
+              "value": "America/Hermosillo",
+              "text": "Hermosillo"
+            },
+            {
+              "value": "America/Indiana/Indianapolis",
+              "text": "Indianapolis (Indiana)"
+            },
+            {
+              "value": "America/Inuvik",
+              "text": "Inuvik"
+            },
+            {
+              "value": "America/Iqaluit",
+              "text": "Iqaluit"
+            },
+            {
+              "value": "America/Jamaica",
+              "text": "Jamaica"
+            },
+            {
+              "value": "America/Argentina/Jujuy",
+              "text": "Jujuy (Argentina)"
+            },
+            {
+              "value": "America/Juneau",
+              "text": "Juneau"
+            },
+            {
+              "value": "America/Indiana/Knox",
+              "text": "Knox (Indiana)"
+            },
+            {
+              "value": "America/Kralendijk",
+              "text": "Kralendijk"
+            },
+            {
+              "value": "America/La_Paz",
+              "text": "La Paz"
+            },
+            {
+              "value": "America/Argentina/La_Rioja",
+              "text": "La Rioja (Argentina)"
+            },
+            {
+              "value": "America/Lima",
+              "text": "Lima"
+            },
+            {
+              "value": "America/Los_Angeles",
+              "text": "Los Angeles"
+            },
+            {
+              "value": "America/Kentucky/Louisville",
+              "text": "Louisville (Kentucky)"
+            },
+            {
+              "value": "America/Lower_Princes",
+              "text": "Lower Princes"
+            },
+            {
+              "value": "America/Maceio",
+              "text": "Maceio"
+            },
+            {
+              "value": "America/Managua",
+              "text": "Managua"
+            },
+            {
+              "value": "America/Manaus",
+              "text": "Manaus"
+            },
+            {
+              "value": "America/Indiana/Marengo",
+              "text": "Marengo (Indiana)"
+            },
+            {
+              "value": "America/Marigot",
+              "text": "Marigot"
+            },
+            {
+              "value": "America/Martinique",
+              "text": "Martinique"
+            },
+            {
+              "value": "America/Matamoros",
+              "text": "Matamoros"
+            },
+            {
+              "value": "America/Mazatlan",
+              "text": "Mazatlan"
+            },
+            {
+              "value": "America/Argentina/Mendoza",
+              "text": "Mendoza (Argentina)"
+            },
+            {
+              "value": "America/Menominee",
+              "text": "Menominee"
+            },
+            {
+              "value": "America/Merida",
+              "text": "Merida"
+            },
+            {
+              "value": "America/Metlakatla",
+              "text": "Metlakatla"
+            },
+            {
+              "value": "America/Mexico_City",
+              "text": "Mexico City"
+            },
+            {
+              "value": "America/Miquelon",
+              "text": "Miquelon"
+            },
+            {
+              "value": "America/Moncton",
+              "text": "Moncton"
+            },
+            {
+              "value": "America/Monterrey",
+              "text": "Monterrey"
+            },
+            {
+              "value": "America/Montevideo",
+              "text": "Montevideo"
+            },
+            {
+              "value": "America/Kentucky/Monticello",
+              "text": "Monticello (Kentucky)"
+            },
+            {
+              "value": "America/Montserrat",
+              "text": "Montserrat"
+            },
+            {
+              "value": "America/Nassau",
+              "text": "Nassau"
+            },
+            {
+              "value": "America/North_Dakota/New_Salem",
+              "text": "New Salem (North Dakota)"
+            },
+            {
+              "value": "America/New_York",
+              "text": "New York"
+            },
+            {
+              "value": "America/Nome",
+              "text": "Nome"
+            },
+            {
+              "value": "America/Noronha",
+              "text": "Noronha"
+            },
+            {
+              "value": "America/Nuuk",
+              "text": "Nuuk"
+            },
+            {
+              "value": "America/Ojinaga",
+              "text": "Ojinaga"
+            },
+            {
+              "value": "America/Panama",
+              "text": "Panama"
+            },
+            {
+              "value": "America/Paramaribo",
+              "text": "Paramaribo"
+            },
+            {
+              "value": "America/Indiana/Petersburg",
+              "text": "Petersburg (Indiana)"
+            },
+            {
+              "value": "America/Phoenix",
+              "text": "Phoenix"
+            },
+            {
+              "value": "America/Port_of_Spain",
+              "text": "Port of Spain"
+            },
+            {
+              "value": "America/Port-au-Prince",
+              "text": "Port-au-Prince"
+            },
+            {
+              "value": "America/Porto_Velho",
+              "text": "Porto Velho"
+            },
+            {
+              "value": "America/Puerto_Rico",
+              "text": "Puerto Rico"
+            },
+            {
+              "value": "America/Punta_Arenas",
+              "text": "Punta Arenas"
+            },
+            {
+              "value": "America/Rankin_Inlet",
+              "text": "Rankin Inlet"
+            },
+            {
+              "value": "America/Recife",
+              "text": "Recife"
+            },
+            {
+              "value": "America/Regina",
+              "text": "Regina"
+            },
+            {
+              "value": "America/Resolute",
+              "text": "Resolute"
+            },
+            {
+              "value": "America/Rio_Branco",
+              "text": "Rio Branco"
+            },
+            {
+              "value": "America/Argentina/Rio_Gallegos",
+              "text": "Rio Gallegos (Argentina)"
+            },
+            {
+              "value": "America/Argentina/Salta",
+              "text": "Salta (Argentina)"
+            },
+            {
+              "value": "America/Argentina/San_Juan",
+              "text": "San Juan (Argentina)"
+            },
+            {
+              "value": "America/Argentina/San_Luis",
+              "text": "San Luis (Argentina)"
+            },
+            {
+              "value": "America/Santarem",
+              "text": "Santarem"
+            },
+            {
+              "value": "America/Santiago",
+              "text": "Santiago"
+            },
+            {
+              "value": "America/Santo_Domingo",
+              "text": "Santo Domingo"
+            },
+            {
+              "value": "America/Sao_Paulo",
+              "text": "Sao Paulo"
+            },
+            {
+              "value": "America/Scoresbysund",
+              "text": "Scoresbysund"
+            },
+            {
+              "value": "America/Sitka",
+              "text": "Sitka"
+            },
+            {
+              "value": "America/St_Barthelemy",
+              "text": "St Barthelemy"
+            },
+            {
+              "value": "America/St_Johns",
+              "text": "St Johns"
+            },
+            {
+              "value": "America/St_Kitts",
+              "text": "St Kitts"
+            },
+            {
+              "value": "America/St_Lucia",
+              "text": "St Lucia"
+            },
+            {
+              "value": "America/St_Thomas",
+              "text": "St Thomas"
+            },
+            {
+              "value": "America/St_Vincent",
+              "text": "St Vincent"
+            },
+            {
+              "value": "America/Swift_Current",
+              "text": "Swift Current"
+            },
+            {
+              "value": "America/Tegucigalpa",
+              "text": "Tegucigalpa"
+            },
+            {
+              "value": "America/Indiana/Tell_City",
+              "text": "Tell City (Indiana)"
+            },
+            {
+              "value": "America/Thule",
+              "text": "Thule"
+            },
+            {
+              "value": "America/Tijuana",
+              "text": "Tijuana"
+            },
+            {
+              "value": "America/Toronto",
+              "text": "Toronto"
+            },
+            {
+              "value": "America/Tortola",
+              "text": "Tortola"
+            },
+            {
+              "value": "America/Argentina/Tucuman",
+              "text": "Tucuman (Argentina)"
+            },
+            {
+              "value": "America/Argentina/Ushuaia",
+              "text": "Ushuaia (Argentina)"
+            },
+            {
+              "value": "America/Vancouver",
+              "text": "Vancouver"
+            },
+            {
+              "value": "America/Indiana/Vevay",
+              "text": "Vevay (Indiana)"
+            },
+            {
+              "value": "America/Indiana/Vincennes",
+              "text": "Vincennes (Indiana)"
+            },
+            {
+              "value": "America/Whitehorse",
+              "text": "Whitehorse"
+            },
+            {
+              "value": "America/Indiana/Winamac",
+              "text": "Winamac (Indiana)"
+            },
+            {
+              "value": "America/Winnipeg",
+              "text": "Winnipeg"
+            },
+            {
+              "value": "America/Yakutat",
+              "text": "Yakutat"
+            },
+            {
+              "value": "Antarctica/Casey",
+              "text": "Casey"
+            },
+            {
+              "value": "Antarctica/Davis",
+              "text": "Davis"
+            },
+            {
+              "value": "Antarctica/DumontDUrville",
+              "text": "DumontDUrville"
+            },
+            {
+              "value": "Antarctica/Macquarie",
+              "text": "Macquarie"
+            },
+            {
+              "value": "Antarctica/Mawson",
+              "text": "Mawson"
+            },
+            {
+              "value": "Antarctica/McMurdo",
+              "text": "McMurdo"
+            },
+            {
+              "value": "Antarctica/Palmer",
+              "text": "Palmer"
+            },
+            {
+              "value": "Antarctica/Rothera",
+              "text": "Rothera"
+            },
+            {
+              "value": "Antarctica/Syowa",
+              "text": "Syowa"
+            },
+            {
+              "value": "Antarctica/Troll",
+              "text": "Troll"
+            },
+            {
+              "value": "Antarctica/Vostok",
+              "text": "Vostok"
+            },
+            {
+              "value": "Arctic/Longyearbyen",
+              "text": "Longyearbyen"
+            },
+            {
+              "value": "Asia/Aden",
+              "text": "Aden"
+            },
+            {
+              "value": "Asia/Almaty",
+              "text": "Almaty"
+            },
+            {
+              "value": "Asia/Amman",
+              "text": "Amman"
+            },
+            {
+              "value": "Asia/Anadyr",
+              "text": "Anadyr"
+            },
+            {
+              "value": "Asia/Aqtau",
+              "text": "Aqtau"
+            },
+            {
+              "value": "Asia/Aqtobe",
+              "text": "Aqtobe"
+            },
+            {
+              "value": "Asia/Ashgabat",
+              "text": "Ashgabat"
+            },
+            {
+              "value": "Asia/Atyrau",
+              "text": "Atyrau"
+            },
+            {
+              "value": "Asia/Baghdad",
+              "text": "Baghdad"
+            },
+            {
+              "value": "Asia/Bahrain",
+              "text": "Bahrain"
+            },
+            {
+              "value": "Asia/Baku",
+              "text": "Baku"
+            },
+            {
+              "value": "Asia/Bangkok",
+              "text": "Bangkok"
+            },
+            {
+              "value": "Asia/Barnaul",
+              "text": "Barnaul"
+            },
+            {
+              "value": "Asia/Beirut",
+              "text": "Beirut"
+            },
+            {
+              "value": "Asia/Bishkek",
+              "text": "Bishkek"
+            },
+            {
+              "value": "Asia/Brunei",
+              "text": "Brunei"
+            },
+            {
+              "value": "Asia/Chita",
+              "text": "Chita"
+            },
+            {
+              "value": "Asia/Colombo",
+              "text": "Colombo"
+            },
+            {
+              "value": "Asia/Damascus",
+              "text": "Damascus"
+            },
+            {
+              "value": "Asia/Dhaka",
+              "text": "Dhaka"
+            },
+            {
+              "value": "Asia/Dili",
+              "text": "Dili"
+            },
+            {
+              "value": "Asia/Dubai",
+              "text": "Dubai"
+            },
+            {
+              "value": "Asia/Dushanbe",
+              "text": "Dushanbe"
+            },
+            {
+              "value": "Asia/Famagusta",
+              "text": "Famagusta"
+            },
+            {
+              "value": "Asia/Gaza",
+              "text": "Gaza"
+            },
+            {
+              "value": "Asia/Hebron",
+              "text": "Hebron"
+            },
+            {
+              "value": "Asia/Ho_Chi_Minh",
+              "text": "Ho Chi Minh"
+            },
+            {
+              "value": "Asia/Hong_Kong",
+              "text": "Hong Kong"
+            },
+            {
+              "value": "Asia/Hovd",
+              "text": "Hovd"
+            },
+            {
+              "value": "Asia/Irkutsk",
+              "text": "Irkutsk"
+            },
+            {
+              "value": "Asia/Jakarta",
+              "text": "Jakarta"
+            },
+            {
+              "value": "Asia/Jayapura",
+              "text": "Jayapura"
+            },
+            {
+              "value": "Asia/Jerusalem",
+              "text": "Jerusalem"
+            },
+            {
+              "value": "Asia/Kabul",
+              "text": "Kabul"
+            },
+            {
+              "value": "Asia/Kamchatka",
+              "text": "Kamchatka"
+            },
+            {
+              "value": "Asia/Karachi",
+              "text": "Karachi"
+            },
+            {
+              "value": "Asia/Kathmandu",
+              "text": "Kathmandu"
+            },
+            {
+              "value": "Asia/Khandyga",
+              "text": "Khandyga"
+            },
+            {
+              "value": "Asia/Kolkata",
+              "text": "Kolkata"
+            },
+            {
+              "value": "Asia/Krasnoyarsk",
+              "text": "Krasnoyarsk"
+            },
+            {
+              "value": "Asia/Kuala_Lumpur",
+              "text": "Kuala Lumpur"
+            },
+            {
+              "value": "Asia/Kuching",
+              "text": "Kuching"
+            },
+            {
+              "value": "Asia/Kuwait",
+              "text": "Kuwait"
+            },
+            {
+              "value": "Asia/Macau",
+              "text": "Macau"
+            },
+            {
+              "value": "Asia/Magadan",
+              "text": "Magadan"
+            },
+            {
+              "value": "Asia/Makassar",
+              "text": "Makassar"
+            },
+            {
+              "value": "Asia/Manila",
+              "text": "Manila"
+            },
+            {
+              "value": "Asia/Muscat",
+              "text": "Muscat"
+            },
+            {
+              "value": "Asia/Nicosia",
+              "text": "Nicosia"
+            },
+            {
+              "value": "Asia/Novokuznetsk",
+              "text": "Novokuznetsk"
+            },
+            {
+              "value": "Asia/Novosibirsk",
+              "text": "Novosibirsk"
+            },
+            {
+              "value": "Asia/Omsk",
+              "text": "Omsk"
+            },
+            {
+              "value": "Asia/Oral",
+              "text": "Oral"
+            },
+            {
+              "value": "Asia/Phnom_Penh",
+              "text": "Phnom Penh"
+            },
+            {
+              "value": "Asia/Pontianak",
+              "text": "Pontianak"
+            },
+            {
+              "value": "Asia/Pyongyang",
+              "text": "Pyongyang"
+            },
+            {
+              "value": "Asia/Qatar",
+              "text": "Qatar"
+            },
+            {
+              "value": "Asia/Qostanay",
+              "text": "Qostanay"
+            },
+            {
+              "value": "Asia/Qyzylorda",
+              "text": "Qyzylorda"
+            },
+            {
+              "value": "Asia/Riyadh",
+              "text": "Riyadh"
+            },
+            {
+              "value": "Asia/Sakhalin",
+              "text": "Sakhalin"
+            },
+            {
+              "value": "Asia/Samarkand",
+              "text": "Samarkand"
+            },
+            {
+              "value": "Asia/Seoul",
+              "text": "Seoul"
+            },
+            {
+              "value": "Asia/Shanghai",
+              "text": "Shanghai"
+            },
+            {
+              "value": "Asia/Singapore",
+              "text": "Singapore"
+            },
+            {
+              "value": "Asia/Srednekolymsk",
+              "text": "Srednekolymsk"
+            },
+            {
+              "value": "Asia/Taipei",
+              "text": "Taipei"
+            },
+            {
+              "value": "Asia/Tashkent",
+              "text": "Tashkent"
+            },
+            {
+              "value": "Asia/Tbilisi",
+              "text": "Tbilisi"
+            },
+            {
+              "value": "Asia/Tehran",
+              "text": "Tehran"
+            },
+            {
+              "value": "Asia/Thimphu",
+              "text": "Thimphu"
+            },
+            {
+              "value": "Asia/Tokyo",
+              "text": "Tokyo"
+            },
+            {
+              "value": "Asia/Tomsk",
+              "text": "Tomsk"
+            },
+            {
+              "value": "Asia/Ulaanbaatar",
+              "text": "Ulaanbaatar"
+            },
+            {
+              "value": "Asia/Urumqi",
+              "text": "Urumqi"
+            },
+            {
+              "value": "Asia/Ust-Nera",
+              "text": "Ust-Nera"
+            },
+            {
+              "value": "Asia/Vientiane",
+              "text": "Vientiane"
+            },
+            {
+              "value": "Asia/Vladivostok",
+              "text": "Vladivostok"
+            },
+            {
+              "value": "Asia/Yakutsk",
+              "text": "Yakutsk"
+            },
+            {
+              "value": "Asia/Yangon",
+              "text": "Yangon"
+            },
+            {
+              "value": "Asia/Yekaterinburg",
+              "text": "Yekaterinburg"
+            },
+            {
+              "value": "Asia/Yerevan",
+              "text": "Yerevan"
+            },
+            {
+              "value": "Atlantic/Azores",
+              "text": "Azores"
+            },
+            {
+              "value": "Atlantic/Bermuda",
+              "text": "Bermuda"
+            },
+            {
+              "value": "Atlantic/Canary",
+              "text": "Canary"
+            },
+            {
+              "value": "Atlantic/Cape_Verde",
+              "text": "Cape Verde"
+            },
+            {
+              "value": "Atlantic/Faroe",
+              "text": "Faroe"
+            },
+            {
+              "value": "Atlantic/Madeira",
+              "text": "Madeira"
+            },
+            {
+              "value": "Atlantic/Reykjavik",
+              "text": "Reykjavik"
+            },
+            {
+              "value": "Atlantic/South_Georgia",
+              "text": "South Georgia"
+            },
+            {
+              "value": "Atlantic/St_Helena",
+              "text": "St Helena"
+            }
+          ],
+          "optionsTruncated": 420
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Date range",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "variations[0][inline_entity_form][maximum_order_quantity][0][value]",
+          "id": "edit-variations-0-inline-entity-form-maximum-order-quantity-0-value",
+          "selector": "edit-variations-0-inline-entity-form-maximum-order-quantity-0-value",
+          "label": "Maximum quantity per order",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "variations_und_0_remove_button",
+          "id": "edit-variations-0-remove-button",
+          "selector": "edit-variations-0-remove-button",
+          "label": "Date and ticket variations",
+          "required": false,
+          "hidden": false,
+          "wrapperSelector": "edit-variations-0",
+          "description": "Format: 9.99",
+          "text": "Remove"
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "variations_0_remove_button",
+          "id": "edit-variations-0-actions-delete",
+          "selector": "edit-variations-0-actions-delete",
+          "label": "Tickets",
+          "required": false,
+          "hidden": false,
+          "wrapperSelector": "edit-variations",
+          "description": "Format: 9.99",
+          "text": "Remove"
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "variations[0][_weight]",
+          "id": "edit-variations-0-weight",
+          "selector": "edit-variations-0-weight",
+          "label": "Weight for row 1",
+          "required": false,
+          "hidden": true,
+          "options": [
+            {
+              "value": "0",
+              "text": "0"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "variations_add_more",
+          "id": "edit-variations-add-more",
+          "selector": "edit-variations-add-more",
+          "label": "Tickets",
+          "required": false,
+          "hidden": false,
+          "wrapperSelector": "edit-variations",
+          "description": "Format: 9.99",
+          "text": "Add additional ticket type"
+        },
+        {
+          "tag": "input",
+          "type": "email",
+          "name": "field_contact_email[0][value]",
+          "id": "edit-field-contact-email-0-value",
+          "selector": "edit-field-contact-email-0-value",
+          "label": "Contact email",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "field_contact_phone_number[0][value]",
+          "id": "edit-field-contact-phone-number-0-value",
+          "selector": "edit-field-contact-phone-number-0-value",
+          "label": "Contact phone number",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "file",
+          "name": "files[field_event_image_banner_0]",
+          "id": "edit-field-event-image-banner-0-upload",
+          "selector": "edit-field-event-image-banner-0-upload",
+          "label": "Banner image",
+          "required": false,
+          "hidden": false,
+          "description": "One file only. • 3 MB limit. • Allowed types: png gif jpg jpeg."
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "field_event_image_banner_0_upload_button",
+          "id": "edit-field-event-image-banner-0-upload-button",
+          "selector": "edit-field-event-image-banner-0-upload-button",
+          "label": "Display & theme",
+          "required": false,
+          "hidden": false,
+          "description": "One file only. • 3 MB limit. • Allowed types: png gif jpg jpeg.",
+          "text": "Upload"
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "field_event_image_banner[0][fids]",
+          "id": "",
+          "selector": "edit-field-event-image-banner-0-fids",
+          "label": "Display & theme",
+          "required": false,
+          "hidden": true,
+          "description": "One file only. • 3 MB limit. • Allowed types: png gif jpg jpeg."
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "field_event_image_banner[0][display]",
+          "id": "",
+          "selector": "edit-field-event-image-banner-0-display",
+          "label": "Display & theme",
+          "required": false,
+          "hidden": true,
+          "description": "One file only. • 3 MB limit. • Allowed types: png gif jpg jpeg."
+        },
+        {
+          "tag": "input",
+          "type": "file",
+          "name": "files[field_event_image_card_0]",
+          "id": "edit-field-event-image-card-0-upload",
+          "selector": "edit-field-event-image-card-0-upload",
+          "label": "Card image",
+          "required": false,
+          "hidden": false,
+          "description": "Upload a photo - avoid uploading graphics or logos. • One file only. • 1 MB limit. • Allowed types: png gif jpg jpeg."
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "field_event_image_card_0_upload_button",
+          "id": "edit-field-event-image-card-0-upload-button",
+          "selector": "edit-field-event-image-card-0-upload-button",
+          "label": "Display & theme",
+          "required": false,
+          "hidden": false,
+          "description": "Upload a photo - avoid uploading graphics or logos. • One file only. • 1 MB limit. • Allowed types: png gif jpg jpeg.",
+          "text": "Upload"
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "field_event_image_card[0][fids]",
+          "id": "",
+          "selector": "edit-field-event-image-card-0-fids",
+          "label": "Display & theme",
+          "required": false,
+          "hidden": true,
+          "description": "Upload a photo - avoid uploading graphics or logos. • One file only. • 1 MB limit. • Allowed types: png gif jpg jpeg."
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "field_event_image_card[0][display]",
+          "id": "",
+          "selector": "edit-field-event-image-card-0-display",
+          "label": "Display & theme",
+          "required": false,
+          "hidden": true,
+          "description": "Upload a photo - avoid uploading graphics or logos. • One file only. • 1 MB limit. • Allowed types: png gif jpg jpeg."
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "field_duotone",
+          "id": "edit-field-duotone",
+          "selector": "edit-field-duotone",
+          "label": "Duotone",
+          "required": false,
+          "hidden": true,
+          "options": [
+            {
+              "value": "_none",
+              "text": "- None -"
+            },
+            {
+              "value": "green-blue-filter",
+              "text": "Green & Blue"
+            },
+            {
+              "value": "green-purple-filter",
+              "text": "Green & Purple"
+            },
+            {
+              "value": "yellow-blue-filter",
+              "text": "Yellow & Blue"
+            },
+            {
+              "value": "green-yellow-filter",
+              "text": "Yellow & Purple"
+            },
+            {
+              "value": "yellow-purple-filter",
+              "text": "Yellow & Purple"
+            },
+            {
+              "value": "orange-yellow-filter",
+              "text": "Orange & Yellow"
+            },
+            {
+              "value": "team-ucl-filter",
+              "text": "Team UCL filter (light blue and purple)"
+            },
+            {
+              "value": "yellow-green-filter",
+              "text": "Yellow & Green"
+            },
+            {
+              "value": "orange-blue-filter",
+              "text": "Orange & Blue"
+            },
+            {
+              "value": "green-paleyellow-filter",
+              "text": "Green & Pale Yellow (COVID-19)"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Display & theme",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "field_access_wheelchair",
+          "id": "edit-field-access-wheelchair-no",
+          "selector": "edit-field-access-wheelchair-no",
+          "label": "No",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "field_access_wheelchair",
+          "id": "edit-field-access-wheelchair-yes",
+          "selector": "edit-field-access-wheelchair-yes",
+          "label": "Yes",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "textarea",
+          "type": "textarea",
+          "name": "field_access_wheelchair_info[0][value]",
+          "id": "edit-field-access-wheelchair-info-0-value",
+          "selector": "edit-field-access-wheelchair-info-0-value",
+          "label": "Wheelchair accessible info",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Bold"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Italic"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Strikethrough"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Block quote"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Horizontal line"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Insert table"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Accordion"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Link"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Bulleted List"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Bulleted List"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Numbered List"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Numbered List"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Upload image from computer"
+        },
+        {
+          "tag": "input",
+          "type": "file",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "multiple": true
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Insert Media"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Insert file"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Paragraph, Heading",
+          "required": false,
+          "hidden": true,
+          "text": "Paragraph"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Remove Format"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Source"
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "field_access_wheelchair_info[0][format]",
+          "id": "edit-field-access-wheelchair-info-0-format--2",
+          "selector": "edit-field-access-wheelchair-info-0-format",
+          "label": "Text format",
+          "required": false,
+          "hidden": true,
+          "options": [
+            {
+              "value": "basic_html",
+              "text": "Basic HTML"
+            },
+            {
+              "value": "e_mail_html",
+              "text": "E-mail HTML"
+            },
+            {
+              "value": "very_basic_html",
+              "text": "Very basic HTML (only basic text formatting, links and lists)"
+            },
+            {
+              "value": "restricted_html",
+              "text": "Restricted HTML"
+            }
+          ]
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "field_access_family",
+          "id": "edit-field-access-family",
+          "selector": "edit-field-access-family",
+          "label": "Family friendly",
+          "required": true,
+          "hidden": true,
+          "options": [
+            {
+              "value": "_none",
+              "text": "- Select a value -"
+            },
+            {
+              "value": "No",
+              "text": "No"
+            },
+            {
+              "value": "Yes",
+              "text": "Yes"
+            },
+            {
+              "value": "Partial",
+              "text": "Partial"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "textarea",
+          "type": "textarea",
+          "name": "field_access_family_info[0][value]",
+          "id": "edit-field-access-family-info-0-value",
+          "selector": "edit-field-access-family-info-0-value",
+          "label": "Family friendly info",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Bold"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Italic"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Strikethrough"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Block quote"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Horizontal line"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Insert table"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Accordion"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Link"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Bulleted List"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Bulleted List"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Numbered List"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Numbered List"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Upload image from computer"
+        },
+        {
+          "tag": "input",
+          "type": "file",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "multiple": true
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Insert Media"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Insert file"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Paragraph, Heading",
+          "required": false,
+          "hidden": true,
+          "text": "Paragraph"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Remove Format"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Access and participation",
+          "required": false,
+          "hidden": true,
+          "text": "Source"
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "field_access_family_info[0][format]",
+          "id": "edit-field-access-family-info-0-format--2",
+          "selector": "edit-field-access-family-info-0-format",
+          "label": "Text format",
+          "required": false,
+          "hidden": true,
+          "options": [
+            {
+              "value": "basic_html",
+              "text": "Basic HTML"
+            },
+            {
+              "value": "e_mail_html",
+              "text": "E-mail HTML"
+            },
+            {
+              "value": "very_basic_html",
+              "text": "Very basic HTML (only basic text formatting, links and lists)"
+            },
+            {
+              "value": "restricted_html",
+              "text": "Restricted HTML"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "status[value]",
+          "id": "edit-status-value",
+          "selector": "edit-status-value",
+          "label": "Published",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "textarea",
+          "type": "textarea",
+          "name": "field_event_ticketholder_info[0][value]",
+          "id": "edit-field-event-ticketholder-info-0-value",
+          "selector": "edit-field-event-ticketholder-info-0-value",
+          "label": "Information for ticketholders",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "text": "Bold"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "text": "Italic"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "text": "Strikethrough"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "text": "Block quote"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "text": "Horizontal line"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "text": "Insert table"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "text": "Accordion"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "text": "Link"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "text": "Bulleted List"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "text": "Bulleted List"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "text": "Numbered List"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "text": "Numbered List"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "text": "Upload image from computer"
+        },
+        {
+          "tag": "input",
+          "type": "file",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "multiple": true
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "text": "Insert Media"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "text": "Insert file"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Paragraph, Heading",
+          "required": false,
+          "hidden": false,
+          "text": "Paragraph"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "text": "Remove Format"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "text": "Show more items"
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "field_event_ticketholder_info[0][format]",
+          "id": "edit-field-event-ticketholder-info-0-format--2",
+          "selector": "edit-field-event-ticketholder-info-0-format",
+          "label": "Text format",
+          "required": false,
+          "hidden": false,
+          "options": [
+            {
+              "value": "basic_html",
+              "text": "Basic HTML"
+            },
+            {
+              "value": "e_mail_html",
+              "text": "E-mail HTML"
+            },
+            {
+              "value": "very_basic_html",
+              "text": "Very basic HTML (only basic text formatting, links and lists)"
+            },
+            {
+              "value": "restricted_html",
+              "text": "Restricted HTML"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_event_feedback_request[value]",
+          "id": "edit-field-event-feedback-request-value",
+          "selector": "edit-field-event-feedback-request-value",
+          "label": "Send automated event feedback request",
+          "required": false,
+          "hidden": false,
+          "description": "If you check this box, an automatic e-mail will be sent 24 hours after the event's end time, requesting feedback from the ticketholder. The feedback will be available to anyone with sales access, on the \"Feedback\" tab on the event page. NOTE: feedback requests will be sent from September 2024. This "
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "field_use_overall_event[value]",
+          "id": "edit-field-use-overall-event-value",
+          "selector": "edit-field-use-overall-event-value",
+          "label": "Use overall event time for What's On calendar",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "tabledrag-toggle-weight",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "wrapperSelector": "edit-field-event-administrators",
+          "description": "Grant access to the event sales report to specific users. For UCL users, it is easiest to use their user ID e-mail to search, e.g. ticketholder@example.invalid",
+          "text": "Show row weights"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": true,
+          "wrapperSelector": "edit-field-event-administrators",
+          "description": "Grant access to the event sales report to specific users. For UCL users, it is easiest to use their user ID e-mail to search, e.g. ticketholder@example.invalid",
+          "text": "Hide lower priority columns"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "field_event_administrators[0][target_id]",
+          "id": "edit-field-event-administrators-0-target-id",
+          "selector": "edit-field-event-administrators-0-target-id",
+          "label": "Event sales access (value 1)",
+          "required": false,
+          "hidden": false,
+          "autocomplete": true
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "field_event_administrators_und_0_remove_button",
+          "id": "edit-field-event-administrators-0-remove-button",
+          "selector": "edit-field-event-administrators-0-remove-button",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "wrapperSelector": "edit-field-event-administrators",
+          "description": "Grant access to the event sales report to specific users. For UCL users, it is easiest to use their user ID e-mail to search, e.g. ticketholder@example.invalid",
+          "text": "Remove"
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "field_event_administrators_0_remove_button",
+          "id": "edit-field-event-administrators-0-actions-delete",
+          "selector": "edit-field-event-administrators-0-actions-delete",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "wrapperSelector": "edit-field-event-administrators",
+          "description": "Grant access to the event sales report to specific users. For UCL users, it is easiest to use their user ID e-mail to search, e.g. ticketholder@example.invalid",
+          "text": "Remove"
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "field_event_administrators[0][_weight]",
+          "id": "edit-field-event-administrators-0-weight",
+          "selector": "edit-field-event-administrators-0-weight",
+          "label": "Weight for row 1",
+          "required": false,
+          "hidden": true,
+          "options": [
+            {
+              "value": "0",
+              "text": "0"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "field_event_administrators_add_more",
+          "id": "edit-field-event-administrators-add-more",
+          "selector": "edit-field-event-administrators-add-more",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "wrapperSelector": "edit-field-event-administrators",
+          "description": "Grant access to the event sales report to specific users. For UCL users, it is easiest to use their user ID e-mail to search, e.g. ticketholder@example.invalid",
+          "text": "Add another item"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "tabledrag-toggle-weight",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "wrapperSelector": "edit-field-related-officers",
+          "text": "Show row weights"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": true,
+          "wrapperSelector": "edit-field-related-officers",
+          "text": "Hide lower priority columns"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "field_related_officers[0][target_id]",
+          "id": "edit-field-related-officers-0-target-id",
+          "selector": "edit-field-related-officers-0-target-id",
+          "label": "Related officer(s) (value 1)",
+          "required": false,
+          "hidden": false,
+          "autocomplete": true
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "field_related_officers_und_0_remove_button",
+          "id": "edit-field-related-officers-0-remove-button",
+          "selector": "edit-field-related-officers-0-remove-button",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "wrapperSelector": "edit-field-related-officers",
+          "text": "Remove"
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "field_related_officers_0_remove_button",
+          "id": "edit-field-related-officers-0-actions-delete",
+          "selector": "edit-field-related-officers-0-actions-delete",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "wrapperSelector": "edit-field-related-officers",
+          "text": "Remove"
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "field_related_officers[0][_weight]",
+          "id": "edit-field-related-officers-0-weight",
+          "selector": "edit-field-related-officers-0-weight",
+          "label": "Weight for row 1",
+          "required": false,
+          "hidden": true,
+          "options": [
+            {
+              "value": "0",
+              "text": "0"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "field_related_officers_add_more",
+          "id": "edit-field-related-officers-add-more",
+          "selector": "edit-field-related-officers-add-more",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false,
+          "wrapperSelector": "edit-field-related-officers",
+          "text": "Add another item"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "field_language[target_id][textfield]",
+          "id": "autocomplete-deluxe-input--2",
+          "selector": "edit-field-language-target-id-textfield",
+          "label": "Language/Culture",
+          "required": false,
+          "hidden": false,
+          "wrapperSelector": "edit-field-language-wrapper",
+          "description": "If this event should appear as part of the \"Language and cultural opportunities\" directory, set the language(s) here. Only set this if the event is a language class or related cultural event."
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "field_language[target_id][value_field]",
+          "id": "edit-field-language-target-id-value-field",
+          "selector": "edit-field-language-target-id-value-field",
+          "label": "Additional options",
+          "required": false,
+          "hidden": true,
+          "description": "If this event should appear as part of the \"Language and cultural opportunities\" directory, set the language(s) here. Only set this if the event is a language class or related cultural event."
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "stores[1]",
+          "id": "edit-stores-1",
+          "selector": "edit-stores-1",
+          "label": "Students' Union UCL online store",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "field_donation_product",
+          "id": "edit-field-donation-product",
+          "selector": "edit-field-donation-product",
+          "label": "Prompt purchasers for donation",
+          "required": false,
+          "hidden": true,
+          "options": [
+            {
+              "value": "_none",
+              "text": "- None -"
+            },
+            {
+              "value": "194142",
+              "text": "Hardship Fund"
+            },
+            {
+              "value": "189379",
+              "text": "Participation Fund"
+            },
+            {
+              "value": "198800",
+              "text": "Movember Foundation"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "field_stock_level_status[0][value]",
+          "id": "edit-field-stock-level-status-0-value",
+          "selector": "edit-field-stock-level-status-0-value",
+          "label": "Stock level status",
+          "required": false,
+          "hidden": false,
+          "description": "Updated automatically within half an hour of any stock transaction (addition or sales)."
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Additional options",
+          "required": false,
+          "hidden": true,
+          "wrapperSelector": "edit-uid-wrapper"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "uid[target_id][textfield]",
+          "id": "autocomplete-deluxe-input--3",
+          "selector": "edit-uid-target-id-textfield",
+          "label": "Author",
+          "required": false,
+          "hidden": false,
+          "wrapperSelector": "edit-uid-wrapper"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "uid[target_id][value_field]",
+          "id": "edit-uid-target-id-value-field",
+          "selector": "edit-uid-target-id-value-field",
+          "label": "Additional options",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "field_tax_category",
+          "id": "edit-field-tax-category",
+          "selector": "edit-field-tax-category",
+          "label": "Tax category",
+          "required": true,
+          "hidden": true,
+          "description": "This is for accounting purposes and does not affect the price or income for the product. Please select whatever is closest to this product.",
+          "options": [
+            {
+              "value": "_none",
+              "text": "- Select a value -"
+            },
+            {
+              "value": "41154",
+              "text": "Educational"
+            },
+            {
+              "value": "41153",
+              "text": "Entertainment"
+            },
+            {
+              "value": "41155",
+              "text": "Hospitality"
+            },
+            {
+              "value": "41156",
+              "text": "Project Active class"
+            },
+            {
+              "value": "41160",
+              "text": "Marketing advertising sale"
+            },
+            {
+              "value": "41158",
+              "text": "Club/Society product or clothing"
+            },
+            {
+              "value": "41157",
+              "text": "Clothing sold by Union"
+            },
+            {
+              "value": "41159",
+              "text": "Other product sold by Union"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "Finance",
+          "required": false,
+          "hidden": true,
+          "description": "This is for accounting purposes and does not affect the price or income for the product. Please select whatever is closest to this product."
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "field_finance_cost_centre[0][target_id]",
+          "id": "edit-field-finance-cost-centre-0-target-id",
+          "selector": "edit-field-finance-cost-centre-0-target-id",
+          "label": "Finance cost centre",
+          "required": true,
+          "hidden": true,
+          "autocomplete": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "field_finance_department[0][target_id]",
+          "id": "edit-field-finance-department-0-target-id",
+          "selector": "edit-field-finance-department-0-target-id",
+          "label": "Finance department",
+          "required": true,
+          "hidden": true,
+          "autocomplete": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "field_finance_gl_code[0][target_id]",
+          "id": "edit-field-finance-gl-code-0-target-id",
+          "selector": "edit-field-finance-gl-code-0-target-id",
+          "label": "Finance GL code",
+          "required": true,
+          "hidden": true,
+          "autocomplete": true
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "op",
+          "id": "edit-actions-submit",
+          "selector": "edit-actions-submit",
+          "label": "",
+          "required": false,
+          "hidden": false,
+          "wrapperSelector": "edit-actions",
+          "text": "Save"
+        }
+      ]
+    }
+  ],
+  "controlsOutsideForms": [
+    {
+      "tag": "input",
+      "type": "text",
+      "name": "",
+      "id": "search-input",
+      "selector": "",
+      "label": "",
+      "required": false,
+      "hidden": false
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "name": "",
+      "id": "",
+      "selector": "",
+      "label": "",
+      "required": false,
+      "hidden": false,
+      "text": "Previous"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "name": "",
+      "id": "",
+      "selector": "",
+      "label": "",
+      "required": false,
+      "hidden": false,
+      "text": "Next"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "name": "",
+      "id": "",
+      "selector": "",
+      "label": "",
+      "required": false,
+      "hidden": false,
+      "text": "Previous"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "name": "",
+      "id": "",
+      "selector": "",
+      "label": "",
+      "required": false,
+      "hidden": false,
+      "text": "Next"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "name": "",
+      "id": "",
+      "selector": "",
+      "label": "",
+      "required": false,
+      "hidden": false,
+      "text": "Previous"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "name": "",
+      "id": "",
+      "selector": "",
+      "label": "",
+      "required": false,
+      "hidden": false,
+      "text": "Next"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "name": "",
+      "id": "",
+      "selector": "",
+      "label": "",
+      "required": false,
+      "hidden": false,
+      "text": "Previous"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "name": "",
+      "id": "",
+      "selector": "",
+      "label": "",
+      "required": false,
+      "hidden": false,
+      "text": "Next"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "name": "",
+      "id": "",
+      "selector": "",
+      "label": "",
+      "required": false,
+      "hidden": false,
+      "text": "Previous"
+    },
+    {
+      "tag": "button",
+      "type": "button",
+      "name": "",
+      "id": "",
+      "selector": "",
+      "label": "",
+      "required": false,
+      "hidden": false,
+      "text": "Next"
+    }
+  ]
+}

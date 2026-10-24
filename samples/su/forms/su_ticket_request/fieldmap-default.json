@@ -1,0 +1,642 @@
+{
+  "capturedAt": "2026-10-24",
+  "url": "https://studentsunionucl.org/forms/ticket-request-form",
+  "title": "Ticket Request Form | Students Union UCL",
+  "forms": [
+    {
+      "id": "webform-submission-webform-126302-node-126302-add-form",
+      "selector": "webform-submission-webform-126302-node-126302-add-form",
+      "action": "/forms/ticket-request-form",
+      "method": "post",
+      "fields": [
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "webform_access_group",
+          "id": "edit-webform-access-group",
+          "selector": "edit-webform-access-group",
+          "label": "Club/Society",
+          "required": true,
+          "hidden": false,
+          "description": "Start typing your club/society name then select from list.",
+          "autocomplete": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "treasurer_name",
+          "id": "edit-treasurer-name",
+          "selector": "edit-treasurer-name",
+          "label": "Activity Lead Name",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "email",
+          "name": "email_address",
+          "id": "edit-email-address",
+          "selector": "edit-email-address",
+          "label": "Activity Lead Email Address",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "tel",
+          "name": "contact_number",
+          "id": "edit-contact-number",
+          "selector": "edit-contact-number",
+          "label": "Activity Lead Phone Number",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "are_you_selling_tickets_for_an_event_or_for_a_product",
+          "id": "edit-are-you-selling-tickets-for-an-event-or-for-a-product-1",
+          "selector": "edit-are-you-selling-tickets-for-an-event-or-for-a-product-1",
+          "label": "Event",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "are_you_selling_tickets_for_an_event_or_for_a_product",
+          "id": "edit-are-you-selling-tickets-for-an-event-or-for-a-product-2",
+          "selector": "edit-are-you-selling-tickets-for-an-event-or-for-a-product-2",
+          "label": "Product",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "account_number",
+          "id": "edit-account-number",
+          "selector": "edit-account-number",
+          "label": "Account Code",
+          "required": true,
+          "hidden": false,
+          "description": "Your 10-digit account code is made up of a 2-letter code indicating Grant or Non-Grant expenditure, your club or society's 3-letter finance code, and a 5-digit code indicating the type of income. You can identify your 2 letter code using the table below: Grant Non-Grant Club GC NC Society GX NX You "
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "are_you_selling_tickets_to_raise_money_for_charity",
+          "id": "edit-are-you-selling-tickets-to-raise-money-for-charity-1",
+          "selector": "edit-are-you-selling-tickets-to-raise-money-for-charity-1",
+          "label": "Yes",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "are_you_selling_tickets_to_raise_money_for_charity",
+          "id": "edit-are-you-selling-tickets-to-raise-money-for-charity-2",
+          "selector": "edit-are-you-selling-tickets-to-raise-money-for-charity-2",
+          "label": "No",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "which_charity_will_you_be_fundraising_on_behalf_of",
+          "id": "edit-which-charity-will-you-be-fundraising-on-behalf-of",
+          "selector": "edit-which-charity-will-you-be-fundraising-on-behalf-of",
+          "label": "Which charity will you be fundraising on behalf of?",
+          "required": false,
+          "hidden": true,
+          "states": {
+            "visible": {
+              ".webform-submission-webform-126302-node-126302-add-form :input[name=\"are_you_selling_tickets_to_raise_money_for_charity\"]": {
+                "value": "1"
+              }
+            }
+          }
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "is_your_request_linked_to_an_external_speaker_request_form",
+          "id": "edit-is-your-request-linked-to-an-external-speaker-request-form-1",
+          "selector": "edit-is-your-request-linked-to-an-external-speaker-request-form-1",
+          "label": "Yes",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "is_your_request_linked_to_an_external_speaker_request_form",
+          "id": "edit-is-your-request-linked-to-an-external-speaker-request-form-2",
+          "selector": "edit-is-your-request-linked-to-an-external-speaker-request-form-2",
+          "label": "No",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "are_the_required_tickets_for_an_event_with_an_expenditure_of_ps200_or_more",
+          "id": "edit-are-the-required-tickets-for-an-event-with-an-expenditure-of-ps200-or-more-1",
+          "selector": "edit-are-the-required-tickets-for-an-event-with-an-expenditure-of-ps200-or-more-1",
+          "label": "Yes",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "are_the_required_tickets_for_an_event_with_an_expenditure_of_ps200_or_more",
+          "id": "edit-are-the-required-tickets-for-an-event-with-an-expenditure-of-ps200-or-more-2",
+          "selector": "edit-are-the-required-tickets-for-an-event-with-an-expenditure-of-ps200-or-more-2",
+          "label": "No",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "select_your_activity_registration_form",
+          "id": "edit-select-your-activity-registration-form",
+          "selector": "edit-select-your-activity-registration-form",
+          "label": "If you are running a one-off event that's not part of your core activity, you must submit an Activity Registration Form. If you have already submitted your Activity Registration Form, please select your submission",
+          "required": false,
+          "hidden": false,
+          "description": "Start typing the details and select from list.",
+          "autocomplete": true
+        },
+        {
+          "tag": "textarea",
+          "type": "textarea",
+          "name": "please_provide_a_short_description_of_the_tickets_on_sale_for_the_students_union_website_50_words_or_less",
+          "id": "edit-please-provide-a-short-description-of-the-tickets-on-sale-for-the-students-union-website-50-words-or-less",
+          "selector": "edit-please-provide-a-short-description-of-the-tickets-on-sale-for-the-students-union-website-50-words-or-less",
+          "label": "Please provide a short description of the tickets on sale for the Students\" Union website (50 words or less):",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "tabledrag-toggle-weight",
+          "label": "",
+          "required": false,
+          "hidden": false,
+          "text": "Show row weights"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "text": "Hide lower priority columns"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "ticket_types[items][0][ticket_type]",
+          "id": "edit-ticket-types-items-0-ticket-type",
+          "selector": "edit-ticket-types-items-0-ticket-type",
+          "label": "Ticket type?",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "ticket_types[items][0][availability]",
+          "id": "edit-ticket-types-items-0-availability",
+          "selector": "edit-ticket-types-items-0-availability",
+          "label": "Availability",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "ticket_types[items][0][number_available]",
+          "id": "edit-ticket-types-items-0-number-available",
+          "selector": "edit-ticket-types-items-0-number-available",
+          "label": "Number available",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "ticket_types[items][0][price]",
+          "id": "edit-ticket-types-items-0-price",
+          "selector": "edit-ticket-types-items-0-price",
+          "label": "Price",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "date",
+          "name": "ticket_types[items][0][date_on_sale][date]",
+          "id": "edit-ticket-types-items-0-date-on-sale-date",
+          "selector": "edit-ticket-types-items-0-date-on-sale-date",
+          "label": "On sale: Date",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "time",
+          "name": "ticket_types[items][0][date_on_sale][time]",
+          "id": "edit-ticket-types-items-0-date-on-sale-time",
+          "selector": "edit-ticket-types-items-0-date-on-sale-time",
+          "label": "On sale: Time",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "date",
+          "name": "ticket_types[items][0][date_off_sale][date]",
+          "id": "edit-ticket-types-items-0-date-off-sale-date",
+          "selector": "edit-ticket-types-items-0-date-off-sale-date",
+          "label": "Off sale: Date",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "time",
+          "name": "ticket_types[items][0][date_off_sale][time]",
+          "id": "edit-ticket-types-items-0-date-off-sale-time",
+          "selector": "edit-ticket-types-items-0-date-off-sale-time",
+          "label": "Off sale: Time",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "ticket_types[items][0][weight]",
+          "id": "edit-ticket-types-items-0-weight",
+          "selector": "edit-ticket-types-items-0-weight",
+          "label": "Item weight",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "image",
+          "name": "ticket_types_table_add_0",
+          "id": "edit-ticket-types-items-0-operations-add",
+          "selector": "edit-ticket-types-items-0-operations-add",
+          "label": "",
+          "required": false,
+          "hidden": false,
+          "text": "Add new item after item 1"
+        },
+        {
+          "tag": "input",
+          "type": "image",
+          "name": "ticket_types_table_remove_0",
+          "id": "edit-ticket-types-items-0-operations-remove",
+          "selector": "edit-ticket-types-items-0-operations-remove",
+          "label": "",
+          "required": false,
+          "hidden": false,
+          "text": "Remove item 1"
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "ticket_types_table_add",
+          "id": "edit-ticket-types-add-submit",
+          "selector": "edit-ticket-types-add-submit",
+          "label": "",
+          "required": false,
+          "hidden": false,
+          "text": "Add"
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "ticket_types[add][more_items]",
+          "id": "edit-ticket-types-add-more-items",
+          "selector": "edit-ticket-types-add-more-items",
+          "label": "Add more items",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "in_total_how_many_tickets_are_available_for_your_event",
+          "id": "edit-in-total-how-many-tickets-are-available-for-your-event",
+          "selector": "edit-in-total-how-many-tickets-are-available-for-your-event",
+          "label": "In total, how many tickets are available for your event?",
+          "required": false,
+          "hidden": true,
+          "states": {
+            "visible": {
+              ".webform-submission-webform-126302-node-126302-add-form :input[name=\"are_you_selling_tickets_for_an_event_or_for_a_product\"]": {
+                "value": "1"
+              }
+            }
+          },
+          "description": "Please provide a total figure. For example, if you are selling 40 student tickets, and 10 public tickets - this is a total of 50 tickets available for your event."
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "total_number_of_items",
+          "id": "edit-total-number-of-items",
+          "selector": "edit-total-number-of-items",
+          "label": "How many items are for sale in total?",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "please_provide_the_url_website_link_for_the_event_page_you_have_set_up",
+          "id": "edit-please-provide-the-url-website-link-for-the-event-page-you-have-set-up",
+          "selector": "edit-please-provide-the-url-website-link-for-the-event-page-you-have-set-up",
+          "label": "Please create a page for your event on the Students\" Union website, and provide the URL (website link) below:",
+          "required": false,
+          "hidden": true,
+          "states": {
+            "visible": {
+              ".webform-submission-webform-126302-node-126302-add-form :input[name=\"are_you_selling_tickets_for_an_event_or_for_a_product\"]": {
+                "value": "1"
+              }
+            },
+            "required": {
+              ".webform-submission-webform-126302-node-126302-add-form :input[name=\"are_you_selling_tickets_for_an_event_or_for_a_product\"]": {
+                "value": "1"
+              }
+            }
+          },
+          "description": "Check out our how to guide on how to create an event on the What's On calendar: http://studentsunionucl.org/how-to-guides/how-to-add-club-society-event-to-whats-on-calendar.Under the \"Event tickets\" option on the edit page, please select \"Club & Society event as part of a Ticket Request Form submiss"
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "is_this_request_for_an_order_of_clothing_or_sports_kit",
+          "id": "edit-is-this-request-for-an-order-of-clothing-or-sports-kit-1",
+          "selector": "edit-is-this-request-for-an-order-of-clothing-or-sports-kit-1",
+          "label": "Yes",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "is_this_request_for_an_order_of_clothing_or_sports_kit",
+          "id": "edit-is-this-request-for-an-order-of-clothing-or-sports-kit-2",
+          "selector": "edit-is-this-request-for-an-order-of-clothing-or-sports-kit-2",
+          "label": "No",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "file",
+          "name": "files[please_upload_an_image_of_your_kit___clothing_design_below]",
+          "id": "edit-please-upload-an-image-of-your-kit-clothing-design-below-upload",
+          "selector": "edit-please-upload-an-image-of-your-kit-clothing-design-below-upload",
+          "label": "Please upload an image of your kit / clothing design below:",
+          "required": false,
+          "hidden": true,
+          "description": "One file only. • Allowed types: gif jpg jpeg png pdf doc docx. • 2 MB limit per file. The accumulated size of all files in this form cannot exceed 50 MB."
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "please_upload_an_image_of_your_kit___clothing_design_below_upload_button",
+          "id": "edit-please-upload-an-image-of-your-kit-clothing-design-below-upload-button",
+          "selector": "edit-please-upload-an-image-of-your-kit-clothing-design-below-upload-button",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "description": "One file only. • Allowed types: gif jpg jpeg png pdf doc docx. • 2 MB limit per file. The accumulated size of all files in this form cannot exceed 50 MB.",
+          "text": "Upload"
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "please_upload_an_image_of_your_kit___clothing_design_below[fids]",
+          "id": "",
+          "selector": "edit-please-upload-an-image-of-your-kit-clothing-design-below-fids",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "description": "One file only. • Allowed types: gif jpg jpeg png pdf doc docx. • 2 MB limit per file. The accumulated size of all files in this form cannot exceed 50 MB."
+        },
+        {
+          "tag": "textarea",
+          "type": "textarea",
+          "name": "any_other_information",
+          "id": "edit-any-other-information",
+          "selector": "edit-any-other-information",
+          "label": "Please provide any other information required for your ticket(s) below:",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "does_this_request_involve_a_coach_or_instructor",
+          "id": "edit-does-this-request-involve-a-coach-or-instructor-1",
+          "selector": "edit-does-this-request-involve-a-coach-or-instructor-1",
+          "label": "Yes",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "does_this_request_involve_a_coach_or_instructor",
+          "id": "edit-does-this-request-involve-a-coach-or-instructor-2",
+          "selector": "edit-does-this-request-involve-a-coach-or-instructor-2",
+          "label": "No",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "description": "Start typing the details and select from list.",
+          "text": "Hide lower priority columns"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "please_select_the_relevant_coach_instructor_registration_form[items][0][_item_]",
+          "id": "edit-please-select-the-relevant-coach-instructor-registration-form-items-0-item-",
+          "selector": "edit-please-select-the-relevant-coach-instructor-registration-form-items-0-item-",
+          "label": "Please select the relevant coach/instructor registration form",
+          "required": false,
+          "hidden": true,
+          "autocomplete": true
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "please_select_the_relevant_coach_instructor_registration_form[items][0][weight]",
+          "id": "edit-please-select-the-relevant-coach-instructor-registration-form-items-0-weight",
+          "selector": "edit-please-select-the-relevant-coach-instructor-registration-form-items-0-weight",
+          "label": "Item weight",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "image",
+          "name": "please_select_the_relevant_coach_instructor_registration_form_table_add_0",
+          "id": "edit-please-select-the-relevant-coach-instructor-registration-form-items-0-operations-add",
+          "selector": "edit-please-select-the-relevant-coach-instructor-registration-form-items-0-operations-add",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "description": "Start typing the details and select from list.",
+          "text": ""
+        },
+        {
+          "tag": "input",
+          "type": "image",
+          "name": "please_select_the_relevant_coach_instructor_registration_form_table_remove_0",
+          "id": "edit-please-select-the-relevant-coach-instructor-registration-form-items-0-operations-remove",
+          "selector": "edit-please-select-the-relevant-coach-instructor-registration-form-items-0-operations-remove",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "description": "Start typing the details and select from list.",
+          "text": ""
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "tabledrag-toggle-weight",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "description": "Start typing the details and select from list.",
+          "text": "Show row weights"
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "please_select_the_relevant_coach_instructor_registration_form_table_add",
+          "id": "edit-please-select-the-relevant-coach-instructor-registration-form-add-submit",
+          "selector": "edit-please-select-the-relevant-coach-instructor-registration-form-add-submit",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "description": "Start typing the details and select from list.",
+          "text": "Add"
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "please_select_the_relevant_coach_instructor_registration_form[add][more_items]",
+          "id": "edit-please-select-the-relevant-coach-instructor-registration-form-add-more-items",
+          "selector": "edit-please-select-the-relevant-coach-instructor-registration-form-add-more-items",
+          "label": "Add more items",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "antibot_key",
+          "id": "",
+          "selector": "edit-antibot-key",
+          "label": "",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "form_build_id",
+          "id": "",
+          "selector": "",
+          "label": "",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "form_token",
+          "id": "",
+          "selector": "edit-webform-submission-webform-126302-node-126302-add-form-form-token",
+          "label": "",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "form_id",
+          "id": "",
+          "selector": "edit-webform-submission-webform-126302-node-126302-add-form",
+          "label": "",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "op",
+          "id": "edit-submit",
+          "selector": "edit-submit",
+          "label": "",
+          "required": false,
+          "hidden": false,
+          "wrapperSelector": "edit-actions",
+          "text": "Submit form"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "url",
+          "id": "edit-url",
+          "selector": "edit-url",
+          "label": "Leave this field blank",
+          "required": false,
+          "hidden": true
+        }
+      ]
+    }
+  ],
+  "controlsOutsideForms": [
+    {
+      "tag": "input",
+      "type": "text",
+      "name": "",
+      "id": "search-input",
+      "selector": "",
+      "label": "",
+      "required": false,
+      "hidden": false
+    }
+  ]
+}

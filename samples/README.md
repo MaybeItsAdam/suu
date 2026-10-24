@@ -29,7 +29,7 @@ from (URL pattern or the producing repo), when it was captured, whether it is
 | `native/connector-form-payload/` | synthetic | — | mirrors connector `test/fixtures/fill/payment-request-payload.json` (not drift-tested yet; see its README) |
 | `native/governing-document-text/` | real excerpts | — | toolbox `src/lib/__fixtures__/governing-documents/` |
 | `native/toolbox-event/` | synthetic | `tests/test_forms_event_payloads.py` | — |
-| `su/forms/` | real, redacted (none yet) | `tests/test_forms_payload.py` (field probes) | toolbox `src/lib/suuForms/fixtures/` (the `.html` pages) |
+| `su/forms/` | real, redacted (ARF, TRF, event listing) + synthetic (`payment_request`) | `tests/test_forms_fieldmap.py`, `tests/test_forms_payload.py` | toolbox `src/lib/suuForms/fixtures/` (the `.html` pages) |
 
 ## Real vs synthetic
 

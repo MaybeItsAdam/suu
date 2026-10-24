@@ -150,4 +150,8 @@ def test_every_saved_capture_drafts_safely(capture):
     for field in draft_fields(data):
         assert field.type not in ("click", "press_enter")
     if capture.parent.name in list_form_ids():
-        assert match_definition(load_form_definition(capture.parent.name), data)["reaches_submit"] == []
+        result = match_definition(load_form_definition(capture.parent.name), data)
+        assert result["reaches_submit"] == []
+        if capture.name == "fieldmap-default.json":
+            assert result["missing"] == []
+

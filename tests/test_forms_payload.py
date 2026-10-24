@@ -53,9 +53,9 @@ def test_definitions_are_keyed_by_id_and_point_at_the_su(form_id):
     assert urlparse(definition.url).hostname == "studentsunionucl.org"
 
 
-SCAFFOLDS = {"su_activity_registration", "su_ticket_request", "su_event_listing", "risk_assessment", "room_booking"}
-#: Scaffolds whose fields are drafted from public guidance, every one unconfirmed.
-DRAFTED = {"su_activity_registration", "su_ticket_request", "su_event_listing"}
+SCAFFOLDS = {"risk_assessment", "room_booking"}
+#: Forms whose selectors have been confirmed against a signed-in capture.
+CAPTURED = {"su_activity_registration", "su_ticket_request", "su_event_listing"}
 
 
 @pytest.mark.parametrize("form_id", sorted(SCAFFOLDS))
@@ -74,12 +74,13 @@ def _raw(form_id):
     return json.loads((definitions_dir() / f"{form_id}.json").read_text(encoding="utf-8"))
 
 
-@pytest.mark.parametrize("form_id", sorted(DRAFTED))
-def test_drafted_scaffolds_mark_every_field_unconfirmed(form_id):
-    """A drafted field's selector is a guess until a capture shows it."""
+@pytest.mark.parametrize("form_id", sorted(CAPTURED))
+def test_captured_forms_mark_every_field_confirmed(form_id):
+    """Every selector in a captured form definition has been confirmed on the real page."""
     fields = walk(load_form_definition(form_id).fields)
     assert fields
-    assert [f.name for f in fields if f.confirmed] == []
+    assert [f.name for f in fields if not f.confirmed] == []
+    assert _raw(form_id)["_todo"]["status"] == "captured"
 
 
 @pytest.mark.parametrize("form_id", list_form_ids())
