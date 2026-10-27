@@ -1,0 +1,195 @@
+{
+    "form_id": "su_sales_invoice_request",
+    "url": "https://studentsunionucl.org/forms/sales-invoice-request-form",
+    "description": "UCL Student Union Sales Invoice Request Form: asks the Union's Finance team to raise an invoice on behalf of a club or society (for example to a company due to pay sponsorship). Only club or society presidents and treasurers should submit it, at least 10 working days before the invoice must be sent to the organisation. A contract or other supporting evidence (headed letter or email naming the company and the agreed amount) is attached as one file.",
+    "login_required": true,
+    "_todo": {
+        "status": "captured",
+        "verified": [
+            "url: /forms/sales-invoice-request-form, captured 2026-10-27 (signed in, read-only; nothing typed, nothing submitted)",
+            "selectors confirmed from signed-in capture (samples/su/forms/su_sales_invoice_request, 2026-10-27): webform-submission-webform-138155-node-138155-add-form, three-letter finance code, type of income and country Chosen selects, company address composite, invoice_details repeating table, total payable, contract upload",
+            "help text on the form: presidents and treasurers only; submit at least 10 working days before the invoice must be sent"
+        ],
+        "unverified": "Not yet end-to-end filled on the live SU form. The country list in the capture stops at Faroe Islands (80 options), so it is not recorded as options.",
+        "notes": [
+            "supporting_document is a single-file upload (the Drupal managed file auto-uploads on selection); the executor's upload step has not been tried on this form.",
+            "type_of_income and country are Chosen dropdowns (the real <select> is hidden), driven like the other chosen_select fields.",
+            "invoice_lines is a repeating table; the page also has a hidden 'Add more items' count box and row add/remove image buttons which the definition never touches."
+        ],
+        "sources": [
+            "https://studentsunionucl.org/forms/sales-invoice-request-form"
+        ]
+    },
+    "fields": [
+        {
+            "name": "club_society",
+            "selector": "input[data-drupal-selector='edit-webform-access-group']",
+            "type": "autocomplete",
+            "description": "Club/Society",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "email",
+            "selector": "input[data-drupal-selector='edit-email-address']",
+            "type": "text",
+            "description": "Email address (email input)",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "finance_code",
+            "selector": "input[data-drupal-selector='edit-finance-code']",
+            "type": "text",
+            "description": "Finance Code — Please provide your three letter finance code here",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "type_of_income",
+            "selector": "select[data-drupal-selector='edit-type-of-income'] + .chosen-container",
+            "type": "chosen_select",
+            "description": "Type of income",
+            "required": true,
+            "confirmed": true,
+            "options": [
+                "Event Income",
+                "Membership Fee Income",
+                "Donations",
+                "Sponsorship Income",
+                "Kit Income",
+                "Tour Income"
+            ]
+        },
+        {
+            "name": "company_name",
+            "selector": "input[data-drupal-selector='edit-company-name']",
+            "type": "text",
+            "description": "Company name:",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "contact_name",
+            "selector": "input[data-drupal-selector='edit-contact-name']",
+            "type": "text",
+            "description": "Contact name:",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "contact_email",
+            "selector": "input[data-drupal-selector='edit-contact-email-address']",
+            "type": "text",
+            "description": "Contact email address: (email input)",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "contact_phone",
+            "selector": "input[data-drupal-selector='edit-contact-number']",
+            "type": "text",
+            "description": "Contact Number (phone input)",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "address_line_1",
+            "selector": "input[data-drupal-selector='edit-company-address-address']",
+            "type": "text",
+            "description": "Address",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "address_line_2",
+            "selector": "input[data-drupal-selector='edit-company-address-address-2']",
+            "type": "text",
+            "description": "Address 2",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "city",
+            "selector": "input[data-drupal-selector='edit-company-address-city']",
+            "type": "text",
+            "description": "City/Town",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "state_province",
+            "selector": "input[data-drupal-selector='edit-company-address-state-province']",
+            "type": "text",
+            "description": "State/Province",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "postal_code",
+            "selector": "input[data-drupal-selector='edit-company-address-postal-code']",
+            "type": "text",
+            "description": "ZIP/Postal Code",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "country",
+            "selector": "select[data-drupal-selector='edit-company-address-country'] + .chosen-container",
+            "type": "chosen_select",
+            "description": "Country (option list is longer than the capture, which stops at Faroe Islands; no options recorded)",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "invoice_lines",
+            "type": "list",
+            "description": "Invoice details: one row per product or service to invoice (product, quantity, net price)",
+            "required": false,
+            "add_button_selector": "[data-drupal-selector='edit-invoice-details-add-submit']",
+            "confirmed": true,
+            "fields": [
+                {
+                    "name": "product",
+                    "selector": "input[data-drupal-selector='edit-invoice-details-items-{i}-product']",
+                    "type": "text",
+                    "description": "Product",
+                    "required": false,
+                    "confirmed": true
+                },
+                {
+                    "name": "quantity",
+                    "selector": "input[data-drupal-selector='edit-invoice-details-items-{i}-quantity']",
+                    "type": "text",
+                    "description": "Quantity (number input)",
+                    "required": false,
+                    "confirmed": true
+                },
+                {
+                    "name": "net_price",
+                    "selector": "input[data-drupal-selector='edit-invoice-details-items-{i}-net-price']",
+                    "type": "text",
+                    "description": "Net Price (number input)",
+                    "required": false,
+                    "confirmed": true
+                }
+            ]
+        },
+        {
+            "name": "total_payable",
+            "selector": "input[data-drupal-selector='edit-total-value']",
+            "type": "text",
+            "description": "Total payable: — Please detail the total payable being requested in GBP, e.g. £260.30.",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "supporting_document",
+            "selector": "input[data-drupal-selector='edit-please-upload-your-contract-or-supporting-documentation-below-upload']",
+            "type": "file",
+            "description": "Please upload your contract or supporting documentation below: — a contract, or alternative supporting evidence such as a headed letter or email naming the company and the agreed payment amount. One file only; allowed types gif jpg jpeg png pdf doc docx xls xlsx xml; 4 MB limit per file; 50 MB for the whole form",
+            "required": false,
+            "confirmed": true
+        }
+    ]
+}

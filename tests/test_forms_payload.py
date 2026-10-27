@@ -55,7 +55,14 @@ def test_definitions_are_keyed_by_id_and_point_at_the_su(form_id):
 
 SCAFFOLDS = {"risk_assessment", "room_booking"}
 #: Forms whose selectors have been confirmed against a signed-in capture.
-CAPTURED = {"su_activity_registration", "su_ticket_request", "su_event_listing"}
+CAPTURED = {
+    "su_activity_registration",
+    "su_ticket_request",
+    "su_event_listing",
+    "su_external_speaker_request",
+    "su_sales_invoice_request",
+    "su_additional_risk_assessment",
+}
 
 
 @pytest.mark.parametrize("form_id", sorted(SCAFFOLDS))

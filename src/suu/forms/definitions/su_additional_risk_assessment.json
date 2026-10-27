@@ -1,0 +1,607 @@
+{
+    "form_id": "su_additional_risk_assessment",
+    "url": "https://studentsunionucl.org/forms/additional-risk-assessment-form",
+    "description": "UCL Student Union Additional Risk Assessment Form: submitted by a president or treasurer for any new or one-off activity not covered by the core risk assessment, large-scale activities involving the public, anything involving an overnight stay or substantial travel, or when the Student Activities team asks. Reviewed case by case, at least 10 working days before the activity; activity outside the UK mainland must be registered at least 8 weeks ahead. Trips with overnight stays must complete the overnight stay and participant details sections. The risk assessment itself is an uploaded spreadsheet (one xls, xlsx or xml file, 2 MB limit). Reached from /forms/additional-risk-assessment-submission, which redirects here. Incidents are reported separately on UCL riskNET.",
+    "login_required": true,
+    "_todo": {
+        "status": "captured",
+        "verified": [
+            "url: /forms/additional-risk-assessment-form (the capture was opened via /forms/additional-risk-assessment-submission, which redirects here), captured 2026-10-27 (signed in, read-only; nothing typed, nothing submitted)",
+            "selectors confirmed from signed-in capture (samples/su/forms/su_additional_risk_assessment, 2026-10-27): webform-submission-webform-136350-node-136350-add-form, proposed dates, overnight stay, activity log and participant details repeating tables, planning checkbox groups, one spreadsheet upload",
+            "help text on the form: president or treasurer only; submit at least 10 working days before; activity outside the UK mainland at least 8 weeks before; overnight trips must complete the overnight stay and participant sections"
+        ],
+        "unverified": "Not yet end-to-end filled on the live SU form. The file upload has not been exercised by the executor on this form, and upload auto-submits via an AJAX button that the definition never touches.",
+        "notes": [
+            "risk_assessment_file: one file only; allowed types xls xlsx xml; 2 MB per file; the whole form is capped at 50 MB.",
+            "Fields marked 'required when overnight_stay is ticked' are optional in the capture (required is false) because the requirement is conditional.",
+            "accommodation_country has more options than the capture holds (stops at Faroe Islands), so none are recorded."
+        ],
+        "sources": [
+            "https://studentsunionucl.org/forms/additional-risk-assessment-form"
+        ]
+    },
+    "fields": [
+        {
+            "name": "club_society",
+            "selector": "input[data-drupal-selector='edit-webform-access-group']",
+            "type": "autocomplete",
+            "description": "Club/Society",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "activity_name",
+            "selector": "input[data-drupal-selector='edit-event-name']",
+            "type": "text",
+            "description": "Activity Name — Please provide a short name for your event, e.g. Online Hackathon 2023.",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "activity_lead_name",
+            "selector": "input[data-drupal-selector='edit-activity-lead-name']",
+            "type": "text",
+            "description": "Club/Society Activity Lead Name — The activity lead should be present and reachable for the whole of the event. If your event includes overnight stays, the activity lead should be present for each day of the trip.",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "activity_lead_email",
+            "selector": "input[data-drupal-selector='edit-email-address']",
+            "type": "text",
+            "description": "Activity Lead Email Address (email input)",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "activity_lead_phone",
+            "selector": "input[data-drupal-selector='edit-activity-lead-phone-number']",
+            "type": "text",
+            "description": "Activity Lead Phone Number",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "proposed_dates",
+            "type": "list",
+            "description": "Proposed Date(s) and Time(s): one row per date/session, including set-up and pack-down time; clearly mark the first day of the activity",
+            "required": false,
+            "add_button_selector": "[data-drupal-selector='edit-proposed-date-s-and-time-s-add-submit']",
+            "confirmed": true,
+            "fields": [
+                {
+                    "name": "date",
+                    "selector": "input[data-drupal-selector='edit-proposed-date-s-and-time-s-items-{i}-dateandtimeproposed']",
+                    "type": "text",
+                    "description": "Proposed Date(s) (date input, YYYY-MM-DD)",
+                    "required": false,
+                    "confirmed": true
+                },
+                {
+                    "name": "start_time",
+                    "selector": "input[data-drupal-selector='edit-proposed-date-s-and-time-s-items-{i}-start']",
+                    "type": "text",
+                    "description": "Start Time (time input, HH:MM (Europe/London))",
+                    "required": false,
+                    "confirmed": true
+                },
+                {
+                    "name": "end_time",
+                    "selector": "input[data-drupal-selector='edit-proposed-date-s-and-time-s-items-{i}-end']",
+                    "type": "text",
+                    "description": "End Time (time input, HH:MM (Europe/London))",
+                    "required": false,
+                    "confirmed": true
+                },
+                {
+                    "name": "location",
+                    "selector": "input[data-drupal-selector='edit-proposed-date-s-and-time-s-items-{i}-proposedlocation']",
+                    "type": "text",
+                    "description": "Location",
+                    "required": false,
+                    "confirmed": true
+                }
+            ]
+        },
+        {
+            "name": "activity_description",
+            "selector": "textarea[data-drupal-selector='edit-please-provide-a-detailed-description-of-your-activity-below-']",
+            "type": "textarea",
+            "description": "Please provide a detailed description of your activity below: — Give as much information here as you can about the activity, including the type and nature of any equipment / furniture being used and where that equipment will be used / set-up. Also include information on load in or load out of equipment. For example \"Tables and chairs will be set up in the South Cloisters with people giving out information; hot and cold food will be served in the Main Quad from 4 stalls, using mixture of gas and electric heaters. The Garden Room will be used as a rest area for volunteers at the event.\"",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "members_taking_part",
+            "selector": "input[data-drupal-selector='edit-number-of-club-society-members-taking-part-']",
+            "type": "text",
+            "description": "Number of club/society members taking part:",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "expected_attendees",
+            "selector": "input[data-drupal-selector='edit-anticipated-number-of-guests-attendees-']",
+            "type": "text",
+            "description": "Anticipated number of guests / attendees:",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "overnight_stay",
+            "selector": "input[data-drupal-selector='edit-if-your-event-includes-an-overnight-stay-please-check-the-box-be']",
+            "type": "checkbox",
+            "description": "If your event includes an overnight stay, please check this box.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "destination",
+            "selector": "input[data-drupal-selector='edit-destination-']",
+            "type": "text",
+            "description": "Destination (required when overnight_stay is ticked)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "accommodation_name",
+            "selector": "input[data-drupal-selector='edit-contact-details-name']",
+            "type": "text",
+            "description": "Name of Accommodation (required when overnight_stay is ticked)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "accommodation_email",
+            "selector": "input[data-drupal-selector='edit-contact-details-email']",
+            "type": "text",
+            "description": "Accommodation Contact Email (email input)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "accommodation_phone",
+            "selector": "input[data-drupal-selector='edit-contact-details-phone']",
+            "type": "text",
+            "description": "Accommodation Contact Phone (phone input) (required when overnight_stay is ticked)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "accommodation_address_1",
+            "selector": "input[data-drupal-selector='edit-contact-details-address']",
+            "type": "text",
+            "description": "Accommodation Address 1 (required when overnight_stay is ticked)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "accommodation_address_2",
+            "selector": "input[data-drupal-selector='edit-contact-details-address-2']",
+            "type": "text",
+            "description": "Address 2",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "accommodation_city",
+            "selector": "input[data-drupal-selector='edit-contact-details-city']",
+            "type": "text",
+            "description": "City/Town (required when overnight_stay is ticked)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "accommodation_postal_code",
+            "selector": "input[data-drupal-selector='edit-contact-details-postal-code']",
+            "type": "text",
+            "description": "ZIP/Postal Code (required when overnight_stay is ticked)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "accommodation_country",
+            "selector": "select[data-drupal-selector='edit-contact-details-country']",
+            "type": "select",
+            "description": "Country (required when overnight_stay is ticked) (option list is longer than the capture, which stops at Faroe Islands; no options recorded)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "nearest_emergency_services",
+            "selector": "input[data-drupal-selector='edit-nearest-emergency-rescue-services']",
+            "type": "text",
+            "description": "Nearest Emergency/Rescue Services (required when overnight_stay is ticked)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "meeting_point",
+            "selector": "input[data-drupal-selector='edit-meeting-point']",
+            "type": "text",
+            "description": "Meeting Point (required when overnight_stay is ticked)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "departure_date",
+            "selector": "input[data-drupal-selector='edit-departure-details-date']",
+            "type": "text",
+            "description": "Departure Details: Date (date input, YYYY-MM-DD)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "departure_time",
+            "selector": "input[data-drupal-selector='edit-departure-details-time']",
+            "type": "text",
+            "description": "Departure Details: Time (time input, HH:MM (Europe/London))",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "return_date",
+            "selector": "input[data-drupal-selector='edit-return-details-with-time-date']",
+            "type": "text",
+            "description": "Return Details: Date (date input, YYYY-MM-DD)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "return_time",
+            "selector": "input[data-drupal-selector='edit-return-details-with-time-time']",
+            "type": "text",
+            "description": "Return Details: Time (time input, HH:MM (Europe/London))",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "activity_log",
+            "type": "list",
+            "description": "Activity Log: a description of the activities planned for each day of the trip (overnight stays)",
+            "required": false,
+            "add_button_selector": "[data-drupal-selector='edit-activity-log-add-submit']",
+            "confirmed": true,
+            "fields": [
+                {
+                    "name": "day",
+                    "selector": "input[data-drupal-selector='edit-activity-log-items-{i}-day']",
+                    "type": "text",
+                    "description": "Day Number (number input)",
+                    "required": false,
+                    "confirmed": true
+                },
+                {
+                    "name": "description",
+                    "selector": "textarea[data-drupal-selector='edit-activity-log-items-{i}-activity']",
+                    "type": "textarea",
+                    "description": "Activity Description",
+                    "required": false,
+                    "confirmed": true
+                },
+                {
+                    "name": "location",
+                    "selector": "input[data-drupal-selector='edit-activity-log-items-{i}-location']",
+                    "type": "text",
+                    "description": "Activity Location",
+                    "required": false,
+                    "confirmed": true
+                }
+            ]
+        },
+        {
+            "name": "planning__transport",
+            "selector": "input[data-drupal-selector='edit-planning-checkboxes-checkboxes-transport']",
+            "type": "checkbox",
+            "description": "Planning Checkboxes: Transport",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "planning__itinerary",
+            "selector": "input[data-drupal-selector='edit-planning-checkboxes-checkboxes-itinerary']",
+            "type": "checkbox",
+            "description": "Planning Checkboxes: Itinerary",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "planning__registration",
+            "selector": "input[data-drupal-selector='edit-planning-checkboxes-checkboxes-registration']",
+            "type": "checkbox",
+            "description": "Planning Checkboxes: Registration",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "planning__registered_driver_s",
+            "selector": "input[data-drupal-selector='edit-planning-checkboxes-checkboxes-registered-drivers']",
+            "type": "checkbox",
+            "description": "Planning Checkboxes: Registered Driver(s)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "planning__first_aider_s",
+            "selector": "input[data-drupal-selector='edit-planning-checkboxes-checkboxes-first-aiders']",
+            "type": "checkbox",
+            "description": "Planning Checkboxes: First Aider(s)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "planning__emergency_procedures",
+            "selector": "input[data-drupal-selector='edit-planning-checkboxes-checkboxes-emergency-procedures']",
+            "type": "checkbox",
+            "description": "Planning Checkboxes: Emergency Procedures",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "planning__equipment",
+            "selector": "input[data-drupal-selector='edit-planning-checkboxes-checkboxes-equipment']",
+            "type": "checkbox",
+            "description": "Planning Checkboxes: Equipment",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "planning__accommodation",
+            "selector": "input[data-drupal-selector='edit-planning-checkboxes-checkboxes-accommodation']",
+            "type": "checkbox",
+            "description": "Planning Checkboxes: Accommodation",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "planning__other",
+            "selector": "input[data-drupal-selector='edit-planning-checkboxes-checkboxes-other-']",
+            "type": "checkbox",
+            "description": "Planning Checkboxes: Other…",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "planning_other_text",
+            "selector": "input[data-drupal-selector='edit-planning-checkboxes-other']",
+            "type": "text",
+            "description": "Enter other…",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "additional_planning__weather_conditions",
+            "selector": "input[data-drupal-selector='edit-additional-planning-checkboxes-checkboxes-weather-conditions']",
+            "type": "checkbox",
+            "description": "Additional Planning Checkboxes: Weather Conditions",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "additional_planning__surf_swell_forecast",
+            "selector": "input[data-drupal-selector='edit-additional-planning-checkboxes-checkboxes-surfswell-forecast']",
+            "type": "checkbox",
+            "description": "Additional Planning Checkboxes: Surf/Swell Forecast",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "additional_planning__water_levels",
+            "selector": "input[data-drupal-selector='edit-additional-planning-checkboxes-checkboxes-water-levels']",
+            "type": "checkbox",
+            "description": "Additional Planning Checkboxes: Water Levels",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "additional_planning__tide_conditions",
+            "selector": "input[data-drupal-selector='edit-additional-planning-checkboxes-checkboxes-tide-conditions']",
+            "type": "checkbox",
+            "description": "Additional Planning Checkboxes: Tide Conditions",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "additional_planning__avalanche_forecast",
+            "selector": "input[data-drupal-selector='edit-additional-planning-checkboxes-checkboxes-avalanche-forecast']",
+            "type": "checkbox",
+            "description": "Additional Planning Checkboxes: Avalanche Forecast",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "additional_planning__local_conditions",
+            "selector": "input[data-drupal-selector='edit-additional-planning-checkboxes-checkboxes-local-conditions']",
+            "type": "checkbox",
+            "description": "Additional Planning Checkboxes: Local Conditions",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "additional_planning__none_of_the_above",
+            "selector": "input[data-drupal-selector='edit-additional-planning-checkboxes-checkboxes-none']",
+            "type": "checkbox",
+            "description": "Additional Planning Checkboxes: None of the above",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "additional_planning__other",
+            "selector": "input[data-drupal-selector='edit-additional-planning-checkboxes-checkboxes-other-']",
+            "type": "checkbox",
+            "description": "Additional Planning Checkboxes: Other…",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "additional_planning_other_text",
+            "selector": "input[data-drupal-selector='edit-additional-planning-checkboxes-other']",
+            "type": "text",
+            "description": "Enter other…",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "equipment_provided_by_society",
+            "selector": "textarea[data-drupal-selector='edit-equipment-provided-by-club-soceity']",
+            "type": "textarea",
+            "description": "Equipment Provided by Club/Society — What equipment will be provided by the club/society? (required when overnight_stay is ticked)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "participant_equipment__footwear",
+            "selector": "input[data-drupal-selector='edit-equipment-checkboxes-footwear']",
+            "type": "checkbox",
+            "description": "Equipment: Footwear",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "participant_equipment__clothing",
+            "selector": "input[data-drupal-selector='edit-equipment-checkboxes-clothing']",
+            "type": "checkbox",
+            "description": "Equipment: Clothing",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "participant_equipment__equipment",
+            "selector": "input[data-drupal-selector='edit-equipment-checkboxes-equipment']",
+            "type": "checkbox",
+            "description": "Equipment: Equipment",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "participant_equipment__food_drink",
+            "selector": "input[data-drupal-selector='edit-equipment-checkboxes-fooddrink']",
+            "type": "checkbox",
+            "description": "Equipment: Food/Drink",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "participant_equipment__none_of_the_above",
+            "selector": "input[data-drupal-selector='edit-equipment-checkboxes-none']",
+            "type": "checkbox",
+            "description": "Equipment: None of the above",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "participant_equipment__other",
+            "selector": "input[data-drupal-selector='edit-equipment-checkboxes-other-']",
+            "type": "checkbox",
+            "description": "Equipment: Other…",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "participant_equipment_other_text",
+            "selector": "input[data-drupal-selector='edit-equipment-other']",
+            "type": "text",
+            "description": "Enter other…",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "method_of_travel",
+            "selector": "input[data-drupal-selector='edit-method-of-travel']",
+            "type": "text",
+            "description": "Method of Travel (required when overnight_stay is ticked)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "travel_company_name",
+            "selector": "input[data-drupal-selector='edit-travel-company-details-company']",
+            "type": "text",
+            "description": "Travel Company's Name",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "travel_company_email",
+            "selector": "input[data-drupal-selector='edit-travel-company-details-email']",
+            "type": "text",
+            "description": "Travel Company's Email (email input)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "travel_company_phone",
+            "selector": "input[data-drupal-selector='edit-travel-company-details-phone']",
+            "type": "text",
+            "description": "Travel Company's Phone Number (phone input)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "participants",
+            "type": "list",
+            "description": "Participant Details: one row per participant. All first aiders should submit evidence of their qualifications to su.activities@ucl.ac.uk; all drivers must complete and submit a Private Vehicle Registration Form",
+            "required": false,
+            "add_button_selector": "[data-drupal-selector='edit-participant-details-add-submit']",
+            "confirmed": true,
+            "fields": [
+                {
+                    "name": "name",
+                    "selector": "input[data-drupal-selector='edit-participant-details-items-{i}-name']",
+                    "type": "text",
+                    "description": "Participant Name",
+                    "required": false,
+                    "confirmed": true
+                },
+                {
+                    "name": "student_number",
+                    "selector": "input[data-drupal-selector='edit-participant-details-items-{i}-student-number']",
+                    "type": "text",
+                    "description": "Student Number",
+                    "required": false,
+                    "confirmed": true
+                },
+                {
+                    "name": "activity_lead",
+                    "selector": "input[data-drupal-selector='edit-participant-details-items-{i}-activity-lead']",
+                    "type": "checkbox",
+                    "description": "Activity Lead*",
+                    "required": false,
+                    "confirmed": true
+                },
+                {
+                    "name": "first_aider",
+                    "selector": "input[data-drupal-selector='edit-participant-details-items-{i}-first-aider']",
+                    "type": "checkbox",
+                    "description": "First Aider",
+                    "required": false,
+                    "confirmed": true
+                },
+                {
+                    "name": "driver",
+                    "selector": "input[data-drupal-selector='edit-participant-details-items-{i}-driver']",
+                    "type": "checkbox",
+                    "description": "Driver**",
+                    "required": false,
+                    "confirmed": true
+                }
+            ]
+        },
+        {
+            "name": "risk_assessment_file",
+            "selector": "input[data-drupal-selector='edit-additional-risk-assessment-upload-upload']",
+            "type": "file",
+            "description": "Additional Risk Assessment Upload — the completed risk assessment spreadsheet. One file only; allowed types xls xlsx xml; 2 MB limit per file; 50 MB for the whole form",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "activity_registration_link",
+            "selector": "input[data-drupal-selector='edit-if-you-have-already-submitted-an-activity-registration-form-plea']",
+            "type": "autocomplete",
+            "description": "If you have already submitted an activity registration form, please link it here (autocompletes against the society's earlier submissions)",
+            "required": false,
+            "confirmed": true
+        }
+    ]
+}

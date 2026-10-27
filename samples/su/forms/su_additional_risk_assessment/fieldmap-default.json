@@ -1,0 +1,1479 @@
+{
+  "url": "https://studentsunionucl.org/forms/additional-risk-assessment-form",
+  "title": "Additional Risk Assessment Form | Students Union UCL",
+  "capturedAt": "2026-10-27T15:53:41.831Z",
+  "forms": [
+    {
+      "id": "webform-submission-webform-136350-node-136350-add-form",
+      "action": "/forms/additional-risk-assessment-form",
+      "drupalSelector": "webform-submission-webform-136350-node-136350-add-form",
+      "fields": [
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "webform_access_group",
+          "id": "edit-webform-access-group",
+          "selector": "edit-webform-access-group",
+          "label": "Club/Society",
+          "required": true,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "event_name",
+          "id": "edit-event-name",
+          "selector": "edit-event-name",
+          "label": "Activity Name",
+          "description": "Please provide a short name for your event, e.g. Online Hackathon 2023.",
+          "required": true,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "activity_lead_name",
+          "id": "edit-activity-lead-name",
+          "selector": "edit-activity-lead-name",
+          "label": "Club/Society Activity Lead Name",
+          "description": "The activity lead should be present and reachable for the whole of the event. If your event includes overnight stays, the activity lead should be present for each day of the trip.",
+          "required": true,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "email",
+          "name": "email_address",
+          "id": "edit-email-address",
+          "selector": "edit-email-address",
+          "label": "Activity Lead Email Address",
+          "required": true,
+          "hidden": false,
+          "options": null,
+          "maxlength": "254"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "activity_lead_phone_number",
+          "id": "edit-activity-lead-phone-number",
+          "selector": "edit-activity-lead-phone-number",
+          "label": "Activity Lead Phone Number",
+          "required": true,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": null,
+          "id": null,
+          "selector": "tabledrag-toggle-weight",
+          "label": "Proposed Date(s) and Time(s)",
+          "description": "Please include any time needed for set-up and pack-down. Please make sure to clearly indicate the first day of your activity.",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": null,
+          "id": null,
+          "selector": null,
+          "label": "Proposed Date(s) and Time(s)",
+          "description": "Please include any time needed for set-up and pack-down. Please make sure to clearly indicate the first day of your activity.",
+          "required": false,
+          "hidden": true,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "date",
+          "name": "proposed_date_s_and_time_s_[items][0][dateandtimeproposed]",
+          "id": "edit-proposed-date-s-and-time-s-items-0-dateandtimeproposed",
+          "selector": "edit-proposed-date-s-and-time-s-items-0-dateandtimeproposed",
+          "label": "Proposed Date(s)",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "time",
+          "name": "proposed_date_s_and_time_s_[items][0][start]",
+          "id": "edit-proposed-date-s-and-time-s-items-0-start",
+          "selector": "edit-proposed-date-s-and-time-s-items-0-start",
+          "label": "Start Time",
+          "required": false,
+          "hidden": false,
+          "options": null,
+          "maxlength": "12"
+        },
+        {
+          "tag": "input",
+          "type": "time",
+          "name": "proposed_date_s_and_time_s_[items][0][end]",
+          "id": "edit-proposed-date-s-and-time-s-items-0-end",
+          "selector": "edit-proposed-date-s-and-time-s-items-0-end",
+          "label": "End Time",
+          "required": false,
+          "hidden": false,
+          "options": null,
+          "maxlength": "12"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "proposed_date_s_and_time_s_[items][0][proposedlocation]",
+          "id": "edit-proposed-date-s-and-time-s-items-0-proposedlocation",
+          "selector": "edit-proposed-date-s-and-time-s-items-0-proposedlocation",
+          "label": "Location",
+          "required": false,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "proposed_date_s_and_time_s_[items][0][weight]",
+          "id": "edit-proposed-date-s-and-time-s-items-0-weight",
+          "selector": "edit-proposed-date-s-and-time-s-items-0-weight",
+          "label": "Item weight",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "image",
+          "name": "proposed_date_s_and_time_s__table_add_0",
+          "id": "edit-proposed-date-s-and-time-s-items-0-operations-add",
+          "selector": "edit-proposed-date-s-and-time-s-items-0-operations-add",
+          "label": "Proposed Date(s) and Time(s)",
+          "description": "Please include any time needed for set-up and pack-down. Please make sure to clearly indicate the first day of your activity.",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "image",
+          "name": "proposed_date_s_and_time_s__table_remove_0",
+          "id": "edit-proposed-date-s-and-time-s-items-0-operations-remove",
+          "selector": "edit-proposed-date-s-and-time-s-items-0-operations-remove",
+          "label": "Proposed Date(s) and Time(s)",
+          "description": "Please include any time needed for set-up and pack-down. Please make sure to clearly indicate the first day of your activity.",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "proposed_date_s_and_time_s__table_add",
+          "id": "edit-proposed-date-s-and-time-s-add-submit",
+          "selector": "edit-proposed-date-s-and-time-s-add-submit",
+          "label": "Proposed Date(s) and Time(s)",
+          "description": "Please include any time needed for set-up and pack-down. Please make sure to clearly indicate the first day of your activity.",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "proposed_date_s_and_time_s_[add][more_items]",
+          "id": "edit-proposed-date-s-and-time-s-add-more-items",
+          "selector": "edit-proposed-date-s-and-time-s-add-more-items",
+          "label": "Add more items",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "textarea",
+          "type": null,
+          "name": "please_provide_a_detailed_description_of_your_activity_below_",
+          "id": "edit-please-provide-a-detailed-description-of-your-activity-below-",
+          "selector": "edit-please-provide-a-detailed-description-of-your-activity-below-",
+          "label": "Please provide a detailed description of your activity below:",
+          "description": "Give as much information here as you can about the activity, including the type and nature of any equipment / furniture being used and where that equipment will be used / set-up. Also include information on load in or load out of equipment. For example \"Tables and chairs will be set up in the South ",
+          "required": true,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "number_of_club_society_members_taking_part_",
+          "id": "edit-number-of-club-society-members-taking-part-",
+          "selector": "edit-number-of-club-society-members-taking-part-",
+          "label": "Number of club/society members taking part:",
+          "required": true,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "anticipated_number_of_guests_attendees_",
+          "id": "edit-anticipated-number-of-guests-attendees-",
+          "selector": "edit-anticipated-number-of-guests-attendees-",
+          "label": "Anticipated number of guests / attendees:",
+          "required": true,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "if_your_event_includes_an_overnight_stay_please_check_the_box_be",
+          "id": "edit-if-your-event-includes-an-overnight-stay-please-check-the-box-be",
+          "selector": "edit-if-your-event-includes-an-overnight-stay-please-check-the-box-be",
+          "label": "If your event includes an overnight stay, please check this box.",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "destination_",
+          "id": "edit-destination-",
+          "selector": "edit-destination-",
+          "label": "Destination",
+          "required": false,
+          "hidden": false,
+          "states": "{\"required\":{\".webform-submission-webform-136350-node-136350-add-form :input[name=\\u0022if_your_event_includes_an_overnight_stay_please_check_the_box_be\\u0022]\":{\"checked\":true}}}",
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "contact_details[name]",
+          "id": "edit-contact-details-name",
+          "selector": "edit-contact-details-name",
+          "label": "Name of Accommodation",
+          "required": false,
+          "hidden": false,
+          "states": "{\"required\":{\".webform-submission-webform-136350-node-136350-add-form :input[name=\\u0022if_your_event_includes_an_overnight_stay_please_check_the_box_be\\u0022]\":{\"checked\":true}}}",
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "email",
+          "name": "contact_details[email]",
+          "id": "edit-contact-details-email",
+          "selector": "edit-contact-details-email",
+          "label": "Accommodation Contact Email",
+          "required": false,
+          "hidden": false,
+          "options": null,
+          "maxlength": "254"
+        },
+        {
+          "tag": "input",
+          "type": "tel",
+          "name": "contact_details[phone]",
+          "id": "edit-contact-details-phone",
+          "selector": "edit-contact-details-phone",
+          "label": "Accommodation Contact Phone",
+          "required": false,
+          "hidden": false,
+          "states": "{\"required\":{\".webform-submission-webform-136350-node-136350-add-form :input[name=\\u0022if_your_event_includes_an_overnight_stay_please_check_the_box_be\\u0022]\":{\"checked\":true}}}",
+          "options": null,
+          "maxlength": "128"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "contact_details[address]",
+          "id": "edit-contact-details-address",
+          "selector": "edit-contact-details-address",
+          "label": "Accommodation Address 1",
+          "required": false,
+          "hidden": false,
+          "states": "{\"required\":{\".webform-submission-webform-136350-node-136350-add-form :input[name=\\u0022if_your_event_includes_an_overnight_stay_please_check_the_box_be\\u0022]\":{\"checked\":true}}}",
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "contact_details[address_2]",
+          "id": "edit-contact-details-address-2",
+          "selector": "edit-contact-details-address-2",
+          "label": "Address 2",
+          "required": false,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "contact_details[city]",
+          "id": "edit-contact-details-city",
+          "selector": "edit-contact-details-city",
+          "label": "City/Town",
+          "required": false,
+          "hidden": false,
+          "states": "{\"required\":{\".webform-submission-webform-136350-node-136350-add-form :input[name=\\u0022if_your_event_includes_an_overnight_stay_please_check_the_box_be\\u0022]\":{\"checked\":true}}}",
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "contact_details[postal_code]",
+          "id": "edit-contact-details-postal-code",
+          "selector": "edit-contact-details-postal-code",
+          "label": "ZIP/Postal Code",
+          "required": false,
+          "hidden": false,
+          "states": "{\"required\":{\".webform-submission-webform-136350-node-136350-add-form :input[name=\\u0022if_your_event_includes_an_overnight_stay_please_check_the_box_be\\u0022]\":{\"checked\":true}}}",
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "select",
+          "type": null,
+          "name": "contact_details[country]",
+          "id": "edit-contact-details-country",
+          "selector": "edit-contact-details-country",
+          "label": "Country",
+          "required": false,
+          "hidden": false,
+          "states": "{\"required\":{\".webform-submission-webform-136350-node-136350-add-form :input[name=\\u0022if_your_event_includes_an_overnight_stay_please_check_the_box_be\\u0022]\":{\"checked\":true}}}",
+          "options": [
+            {
+              "value": "",
+              "text": "- Select -"
+            },
+            {
+              "value": "Afghanistan",
+              "text": "Afghanistan"
+            },
+            {
+              "value": "Albania",
+              "text": "Albania"
+            },
+            {
+              "value": "Algeria",
+              "text": "Algeria"
+            },
+            {
+              "value": "American Samoa",
+              "text": "American Samoa"
+            },
+            {
+              "value": "Andorra",
+              "text": "Andorra"
+            },
+            {
+              "value": "Angola",
+              "text": "Angola"
+            },
+            {
+              "value": "Anguilla",
+              "text": "Anguilla"
+            },
+            {
+              "value": "Antarctica",
+              "text": "Antarctica"
+            },
+            {
+              "value": "Antigua & Barbuda",
+              "text": "Antigua & Barbuda"
+            },
+            {
+              "value": "Argentina",
+              "text": "Argentina"
+            },
+            {
+              "value": "Armenia",
+              "text": "Armenia"
+            },
+            {
+              "value": "Aruba",
+              "text": "Aruba"
+            },
+            {
+              "value": "Ascension Island",
+              "text": "Ascension Island"
+            },
+            {
+              "value": "Australia",
+              "text": "Australia"
+            },
+            {
+              "value": "Austria",
+              "text": "Austria"
+            },
+            {
+              "value": "Azerbaijan",
+              "text": "Azerbaijan"
+            },
+            {
+              "value": "Bahamas",
+              "text": "Bahamas"
+            },
+            {
+              "value": "Bahrain",
+              "text": "Bahrain"
+            },
+            {
+              "value": "Bangladesh",
+              "text": "Bangladesh"
+            },
+            {
+              "value": "Barbados",
+              "text": "Barbados"
+            },
+            {
+              "value": "Belarus",
+              "text": "Belarus"
+            },
+            {
+              "value": "Belgium",
+              "text": "Belgium"
+            },
+            {
+              "value": "Belize",
+              "text": "Belize"
+            },
+            {
+              "value": "Benin",
+              "text": "Benin"
+            },
+            {
+              "value": "Bermuda",
+              "text": "Bermuda"
+            },
+            {
+              "value": "Bhutan",
+              "text": "Bhutan"
+            },
+            {
+              "value": "Bolivia",
+              "text": "Bolivia"
+            },
+            {
+              "value": "Bosnia & Herzegovina",
+              "text": "Bosnia & Herzegovina"
+            },
+            {
+              "value": "Botswana",
+              "text": "Botswana"
+            },
+            {
+              "value": "Bouvet Island",
+              "text": "Bouvet Island"
+            },
+            {
+              "value": "Brazil",
+              "text": "Brazil"
+            },
+            {
+              "value": "British Indian Ocean Territory",
+              "text": "British Indian Ocean Territory"
+            },
+            {
+              "value": "British Virgin Islands",
+              "text": "British Virgin Islands"
+            },
+            {
+              "value": "Brunei",
+              "text": "Brunei"
+            },
+            {
+              "value": "Bulgaria",
+              "text": "Bulgaria"
+            },
+            {
+              "value": "Burkina Faso",
+              "text": "Burkina Faso"
+            },
+            {
+              "value": "Burundi",
+              "text": "Burundi"
+            },
+            {
+              "value": "Cambodia",
+              "text": "Cambodia"
+            },
+            {
+              "value": "Cameroon",
+              "text": "Cameroon"
+            },
+            {
+              "value": "Canada",
+              "text": "Canada"
+            },
+            {
+              "value": "Canary Islands",
+              "text": "Canary Islands"
+            },
+            {
+              "value": "Cape Verde",
+              "text": "Cape Verde"
+            },
+            {
+              "value": "Caribbean Netherlands",
+              "text": "Caribbean Netherlands"
+            },
+            {
+              "value": "Cayman Islands",
+              "text": "Cayman Islands"
+            },
+            {
+              "value": "Central African Republic",
+              "text": "Central African Republic"
+            },
+            {
+              "value": "Ceuta & Melilla",
+              "text": "Ceuta & Melilla"
+            },
+            {
+              "value": "Chad",
+              "text": "Chad"
+            },
+            {
+              "value": "Chile",
+              "text": "Chile"
+            },
+            {
+              "value": "China",
+              "text": "China"
+            },
+            {
+              "value": "Christmas Island",
+              "text": "Christmas Island"
+            },
+            {
+              "value": "Clipperton Island",
+              "text": "Clipperton Island"
+            },
+            {
+              "value": "Cocos (Keeling) Islands",
+              "text": "Cocos (Keeling) Islands"
+            },
+            {
+              "value": "Colombia",
+              "text": "Colombia"
+            },
+            {
+              "value": "Comoros",
+              "text": "Comoros"
+            },
+            {
+              "value": "Congo - Brazzaville",
+              "text": "Congo - Brazzaville"
+            },
+            {
+              "value": "Congo - Kinshasa",
+              "text": "Congo - Kinshasa"
+            },
+            {
+              "value": "Cook Islands",
+              "text": "Cook Islands"
+            },
+            {
+              "value": "Costa Rica",
+              "text": "Costa Rica"
+            },
+            {
+              "value": "Croatia",
+              "text": "Croatia"
+            },
+            {
+              "value": "Cuba",
+              "text": "Cuba"
+            },
+            {
+              "value": "Curaçao",
+              "text": "Curaçao"
+            },
+            {
+              "value": "Cyprus",
+              "text": "Cyprus"
+            },
+            {
+              "value": "Czechia",
+              "text": "Czechia"
+            },
+            {
+              "value": "Côte d’Ivoire",
+              "text": "Côte d’Ivoire"
+            },
+            {
+              "value": "Denmark",
+              "text": "Denmark"
+            },
+            {
+              "value": "Diego Garcia",
+              "text": "Diego Garcia"
+            },
+            {
+              "value": "Djibouti",
+              "text": "Djibouti"
+            },
+            {
+              "value": "Dominica",
+              "text": "Dominica"
+            },
+            {
+              "value": "Dominican Republic",
+              "text": "Dominican Republic"
+            },
+            {
+              "value": "Ecuador",
+              "text": "Ecuador"
+            },
+            {
+              "value": "Egypt",
+              "text": "Egypt"
+            },
+            {
+              "value": "El Salvador",
+              "text": "El Salvador"
+            },
+            {
+              "value": "Equatorial Guinea",
+              "text": "Equatorial Guinea"
+            },
+            {
+              "value": "Eritrea",
+              "text": "Eritrea"
+            },
+            {
+              "value": "Estonia",
+              "text": "Estonia"
+            },
+            {
+              "value": "Eswatini",
+              "text": "Eswatini"
+            },
+            {
+              "value": "Ethiopia",
+              "text": "Ethiopia"
+            },
+            {
+              "value": "Falkland Islands",
+              "text": "Falkland Islands"
+            },
+            {
+              "value": "Faroe Islands",
+              "text": "Faroe Islands"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "nearest_emergency_rescue_services",
+          "id": "edit-nearest-emergency-rescue-services",
+          "selector": "edit-nearest-emergency-rescue-services",
+          "label": "Nearest Emergency/Rescue Services",
+          "required": false,
+          "hidden": false,
+          "states": "{\"required\":{\".webform-submission-webform-136350-node-136350-add-form :input[name=\\u0022if_your_event_includes_an_overnight_stay_please_check_the_box_be\\u0022]\":{\"checked\":true}}}",
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "meeting_point",
+          "id": "edit-meeting-point",
+          "selector": "edit-meeting-point",
+          "label": "Meeting Point",
+          "required": false,
+          "hidden": false,
+          "states": "{\"required\":{\".webform-submission-webform-136350-node-136350-add-form :input[name=\\u0022if_your_event_includes_an_overnight_stay_please_check_the_box_be\\u0022]\":{\"checked\":true}}}",
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "date",
+          "name": "departure_details[date]",
+          "id": "edit-departure-details-date",
+          "selector": "edit-departure-details-date",
+          "label": "Departure Details: Date",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "time",
+          "name": "departure_details[time]",
+          "id": "edit-departure-details-time",
+          "selector": "edit-departure-details-time",
+          "label": "Departure Details: Time",
+          "required": false,
+          "hidden": false,
+          "options": null,
+          "maxlength": "12"
+        },
+        {
+          "tag": "input",
+          "type": "date",
+          "name": "return_details_with_time[date]",
+          "id": "edit-return-details-with-time-date",
+          "selector": "edit-return-details-with-time-date",
+          "label": "Return Details: Date",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "time",
+          "name": "return_details_with_time[time]",
+          "id": "edit-return-details-with-time-time",
+          "selector": "edit-return-details-with-time-time",
+          "label": "Return Details: Time",
+          "required": false,
+          "hidden": false,
+          "options": null,
+          "maxlength": "12"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": null,
+          "id": null,
+          "selector": "tabledrag-toggle-weight",
+          "label": "Activity Log",
+          "description": "Please provide a description of activities planned for each day of the trip.",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": null,
+          "id": null,
+          "selector": null,
+          "label": "Activity Log",
+          "description": "Please provide a description of activities planned for each day of the trip.",
+          "required": false,
+          "hidden": true,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "activity_log_[items][0][day]",
+          "id": "edit-activity-log-items-0-day",
+          "selector": "edit-activity-log-items-0-day",
+          "label": "Day Number",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "textarea",
+          "type": null,
+          "name": "activity_log_[items][0][activity]",
+          "id": "edit-activity-log-items-0-activity",
+          "selector": "edit-activity-log-items-0-activity",
+          "label": "Activity Description",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "activity_log_[items][0][location]",
+          "id": "edit-activity-log-items-0-location",
+          "selector": "edit-activity-log-items-0-location",
+          "label": "Activity Location",
+          "required": false,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "activity_log_[items][0][weight]",
+          "id": "edit-activity-log-items-0-weight",
+          "selector": "edit-activity-log-items-0-weight",
+          "label": "Item weight",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "image",
+          "name": "activity_log__table_add_0",
+          "id": "edit-activity-log-items-0-operations-add",
+          "selector": "edit-activity-log-items-0-operations-add",
+          "label": "Activity Log",
+          "description": "Please provide a description of activities planned for each day of the trip.",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "image",
+          "name": "activity_log__table_remove_0",
+          "id": "edit-activity-log-items-0-operations-remove",
+          "selector": "edit-activity-log-items-0-operations-remove",
+          "label": "Activity Log",
+          "description": "Please provide a description of activities planned for each day of the trip.",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "activity_log__table_add",
+          "id": "edit-activity-log-add-submit",
+          "selector": "edit-activity-log-add-submit",
+          "label": "Activity Log",
+          "description": "Please provide a description of activities planned for each day of the trip.",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "activity_log_[add][more_items]",
+          "id": "edit-activity-log-add-more-items",
+          "selector": "edit-activity-log-add-more-items",
+          "label": "Add more items",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "planning_checkboxes[checkboxes][Transport]",
+          "id": "edit-planning-checkboxes-checkboxes-transport",
+          "selector": "edit-planning-checkboxes-checkboxes-transport",
+          "label": "Transport",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "planning_checkboxes[checkboxes][Itinerary]",
+          "id": "edit-planning-checkboxes-checkboxes-itinerary",
+          "selector": "edit-planning-checkboxes-checkboxes-itinerary",
+          "label": "Itinerary",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "planning_checkboxes[checkboxes][Registration]",
+          "id": "edit-planning-checkboxes-checkboxes-registration",
+          "selector": "edit-planning-checkboxes-checkboxes-registration",
+          "label": "Registration",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "planning_checkboxes[checkboxes][Registered Driver(s)]",
+          "id": "edit-planning-checkboxes-checkboxes-registered-drivers",
+          "selector": "edit-planning-checkboxes-checkboxes-registered-drivers",
+          "label": "Registered Driver(s)",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "planning_checkboxes[checkboxes][First Aider(s)]",
+          "id": "edit-planning-checkboxes-checkboxes-first-aiders",
+          "selector": "edit-planning-checkboxes-checkboxes-first-aiders",
+          "label": "First Aider(s)",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "planning_checkboxes[checkboxes][Emergency Procedures]",
+          "id": "edit-planning-checkboxes-checkboxes-emergency-procedures",
+          "selector": "edit-planning-checkboxes-checkboxes-emergency-procedures",
+          "label": "Emergency Procedures",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "planning_checkboxes[checkboxes][Equipment]",
+          "id": "edit-planning-checkboxes-checkboxes-equipment",
+          "selector": "edit-planning-checkboxes-checkboxes-equipment",
+          "label": "Equipment",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "planning_checkboxes[checkboxes][Accommodation]",
+          "id": "edit-planning-checkboxes-checkboxes-accommodation",
+          "selector": "edit-planning-checkboxes-checkboxes-accommodation",
+          "label": "Accommodation",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "planning_checkboxes[checkboxes][_other_]",
+          "id": "edit-planning-checkboxes-checkboxes-other-",
+          "selector": "edit-planning-checkboxes-checkboxes-other-",
+          "label": "Other…",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "planning_checkboxes[other]",
+          "id": "edit-planning-checkboxes-other",
+          "selector": "edit-planning-checkboxes-other",
+          "label": "Enter other…",
+          "required": false,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "additional_planning_checkboxes[checkboxes][Weather Conditions]",
+          "id": "edit-additional-planning-checkboxes-checkboxes-weather-conditions",
+          "selector": "edit-additional-planning-checkboxes-checkboxes-weather-conditions",
+          "label": "Weather Conditions",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "additional_planning_checkboxes[checkboxes][Surf/Swell Forecast]",
+          "id": "edit-additional-planning-checkboxes-checkboxes-surfswell-forecast",
+          "selector": "edit-additional-planning-checkboxes-checkboxes-surfswell-forecast",
+          "label": "Surf/Swell Forecast",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "additional_planning_checkboxes[checkboxes][Water Levels]",
+          "id": "edit-additional-planning-checkboxes-checkboxes-water-levels",
+          "selector": "edit-additional-planning-checkboxes-checkboxes-water-levels",
+          "label": "Water Levels",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "additional_planning_checkboxes[checkboxes][Tide Conditions]",
+          "id": "edit-additional-planning-checkboxes-checkboxes-tide-conditions",
+          "selector": "edit-additional-planning-checkboxes-checkboxes-tide-conditions",
+          "label": "Tide Conditions",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "additional_planning_checkboxes[checkboxes][Avalanche Forecast]",
+          "id": "edit-additional-planning-checkboxes-checkboxes-avalanche-forecast",
+          "selector": "edit-additional-planning-checkboxes-checkboxes-avalanche-forecast",
+          "label": "Avalanche Forecast",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "additional_planning_checkboxes[checkboxes][Local Conditions]",
+          "id": "edit-additional-planning-checkboxes-checkboxes-local-conditions",
+          "selector": "edit-additional-planning-checkboxes-checkboxes-local-conditions",
+          "label": "Local Conditions",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "additional_planning_checkboxes[checkboxes][none]",
+          "id": "edit-additional-planning-checkboxes-checkboxes-none",
+          "selector": "edit-additional-planning-checkboxes-checkboxes-none",
+          "label": "None of the above",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "additional_planning_checkboxes[checkboxes][_other_]",
+          "id": "edit-additional-planning-checkboxes-checkboxes-other-",
+          "selector": "edit-additional-planning-checkboxes-checkboxes-other-",
+          "label": "Other…",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "additional_planning_checkboxes[other]",
+          "id": "edit-additional-planning-checkboxes-other",
+          "selector": "edit-additional-planning-checkboxes-other",
+          "label": "Enter other…",
+          "required": false,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "textarea",
+          "type": null,
+          "name": "equipment_provided_by_club_soceity",
+          "id": "edit-equipment-provided-by-club-soceity",
+          "selector": "edit-equipment-provided-by-club-soceity",
+          "label": "Equipment Provided by Club/Society",
+          "description": "What equipment will be provided by the club/society?",
+          "required": false,
+          "hidden": false,
+          "states": "{\"required\":{\".webform-submission-webform-136350-node-136350-add-form :input[name=\\u0022if_your_event_includes_an_overnight_stay_please_check_the_box_be\\u0022]\":{\"checked\":true}}}",
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "equipment_[checkboxes][Footwear]",
+          "id": "edit-equipment-checkboxes-footwear",
+          "selector": "edit-equipment-checkboxes-footwear",
+          "label": "Footwear",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "equipment_[checkboxes][Clothing]",
+          "id": "edit-equipment-checkboxes-clothing",
+          "selector": "edit-equipment-checkboxes-clothing",
+          "label": "Clothing",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "equipment_[checkboxes][Equipment]",
+          "id": "edit-equipment-checkboxes-equipment",
+          "selector": "edit-equipment-checkboxes-equipment",
+          "label": "Equipment",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "equipment_[checkboxes][Food/Drink]",
+          "id": "edit-equipment-checkboxes-fooddrink",
+          "selector": "edit-equipment-checkboxes-fooddrink",
+          "label": "Food/Drink",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "equipment_[checkboxes][none]",
+          "id": "edit-equipment-checkboxes-none",
+          "selector": "edit-equipment-checkboxes-none",
+          "label": "None of the above",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "equipment_[checkboxes][_other_]",
+          "id": "edit-equipment-checkboxes-other-",
+          "selector": "edit-equipment-checkboxes-other-",
+          "label": "Other…",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "equipment_[other]",
+          "id": "edit-equipment-other",
+          "selector": "edit-equipment-other",
+          "label": "Enter other…",
+          "required": false,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "method_of_travel",
+          "id": "edit-method-of-travel",
+          "selector": "edit-method-of-travel",
+          "label": "Method of Travel",
+          "required": false,
+          "hidden": false,
+          "states": "{\"required\":{\".webform-submission-webform-136350-node-136350-add-form :input[name=\\u0022if_your_event_includes_an_overnight_stay_please_check_the_box_be\\u0022]\":{\"checked\":true}}}",
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "travel_company_details[company]",
+          "id": "edit-travel-company-details-company",
+          "selector": "edit-travel-company-details-company",
+          "label": "Travel Company's Name",
+          "required": false,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "email",
+          "name": "travel_company_details[email]",
+          "id": "edit-travel-company-details-email",
+          "selector": "edit-travel-company-details-email",
+          "label": "Travel Company's Email",
+          "required": false,
+          "hidden": false,
+          "options": null,
+          "maxlength": "254"
+        },
+        {
+          "tag": "input",
+          "type": "tel",
+          "name": "travel_company_details[phone]",
+          "id": "edit-travel-company-details-phone",
+          "selector": "edit-travel-company-details-phone",
+          "label": "Travel Company's Phone Number",
+          "required": false,
+          "hidden": false,
+          "options": null,
+          "maxlength": "128"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": null,
+          "id": null,
+          "selector": "tabledrag-toggle-weight",
+          "label": "Participant Details",
+          "description": "* All first aiders should submit evidence of their qualifications to su.activities@ucl.ac.uk ** All drivers must complete and submit a Private Vehicle Registration Form.",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": null,
+          "id": null,
+          "selector": null,
+          "label": "Participant Details",
+          "description": "* All first aiders should submit evidence of their qualifications to su.activities@ucl.ac.uk ** All drivers must complete and submit a Private Vehicle Registration Form.",
+          "required": false,
+          "hidden": true,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "participant_details[items][0][name]",
+          "id": "edit-participant-details-items-0-name",
+          "selector": "edit-participant-details-items-0-name",
+          "label": "Participant Name",
+          "required": false,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "participant_details[items][0][student_number]",
+          "id": "edit-participant-details-items-0-student-number",
+          "selector": "edit-participant-details-items-0-student-number",
+          "label": "Student Number",
+          "required": false,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "participant_details[items][0][activity_lead]",
+          "id": "edit-participant-details-items-0-activity-lead",
+          "selector": "edit-participant-details-items-0-activity-lead",
+          "label": "Activity Lead*",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "participant_details[items][0][first_aider]",
+          "id": "edit-participant-details-items-0-first-aider",
+          "selector": "edit-participant-details-items-0-first-aider",
+          "label": "First Aider",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "participant_details[items][0][driver]",
+          "id": "edit-participant-details-items-0-driver",
+          "selector": "edit-participant-details-items-0-driver",
+          "label": "Driver**",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "participant_details[items][0][weight]",
+          "id": "edit-participant-details-items-0-weight",
+          "selector": "edit-participant-details-items-0-weight",
+          "label": "Item weight",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "image",
+          "name": "participant_details_table_add_0",
+          "id": "edit-participant-details-items-0-operations-add",
+          "selector": "edit-participant-details-items-0-operations-add",
+          "label": "Participant Details",
+          "description": "* All first aiders should submit evidence of their qualifications to su.activities@ucl.ac.uk ** All drivers must complete and submit a Private Vehicle Registration Form.",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "image",
+          "name": "participant_details_table_remove_0",
+          "id": "edit-participant-details-items-0-operations-remove",
+          "selector": "edit-participant-details-items-0-operations-remove",
+          "label": "Participant Details",
+          "description": "* All first aiders should submit evidence of their qualifications to su.activities@ucl.ac.uk ** All drivers must complete and submit a Private Vehicle Registration Form.",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "participant_details_table_add",
+          "id": "edit-participant-details-add-submit",
+          "selector": "edit-participant-details-add-submit",
+          "label": "Participant Details",
+          "description": "* All first aiders should submit evidence of their qualifications to su.activities@ucl.ac.uk ** All drivers must complete and submit a Private Vehicle Registration Form.",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "participant_details[add][more_items]",
+          "id": "edit-participant-details-add-more-items",
+          "selector": "edit-participant-details-add-more-items",
+          "label": "Add more items",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "file",
+          "name": "files[additional_risk_assessment_upload_]",
+          "id": "edit-additional-risk-assessment-upload-upload",
+          "selector": "edit-additional-risk-assessment-upload-upload",
+          "label": "Additional Risk Assessment Upload",
+          "description": "One file only. • Allowed types: xls xlsx xml. • 2 MB limit per file. The accumulated size of all files in this form cannot exceed 50 MB.",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "additional_risk_assessment_upload__upload_button",
+          "id": "edit-additional-risk-assessment-upload-upload-button",
+          "selector": "edit-additional-risk-assessment-upload-upload-button",
+          "label": "Additional Risk Assessment Upload",
+          "description": "One file only. • Allowed types: xls xlsx xml. • 2 MB limit per file. The accumulated size of all files in this form cannot exceed 50 MB.",
+          "required": false,
+          "hidden": true,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "additional_risk_assessment_upload_[fids]",
+          "id": null,
+          "selector": "edit-additional-risk-assessment-upload-fids",
+          "label": "Additional Risk Assessment Upload",
+          "description": "One file only. • Allowed types: xls xlsx xml. • 2 MB limit per file. The accumulated size of all files in this form cannot exceed 50 MB.",
+          "required": false,
+          "hidden": true,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "if_you_have_already_submitted_an_activity_registration_form_plea",
+          "id": "edit-if-you-have-already-submitted-an-activity-registration-form-plea",
+          "selector": "edit-if-you-have-already-submitted-an-activity-registration-form-plea",
+          "label": "If you have already submitted an activity registration form, please link it here",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "antibot_key",
+          "id": null,
+          "selector": "edit-antibot-key",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "form_build_id",
+          "id": null,
+          "selector": "form-azdhjxnih-cre-zeslmroilpayhhdaoswucdwrvjhfm",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "form_token",
+          "id": null,
+          "selector": "edit-webform-submission-webform-136350-node-136350-add-form-form-token",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "form_id",
+          "id": null,
+          "selector": "edit-webform-submission-webform-136350-node-136350-add-form",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "op",
+          "id": "edit-submit",
+          "selector": "edit-submit",
+          "label": "",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "url",
+          "id": "edit-url",
+          "selector": "edit-url",
+          "label": "Leave this field blank",
+          "required": false,
+          "hidden": false,
+          "options": null,
+          "maxlength": "128"
+        }
+      ]
+    }
+  ],
+  "openedVia": "https://studentsunionucl.org/forms/additional-risk-assessment-submission (redirects to the url above)"
+}

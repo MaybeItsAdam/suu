@@ -1,0 +1,378 @@
+{
+    "form_id": "su_external_speaker_request",
+    "url": "https://studentsunionucl.org/forms/external-speaker-request-form",
+    "description": "UCL Student Union External Speaker Request Form: a society (or student-led volunteering project, officer or staff member) asks the Union to approve an external speaker for a planned event. One speaker per form. The form must be submitted at least 10 working days before the event: the date field will not accept an earlier date and the request is rejected if the date is wrong, with no exceptions; an event less than 10 working days away must be rescheduled first. Tickets and advertising must not be put on sale or released until the request is approved. The Union's Briefing for External Speakers must be given to the speaker, and the speaker must agree to comply with it, before the form is submitted. Failure to disclose full speaker details may result in the event being cancelled and a referral for disciplinary action. Queries go to the Student Activities team (su.activities@ucl.ac.uk). Free-text answers are not the end of it: the Union may ask follow-up questions before approving.",
+    "login_required": true,
+    "_todo": {
+        "status": "captured",
+        "verified": [
+            "url: /forms/external-speaker-request-form, captured 2026-10-27 (signed in, read-only; nothing typed, nothing submitted)",
+            "login_required: the page itself says 'You need to be logged in to the Students' Union website to view this form.'",
+            "selectors confirmed from signed-in capture (samples/su/forms/su_external_speaker_request, 2026-10-27): webform-submission-webform-130362-node-130362-add-form, requestor type radios, conditional text fields, Yes/No radios with 'If yes' detail fields, open-to radios",
+            "help text on the form: submit at least 10 working days before the event (earlier dates are refused and the request rejected); give the speaker the Briefing for External Speakers first; one speaker per form; full speaker details must be disclosed"
+        ],
+        "unverified": "Not yet end-to-end filled on the live SU form. The 'tickets and advertising blocked until approved' rule is the Union's guidance (see the Ticket Request Form's prerequisites and the external speaker guidance), not text on this form's page; the form's own text states the 10 working days rule, the briefing requirement, the disclosure warning and one speaker per form.",
+        "notes": [
+            "Conditional fields are noted in each description (club_society, affiliations_details, cohost_or_sponsor_details, media_interest_details, past_controversy_details, open_to_other_details); the capture stores #states unparsed and the sponsors states string was truncated, assumed to be 'Yes' like its siblings.",
+            "event_date: the page sets data-min-year/data-max-year (2026/2027) and the live date picker rejects dates under the notice period; a prefilled default date in the page is the minimum allowed date, not a value anyone entered.",
+            "Capture was taken after a previous submission existed (status message 'You have already submitted this webform'); that does not change the form."
+        ],
+        "sources": [
+            "https://studentsunionucl.org/forms/external-speaker-request-form"
+        ]
+    },
+    "fields": [
+        {
+            "name": "requestor_type__club_society",
+            "selector": "input[data-drupal-selector='edit-requestor-type-1']",
+            "type": "checkbox",
+            "description": "Requestor type — Club/Society",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "requestor_type__volunteering_project",
+            "selector": "input[data-drupal-selector='edit-requestor-type-2']",
+            "type": "checkbox",
+            "description": "Requestor type — Student-Led Volunteering Project",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "requestor_type__officer_or_rep",
+            "selector": "input[data-drupal-selector='edit-requestor-type-3']",
+            "type": "checkbox",
+            "description": "Requestor type — Officer (full or part-time) or Representative",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "requestor_type__staff_member",
+            "selector": "input[data-drupal-selector='edit-requestor-type-4']",
+            "type": "checkbox",
+            "description": "Requestor type — Union staff member",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "club_society",
+            "selector": "input[data-drupal-selector='edit-club-society']",
+            "type": "autocomplete",
+            "description": "Club/society (visible when requestor_type = Club/Society; required when requestor_type = Club/Society)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "event_lead_name",
+            "selector": "input[data-drupal-selector='edit-event-lead-name']",
+            "type": "text",
+            "description": "Event lead name",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "event_lead_email",
+            "selector": "input[data-drupal-selector='edit-event-lead-e-mail-address']",
+            "type": "text",
+            "description": "Event lead e-mail address (email input)",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "event_lead_phone",
+            "selector": "input[data-drupal-selector='edit-event-lead-contact-number']",
+            "type": "text",
+            "description": "Event lead contact number",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "event_date",
+            "selector": "input[data-drupal-selector='edit-date-of-event']",
+            "type": "text",
+            "description": "Proposed event date — The date of your event must be at least 2 weeks from todays' date. You will not be able to submit this form if it is not submitted at least 2 weeks in advance of your event. The form's help text states the notice as a minimum of 10 working days. (date input, YYYY-MM-DD)",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "event_title",
+            "selector": "input[data-drupal-selector='edit-pro']",
+            "type": "text",
+            "description": "Proposed Event Title",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "event_start_time",
+            "selector": "input[data-drupal-selector='edit-event-start-time']",
+            "type": "text",
+            "description": "Event start time (time input, HH:MM (Europe/London))",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "event_end_time",
+            "selector": "input[data-drupal-selector='edit-event-end-time']",
+            "type": "text",
+            "description": "Event end time (time input, HH:MM (Europe/London))",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "room",
+            "selector": "input[data-drupal-selector='edit-room']",
+            "type": "text",
+            "description": "Room — If you do not have a room booked before submitting this form, please write to be confirmed.",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "room_booking_reference",
+            "selector": "input[data-drupal-selector='edit-booking-reference']",
+            "type": "text",
+            "description": "If you have booked a room through the UCL room bookings system, you will have been provided a booking reference. Please provide your booking reference below: — This is a 7 digit number, which can be found in your email confirmation or under my bookings on the UCL room bookings system.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "speaker_full_name",
+            "selector": "input[data-drupal-selector='edit-speakers-full-name']",
+            "type": "text",
+            "description": "Speaker's full name (only one speaker per form)",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "security_required__yes",
+            "selector": "input[data-drupal-selector='edit-will-security-be-required-1']",
+            "type": "checkbox",
+            "description": "Will security be required? — Yes",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "security_required__no",
+            "selector": "input[data-drupal-selector='edit-will-security-be-required-2']",
+            "type": "checkbox",
+            "description": "Will security be required? — No",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "speaker_has_affiliations__yes",
+            "selector": "input[data-drupal-selector='edit-affiliations-1']",
+            "type": "checkbox",
+            "description": "Does the speaker have any political, religious or other affiliation? — Yes",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "speaker_has_affiliations__no",
+            "selector": "input[data-drupal-selector='edit-affiliations-2']",
+            "type": "checkbox",
+            "description": "Does the speaker have any political, religious or other affiliation? — No",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "speaker_affiliations_details",
+            "selector": "input[data-drupal-selector='edit-affiliations-details']",
+            "type": "text",
+            "description": "If yes, please provide details below: (visible when speaker_has_affiliations = Yes; required when speaker_has_affiliations = Yes)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "speaker_briefing_agreed__yes",
+            "selector": "input[data-drupal-selector='edit-given-and-agreed-to-external-speaker-briefing-1']",
+            "type": "checkbox",
+            "description": "Has the speaker been given and agreed to the Union's External Speaker Briefing? — Yes",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "speaker_briefing_agreed__no",
+            "selector": "input[data-drupal-selector='edit-given-and-agreed-to-external-speaker-briefing-2']",
+            "type": "checkbox",
+            "description": "Has the speaker been given and agreed to the Union's External Speaker Briefing? — No",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "has_cohost_or_sponsor__yes",
+            "selector": "input[data-drupal-selector='edit-does-this-event-have-a-co-host-partner-agency-or-sponsor-either-formally-or-informally-agreed-1']",
+            "type": "checkbox",
+            "description": "Does this event have a co-host, partner agency or sponsor either formally or informally agreed? — Yes",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "has_cohost_or_sponsor__no",
+            "selector": "input[data-drupal-selector='edit-does-this-event-have-a-co-host-partner-agency-or-sponsor-either-formally-or-informally-agreed-2']",
+            "type": "checkbox",
+            "description": "Does this event have a co-host, partner agency or sponsor either formally or informally agreed? — No",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "cohost_or_sponsor_details",
+            "selector": "input[data-drupal-selector='edit-sponsors-details']",
+            "type": "text",
+            "description": "If yes, please provide details below: (visible when has_cohost_or_sponsor = Yes; required when has_cohost_or_sponsor = Yes (condition truncated in the capture; assumed to match its sibling fields))",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "lead_society_if_collaborating",
+            "selector": "input[data-drupal-selector='edit-if-you-re-collaborating-with-another-society-at-ucl-or-another-u']",
+            "type": "text",
+            "description": "If you're collaborating with another Society, at UCL or another University, please tell us who the lead society is.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "event_details",
+            "selector": "textarea[data-drupal-selector='edit-full-details']",
+            "type": "textarea",
+            "description": "Please provide full details of your proposed event below. — You should include information such as what will be covered, main topics, agenda and format.",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "speaker_information",
+            "selector": "textarea[data-drupal-selector='edit-please-provide-a-website-link-and-or-some-information-about-your-proposed-speaker']",
+            "type": "textarea",
+            "description": "Please provide a website link and/or some information about your proposed speaker.",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "media_interest__yes",
+            "selector": "input[data-drupal-selector='edit-media-interest-options-1']",
+            "type": "checkbox",
+            "description": "Will your event attract media interest? — Yes",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "media_interest__no",
+            "selector": "input[data-drupal-selector='edit-media-interest-options-2']",
+            "type": "checkbox",
+            "description": "Will your event attract media interest? — No",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "media_interest_details",
+            "selector": "input[data-drupal-selector='edit-media-interest']",
+            "type": "text",
+            "description": "If yes, please provide details below: (visible when media_interest = Yes; required when media_interest = Yes)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "past_controversy__yes",
+            "selector": "input[data-drupal-selector='edit-controversy-options-1']",
+            "type": "checkbox",
+            "description": "Has this speaker or topic generated any controversy in the past? — Yes",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "past_controversy__no",
+            "selector": "input[data-drupal-selector='edit-controversy-options-2']",
+            "type": "checkbox",
+            "description": "Has this speaker or topic generated any controversy in the past? — No",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "past_controversy_details",
+            "selector": "input[data-drupal-selector='edit-controversy-details']",
+            "type": "text",
+            "description": "If yes, please provide details below: (visible when past_controversy = Yes; required when past_controversy = Yes)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "open_to__members_only",
+            "selector": "input[data-drupal-selector='edit-open-to-1']",
+            "type": "checkbox",
+            "description": "Who will your event be open to? — Club/society members only",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "open_to__public",
+            "selector": "input[data-drupal-selector='edit-open-to-2']",
+            "type": "checkbox",
+            "description": "Who will your event be open to? — Public",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "open_to__invite_or_ticketed",
+            "selector": "input[data-drupal-selector='edit-open-to-3']",
+            "type": "checkbox",
+            "description": "Who will your event be open to? — By invite / ticketed",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "open_to__other",
+            "selector": "input[data-drupal-selector='edit-open-to-4']",
+            "type": "checkbox",
+            "description": "Who will your event be open to? — Other (please specify)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "open_to_other_details",
+            "selector": "input[data-drupal-selector='edit-open-to-details']",
+            "type": "text",
+            "description": "Other (please specify) details (visible when open_to = Other (please specify))",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "expected_attendance",
+            "selector": "input[data-drupal-selector='edit-attendance']",
+            "type": "text",
+            "description": "How many people do you expect to attend your event?",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "advertising",
+            "selector": "input[data-drupal-selector='edit-how-will-you-advertise-the-event']",
+            "type": "text",
+            "description": "How will you advertise the event?",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "attendee_takeaways",
+            "selector": "textarea[data-drupal-selector='edit-what-do-you-want-attendees-to-learn-from-or-get-out-of-your-even']",
+            "type": "textarea",
+            "description": "What do you want attendees to learn from or get out of your event?",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "discussion_format_and_chair",
+            "selector": "input[data-drupal-selector='edit-what-is-the-format-of-the-discussion-how-will-it-be-moderated-an']",
+            "type": "text",
+            "description": "What is the format of the discussion? How will it be moderated and chaired?",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "other_comments",
+            "selector": "textarea[data-drupal-selector='edit-please-provide-any-other-information-or-comments-below']",
+            "type": "textarea",
+            "description": "Please provide any other information or comments below:",
+            "required": false,
+            "confirmed": true
+        }
+    ]
+}

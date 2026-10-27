@@ -11,6 +11,9 @@ definition's fields mechanically.
 |---|---|---|
 | Activity Registration Form (ARF) | `su_activity_registration` | https://studentsunionucl.org/webform/activity-registration-form |
 | Ticket Request Form (TRF) | `su_ticket_request` | https://studentsunionucl.org/forms/ticket-request-form |
+| External Speaker Request Form | `su_external_speaker_request` | https://studentsunionucl.org/forms/external-speaker-request-form |
+| Sales Invoice Request Form | `su_sales_invoice_request` | https://studentsunionucl.org/forms/sales-invoice-request-form |
+| Additional Risk Assessment Form | `su_additional_risk_assessment` | https://studentsunionucl.org/forms/additional-risk-assessment-form |
 | What's On "Create event" | `su_event_listing` | https://studentsunionucl.org/whats-on → **Create event** (top left). Note the address it opens: the definition needs it. |
 
 ## Never

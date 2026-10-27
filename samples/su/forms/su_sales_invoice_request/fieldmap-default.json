@@ -1,0 +1,781 @@
+{
+  "url": "https://studentsunionucl.org/forms/sales-invoice-request-form",
+  "title": "Sales Invoice Request Form | Students Union UCL",
+  "capturedAt": "2026-10-27T15:53:48.379Z",
+  "forms": [
+    {
+      "id": "webform-submission-webform-138155-node-138155-add-form",
+      "action": "/antibot",
+      "drupalSelector": "webform-submission-webform-138155-node-138155-add-form",
+      "fields": [
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "webform_access_group",
+          "id": "edit-webform-access-group",
+          "selector": "edit-webform-access-group",
+          "label": "Club/Society",
+          "required": true,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "email",
+          "name": "email_address",
+          "id": "edit-email-address",
+          "selector": "edit-email-address",
+          "label": "Email address",
+          "required": true,
+          "hidden": false,
+          "options": null,
+          "maxlength": "254"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "finance_code",
+          "id": "edit-finance-code",
+          "selector": "edit-finance-code",
+          "label": "Finance Code",
+          "description": "Please provide your three letter finance code here",
+          "required": true,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "select",
+          "type": null,
+          "name": "type_of_income",
+          "id": "edit-type-of-income",
+          "selector": "edit-type-of-income",
+          "label": "Type of income",
+          "required": true,
+          "hidden": true,
+          "options": [
+            {
+              "value": "",
+              "text": "- Select -"
+            },
+            {
+              "value": "1",
+              "text": "Event Income"
+            },
+            {
+              "value": "2",
+              "text": "Membership Fee Income"
+            },
+            {
+              "value": "3",
+              "text": "Donations"
+            },
+            {
+              "value": "4",
+              "text": "Sponsorship Income"
+            },
+            {
+              "value": "5",
+              "text": "Kit Income"
+            },
+            {
+              "value": "6",
+              "text": "Tour Income"
+            }
+          ],
+          "chosen": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": null,
+          "id": null,
+          "selector": null,
+          "label": "Type of income",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "company_name",
+          "id": "edit-company-name",
+          "selector": "edit-company-name",
+          "label": "Company name:",
+          "required": true,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "contact_name",
+          "id": "edit-contact-name",
+          "selector": "edit-contact-name",
+          "label": "Contact name:",
+          "required": true,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "email",
+          "name": "contact_email_address",
+          "id": "edit-contact-email-address",
+          "selector": "edit-contact-email-address",
+          "label": "Contact email address:",
+          "required": true,
+          "hidden": false,
+          "options": null,
+          "maxlength": "254"
+        },
+        {
+          "tag": "input",
+          "type": "tel",
+          "name": "contact_number",
+          "id": "edit-contact-number",
+          "selector": "edit-contact-number",
+          "label": "Contact Number",
+          "required": true,
+          "hidden": false,
+          "options": null,
+          "maxlength": "128"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "company_address[address]",
+          "id": "edit-company-address-address",
+          "selector": "edit-company-address-address",
+          "label": "Address",
+          "required": true,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "company_address[address_2]",
+          "id": "edit-company-address-address-2",
+          "selector": "edit-company-address-address-2",
+          "label": "Address 2",
+          "required": false,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "company_address[city]",
+          "id": "edit-company-address-city",
+          "selector": "edit-company-address-city",
+          "label": "City/Town",
+          "required": true,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "company_address[state_province]",
+          "id": "edit-company-address-state-province",
+          "selector": "edit-company-address-state-province",
+          "label": "State/Province",
+          "required": true,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "company_address[postal_code]",
+          "id": "edit-company-address-postal-code",
+          "selector": "edit-company-address-postal-code",
+          "label": "ZIP/Postal Code",
+          "required": true,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "select",
+          "type": null,
+          "name": "company_address[country]",
+          "id": "edit-company-address-country",
+          "selector": "edit-company-address-country",
+          "label": "Country",
+          "required": true,
+          "hidden": true,
+          "options": [
+            {
+              "value": "",
+              "text": "- Select -"
+            },
+            {
+              "value": "Afghanistan",
+              "text": "Afghanistan"
+            },
+            {
+              "value": "Albania",
+              "text": "Albania"
+            },
+            {
+              "value": "Algeria",
+              "text": "Algeria"
+            },
+            {
+              "value": "American Samoa",
+              "text": "American Samoa"
+            },
+            {
+              "value": "Andorra",
+              "text": "Andorra"
+            },
+            {
+              "value": "Angola",
+              "text": "Angola"
+            },
+            {
+              "value": "Anguilla",
+              "text": "Anguilla"
+            },
+            {
+              "value": "Antarctica",
+              "text": "Antarctica"
+            },
+            {
+              "value": "Antigua & Barbuda",
+              "text": "Antigua & Barbuda"
+            },
+            {
+              "value": "Argentina",
+              "text": "Argentina"
+            },
+            {
+              "value": "Armenia",
+              "text": "Armenia"
+            },
+            {
+              "value": "Aruba",
+              "text": "Aruba"
+            },
+            {
+              "value": "Ascension Island",
+              "text": "Ascension Island"
+            },
+            {
+              "value": "Australia",
+              "text": "Australia"
+            },
+            {
+              "value": "Austria",
+              "text": "Austria"
+            },
+            {
+              "value": "Azerbaijan",
+              "text": "Azerbaijan"
+            },
+            {
+              "value": "Bahamas",
+              "text": "Bahamas"
+            },
+            {
+              "value": "Bahrain",
+              "text": "Bahrain"
+            },
+            {
+              "value": "Bangladesh",
+              "text": "Bangladesh"
+            },
+            {
+              "value": "Barbados",
+              "text": "Barbados"
+            },
+            {
+              "value": "Belarus",
+              "text": "Belarus"
+            },
+            {
+              "value": "Belgium",
+              "text": "Belgium"
+            },
+            {
+              "value": "Belize",
+              "text": "Belize"
+            },
+            {
+              "value": "Benin",
+              "text": "Benin"
+            },
+            {
+              "value": "Bermuda",
+              "text": "Bermuda"
+            },
+            {
+              "value": "Bhutan",
+              "text": "Bhutan"
+            },
+            {
+              "value": "Bolivia",
+              "text": "Bolivia"
+            },
+            {
+              "value": "Bosnia & Herzegovina",
+              "text": "Bosnia & Herzegovina"
+            },
+            {
+              "value": "Botswana",
+              "text": "Botswana"
+            },
+            {
+              "value": "Bouvet Island",
+              "text": "Bouvet Island"
+            },
+            {
+              "value": "Brazil",
+              "text": "Brazil"
+            },
+            {
+              "value": "British Indian Ocean Territory",
+              "text": "British Indian Ocean Territory"
+            },
+            {
+              "value": "British Virgin Islands",
+              "text": "British Virgin Islands"
+            },
+            {
+              "value": "Brunei",
+              "text": "Brunei"
+            },
+            {
+              "value": "Bulgaria",
+              "text": "Bulgaria"
+            },
+            {
+              "value": "Burkina Faso",
+              "text": "Burkina Faso"
+            },
+            {
+              "value": "Burundi",
+              "text": "Burundi"
+            },
+            {
+              "value": "Cambodia",
+              "text": "Cambodia"
+            },
+            {
+              "value": "Cameroon",
+              "text": "Cameroon"
+            },
+            {
+              "value": "Canada",
+              "text": "Canada"
+            },
+            {
+              "value": "Canary Islands",
+              "text": "Canary Islands"
+            },
+            {
+              "value": "Cape Verde",
+              "text": "Cape Verde"
+            },
+            {
+              "value": "Caribbean Netherlands",
+              "text": "Caribbean Netherlands"
+            },
+            {
+              "value": "Cayman Islands",
+              "text": "Cayman Islands"
+            },
+            {
+              "value": "Central African Republic",
+              "text": "Central African Republic"
+            },
+            {
+              "value": "Ceuta & Melilla",
+              "text": "Ceuta & Melilla"
+            },
+            {
+              "value": "Chad",
+              "text": "Chad"
+            },
+            {
+              "value": "Chile",
+              "text": "Chile"
+            },
+            {
+              "value": "China",
+              "text": "China"
+            },
+            {
+              "value": "Christmas Island",
+              "text": "Christmas Island"
+            },
+            {
+              "value": "Clipperton Island",
+              "text": "Clipperton Island"
+            },
+            {
+              "value": "Cocos (Keeling) Islands",
+              "text": "Cocos (Keeling) Islands"
+            },
+            {
+              "value": "Colombia",
+              "text": "Colombia"
+            },
+            {
+              "value": "Comoros",
+              "text": "Comoros"
+            },
+            {
+              "value": "Congo - Brazzaville",
+              "text": "Congo - Brazzaville"
+            },
+            {
+              "value": "Congo - Kinshasa",
+              "text": "Congo - Kinshasa"
+            },
+            {
+              "value": "Cook Islands",
+              "text": "Cook Islands"
+            },
+            {
+              "value": "Costa Rica",
+              "text": "Costa Rica"
+            },
+            {
+              "value": "Croatia",
+              "text": "Croatia"
+            },
+            {
+              "value": "Cuba",
+              "text": "Cuba"
+            },
+            {
+              "value": "Curaçao",
+              "text": "Curaçao"
+            },
+            {
+              "value": "Cyprus",
+              "text": "Cyprus"
+            },
+            {
+              "value": "Czechia",
+              "text": "Czechia"
+            },
+            {
+              "value": "Côte d’Ivoire",
+              "text": "Côte d’Ivoire"
+            },
+            {
+              "value": "Denmark",
+              "text": "Denmark"
+            },
+            {
+              "value": "Diego Garcia",
+              "text": "Diego Garcia"
+            },
+            {
+              "value": "Djibouti",
+              "text": "Djibouti"
+            },
+            {
+              "value": "Dominica",
+              "text": "Dominica"
+            },
+            {
+              "value": "Dominican Republic",
+              "text": "Dominican Republic"
+            },
+            {
+              "value": "Ecuador",
+              "text": "Ecuador"
+            },
+            {
+              "value": "Egypt",
+              "text": "Egypt"
+            },
+            {
+              "value": "El Salvador",
+              "text": "El Salvador"
+            },
+            {
+              "value": "Equatorial Guinea",
+              "text": "Equatorial Guinea"
+            },
+            {
+              "value": "Eritrea",
+              "text": "Eritrea"
+            },
+            {
+              "value": "Estonia",
+              "text": "Estonia"
+            },
+            {
+              "value": "Eswatini",
+              "text": "Eswatini"
+            },
+            {
+              "value": "Ethiopia",
+              "text": "Ethiopia"
+            },
+            {
+              "value": "Falkland Islands",
+              "text": "Falkland Islands"
+            },
+            {
+              "value": "Faroe Islands",
+              "text": "Faroe Islands"
+            }
+          ],
+          "chosen": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": null,
+          "id": null,
+          "selector": null,
+          "label": "Country",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": null,
+          "id": null,
+          "selector": "tabledrag-toggle-weight",
+          "label": "Invoice details",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": null,
+          "id": null,
+          "selector": null,
+          "label": "Invoice details",
+          "required": false,
+          "hidden": true,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "invoice_details[items][0][product]",
+          "id": "edit-invoice-details-items-0-product",
+          "selector": "edit-invoice-details-items-0-product",
+          "label": "Product",
+          "required": false,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "invoice_details[items][0][quantity]",
+          "id": "edit-invoice-details-items-0-quantity",
+          "selector": "edit-invoice-details-items-0-quantity",
+          "label": "Quantity",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "invoice_details[items][0][net_price]",
+          "id": "edit-invoice-details-items-0-net-price",
+          "selector": "edit-invoice-details-items-0-net-price",
+          "label": "Net Price",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "invoice_details[items][0][weight]",
+          "id": "edit-invoice-details-items-0-weight",
+          "selector": "edit-invoice-details-items-0-weight",
+          "label": "Item weight",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "image",
+          "name": "invoice_details_table_add_0",
+          "id": "edit-invoice-details-items-0-operations-add",
+          "selector": "edit-invoice-details-items-0-operations-add",
+          "label": "Invoice details",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "image",
+          "name": "invoice_details_table_remove_0",
+          "id": "edit-invoice-details-items-0-operations-remove",
+          "selector": "edit-invoice-details-items-0-operations-remove",
+          "label": "Invoice details",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "invoice_details_table_add",
+          "id": "edit-invoice-details-add-submit",
+          "selector": "edit-invoice-details-add-submit",
+          "label": "Invoice details",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "invoice_details[add][more_items]",
+          "id": "edit-invoice-details-add-more-items",
+          "selector": "edit-invoice-details-add-more-items",
+          "label": "Add more items",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "total_value",
+          "id": "edit-total-value",
+          "selector": "edit-total-value",
+          "label": "Total payable:",
+          "description": "Please detail the total payable being requested in GBP, e.g. £260.30.",
+          "required": true,
+          "hidden": false,
+          "options": null,
+          "maxlength": "255"
+        },
+        {
+          "tag": "input",
+          "type": "file",
+          "name": "files[please_upload_your_contract_or_supporting_documentation_below]",
+          "id": "edit-please-upload-your-contract-or-supporting-documentation-below-upload",
+          "selector": "edit-please-upload-your-contract-or-supporting-documentation-below-upload",
+          "label": "Please upload your contract or supporting documentation below:",
+          "description": "In order to process your Sales Invoice Request Form, you will need to have a contract or other supporting evidence in place. If you do not have a contract signed by the Students' Union, you can provide alternative supporting evidence, such as a headed letter or email. Evidence should include the nam",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "please_upload_your_contract_or_supporting_documentation_below_upload_button",
+          "id": "edit-please-upload-your-contract-or-supporting-documentation-below-upload-button",
+          "selector": "edit-please-upload-your-contract-or-supporting-documentation-below-upload-button",
+          "label": "Please upload your contract or supporting documentation below:",
+          "description": "In order to process your Sales Invoice Request Form, you will need to have a contract or other supporting evidence in place. If you do not have a contract signed by the Students' Union, you can provide alternative supporting evidence, such as a headed letter or email. Evidence should include the nam",
+          "required": false,
+          "hidden": true,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "please_upload_your_contract_or_supporting_documentation_below[fids]",
+          "id": null,
+          "selector": "edit-please-upload-your-contract-or-supporting-documentation-below-fids",
+          "label": "Please upload your contract or supporting documentation below:",
+          "description": "In order to process your Sales Invoice Request Form, you will need to have a contract or other supporting evidence in place. If you do not have a contract signed by the Students' Union, you can provide alternative supporting evidence, such as a headed letter or email. Evidence should include the nam",
+          "required": false,
+          "hidden": true,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "antibot_key",
+          "id": null,
+          "selector": "edit-antibot-key",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "form_build_id",
+          "id": null,
+          "selector": "form-u8yhlbmorz7wqjxw8v3isaknprh0-qyyxqsqszx53xg",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "form_token",
+          "id": null,
+          "selector": "edit-webform-submission-webform-138155-node-138155-add-form-form-token",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "form_id",
+          "id": null,
+          "selector": "edit-webform-submission-webform-138155-node-138155-add-form",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "op",
+          "id": "edit-submit",
+          "selector": "edit-submit",
+          "label": "",
+          "required": false,
+          "hidden": false,
+          "options": null
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "url",
+          "id": "edit-url",
+          "selector": "edit-url",
+          "label": "Leave this field blank",
+          "required": false,
+          "hidden": false,
+          "options": null,
+          "maxlength": "128"
+        }
+      ]
+    }
+  ]
+}
