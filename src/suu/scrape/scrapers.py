@@ -669,10 +669,14 @@ class GenericElectionScraper(ScraperBase):
             # Network committee roles have no colon and contain "Network":
             #   "POC Network Treasurer"
             #   "Disabled Students' Network Social Secretary"
+            # Longest suffix first: "secretary" also ends "... Social
+            # Secretary", and taking it split the role into a phantom
+            # "<Network> Social" group holding a plain "Secretary".
             role_lower = full_title.lower()
-            if any(role_lower.endswith(suf) for suf in _NETWORK_COMMITTEE_SUFFIXES):
+            suffixes = sorted(_NETWORK_COMMITTEE_SUFFIXES, key=len, reverse=True)
+            if any(role_lower.endswith(suf) for suf in suffixes):
                 group_type = "NetworkCommittee"
-                for suf in _NETWORK_COMMITTEE_SUFFIXES:
+                for suf in suffixes:
                     if role_lower.endswith(suf):
                         group_name = full_title[: len(full_title) - len(suf)].strip()
                         role = full_title[len(group_name) :].strip()
