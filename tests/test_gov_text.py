@@ -85,6 +85,41 @@ def test_ocr_fixes_are_a_closed_list():
     assert _fix_ocr("another piano abandoned") == "another piano abandoned"
 
 
+def test_ocr_fixes_from_the_cs_regulations_scan():
+    # Each pair is real Tesseract output from the July 2025 C&S Regulations.
+    cases = {
+        "45.3 All officer positions": "4.5.3 All officer positions",
+        "4:7. The President": "4.7. The President",
+        "8.11 All clubs and societies representing the Union": "8.1.1 All clubs and societies representing the Union",
+        "A Governance of Clubs and Societies": "4 Governance of Clubs and Societies",
+        "in within the same club or society, unless": "within the same club or society, unless",
+        "3.1.1. Ifaclub or society officer": "3.1.1. If a club or society officer",
+        "3.2.1 Ifa member wishes": "3.2.1 If a member wishes",
+        "grant account on 31* July will be": "grant account on 31 July will be",
+        "will be ‘frozer’ from making payments": "will be ‘frozen’ from making payments",
+        "accounts that are ina permanent deficit": "accounts that are in a permanent deficit",
+        "7.7.7 \\f the panel considers": "7.7.7 If the panel considers",
+        "https:/www.ucl.ac.uk/srs/code.p df.": "https://www.ucl.ac.uk/srs/code.pdf.",
+    }
+    for raw, fixed in cases.items():
+        assert _fix_ocr(raw) == fixed
+
+
+def test_ocr_keeps_the_sus_own_misnumbering():
+    # "5.1.1" inside 4.7 and "7.7.3" inside 6.7 are printed that way in the PDF.
+    assert _fix_ocr("5.1.1 Shall be a principal officer") == "5.1.1 Shall be a principal officer"
+    assert _fix_ocr("7.7.3. The Awards and Colours Panels") == "7.7.3. The Awards and Colours Panels"
+    assert _fix_ocr("https://example.org/a") == "https://example.org/a"
+
+
+def test_ocr_fixes_apply_across_a_line_break():
+    text = render([
+        row(10, "3.2.1 Ifa", x1=520),
+        row(24, "member wishes to complain.", x0=96, x1=300),
+    ], ocr=True)
+    assert "If a member wishes to complain." in text
+
+
 CLAUSES = ["Membership is open.", "Officers are elected.", "Grants are allocated.", "Rooms are booked.", "Kit is insured."]
 
 
@@ -113,3 +148,12 @@ def test_extract_structured_text_round_trips_a_real_pdf():
     text = extract_structured_text(document.tobytes())
     assert text.splitlines()[0] == "## Bye-Law 1 — General"
     assert "1. The Union is a company limited by guarantee.\n\n2. Words" in text
+
+
+def test_ocr_noisy_page_number_is_dropped():
+    pages = [
+        [row(10, f"{n}.1 Clause on page {n}."), row(700, "15," if n == 2 else str(n))]
+        for n in range(1, 6)
+    ]
+    kept = [r.text for rows in _drop_furniture(pages) for r in rows]
+    assert "15," not in kept

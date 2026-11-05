@@ -11,7 +11,7 @@
   the older pypdf text prod held before the re-collect (kept so the parser still reads
   it).
 - **Real or synthetic**: real extractor output, cut to excerpts.
-- **Captured**: 2026-09-25 (from the July 2026 documents).
+- **Captured**: 2026-09-25 (from the July 2026 documents); C&S Regulations re-extracted 2026-11-05 after the OCR fixes.
 - **Redacted**: no — public documents.
 - **Read by**: the Toolbox's `src/lib/governingDocumentText.test.ts` through its copy in
   `src/lib/__fixtures__/governing-documents/` — sync with `node scripts/sync-samples.mjs`

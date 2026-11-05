@@ -81,13 +81,13 @@ Version: July 2025
 
 ### 3.1. For Club and Society Officers
 
-3.1.1. Ifaclub or society officer would like to make a complaint about the Union, then they should follow the complaint procedure on the Students’ Union website:
+3.1.1. If a club or society officer would like to make a complaint about the Union, then they should follow the complaint procedure on the Students’ Union website:
 
   http://studentsunionucl.org/complaints.
 
 ### 3.2 For Club and Society Members
 
-3.2.1 Ifa member wishes to make a complaint about any club or society activity, then they should first contact the relevant club or society president, or the SU Activities Team, to see if this can be resolved informally.
+3.2.1 If a member wishes to make a complaint about any club or society activity, then they should first contact the relevant club or society president, or the SU Activities Team, to see if this can be resolved informally.
 
 3.2.2 If the matter cannot be resolved informally, then they should submit a complaint through the Students’ Union UCL website or by contacting SU.Complaints@ucl.ac.uk.
 
@@ -95,7 +95,7 @@ Version: July 2025
 
 3.3.1. Disciplinary action may be taken against clubs, societies and related groups, or individual members through the Union disciplinary procedure (Bye-Law 12).
 
-A Governance of Clubs and Societies
+## 4 Governance of Clubs and Societies
 
 ### 4.1 Full Membership
 

@@ -51,7 +51,8 @@ _MARKER_RE = re.compile(
 )
 _DOTTED_RE = re.compile(r"^\d{1,2}(?:\.\d{1,2}){1,3}\.?$")
 _BYELAW_HEADING_RE = re.compile(r"^Bye\s*-?\s*Law\s*((?:\d\s*){1,2})\s*[-–—:]\s*(.+)$", re.IGNORECASE)
-_NUMBER_ONLY_RE = re.compile(r"^(?:page\s+)?\d{1,3}(?:\s+of\s+\d{1,3})?$", re.IGNORECASE)
+# A trailing "," or "." is OCR noise on the page number ("15," in the C&S Regulations).
+_NUMBER_ONLY_RE = re.compile(r"^(?:page\s+)?\d{1,3}(?:\s+of\s+\d{1,3})?[,.]?$", re.IGNORECASE)
 # Contents-page leader: real dots, or the "ssssseeee" OCR makes of them.
 _LEADER_RE = re.compile(r"(?:\.\s?){4,}|…{2,}|[.,:;sScCeEoOnNuUmMr]{14,}")
 _RULE_RE = re.compile(r"^[_\-–—=.\s]{8,}$")
@@ -334,6 +335,28 @@ _OCR_FIXES = [
     (re.compile(r"\b([Aa])(club|society|president|treasurer|member|representative|constitution|welfare)\b"), r"\1 \2"),
     (re.compile(r"\bano(?= confidence\b)"), "a no"),
     (re.compile(r"\bNew(clubs|societies)\b"), r"New \1"),
+    # Slips in the July 2025 C&S Regulations, each checked against the scan.
+    # Only OCR misreads belong here: the PDF's own misnumbering ("5.1.1" inside
+    # 4.7, "7.7.3" inside 6.7) is what the SU published and what people cite,
+    # so it is reproduced as printed.
+    (re.compile(r"^(\d{1,2}):(\d{1,2})(?=[.\s])"), r"\1.\2"),  # "4:7. The President"
+    (re.compile(r"^45\.([36])(?=\s)"), r"4.5.\1"),  # "4.5.3" with its first dot lost
+    (re.compile(r"^8\.11(?=\s+All clubs and societies representing)"), "8.1.1"),
+    (re.compile(r"^A(?= Governance of Clubs and Societies$)"), "4"),  # chapter number read as "A"
+    (re.compile(r"^in (?=within the same club or society)"), ""),
+    (re.compile(r"\bIfa ?(?=(?:club|society|member)\b)"), "If a "),  # "Ifaclub", "Ifa member"
+    (re.compile(r"\bAsaminimum\b"), "As a minimum"),
+    (re.compile(r"\batwo-thirds\b"), "a two-thirds"),
+    (re.compile(r"\banon-grant\b"), "a non-grant"),
+    (re.compile(r"\bina(?= permanent\b)"), "in a"),
+    (re.compile(r"‘frozer’"), "‘frozen’"),
+    # Superscript "st" read as "*": "31* July".
+    (re.compile(r"\b(\d{1,2})\*(?= (?:January|February|March|April|May|June|July|August|September|October|November|December)\b)"), r"\1"),
+    (re.compile(r"\bAll(income|sports)\b"), r"All \1"),
+    (re.compile(r"\bInthe\b"), "In the"),
+    (re.compile(r"(?<![A-Za-z\\])\\f\b"), "If"),  # like "|f"
+    (re.compile(r"\bhttps?:/(?=[^/])"), r"\g<0>/"),
+    (re.compile(r"\.p df\b"), ".pdf"),
 ]
 
 
@@ -495,6 +518,12 @@ def rows_to_blocks(rows: list[Row], ocr: bool = False) -> list[Block]:
         current = Block(kind="para", text=row.text, level=current_depth_for(stack, row.x0), marker_x=row.x0, last=row)
 
     flush()
+    if ocr:
+        # Again on the joined text: some slips straddle a line break
+        # ("Ifa" / "member", ".p" / "df").
+        for block in blocks:
+            if block.kind == "para":
+                block.text = _fix_ocr(re.sub(r"\s+", " ", block.text).strip())
     return blocks
 
 
