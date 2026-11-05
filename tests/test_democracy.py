@@ -1,5 +1,6 @@
 """Democracy parsers against saved SU pages (samples/su/democracy/, trimmed)."""
 
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -87,6 +88,16 @@ def test_archive_covers_every_body_and_year(archive):
     assert {e.academic_year for e in archive.values()} == {
         "2021-22", "2022-23", "2023-24", "2024-25", "2025-26",
     }
+
+
+def test_archive_reads_two_digit_year_labels():
+    # The SU relabelled "minutes and papers 2025-26" as "… 25-26" on 5 Nov 2026,
+    # which emptied the archive for the four-digit-only year pattern.
+    html = re.sub(r"(<dt>[^<]*?)20(\d{2}\s*[-–/]\s*\d{2})", r"\1\2", _html("archive.html"))
+    assert "from 25-26 Academic Year" in html
+    entries = {e.code: e for e in parse_archive(html)}
+    assert len(entries) == 111
+    assert entries["AZ2502"].academic_year == "2025-26"
 
 
 def test_archive_pdf_links_carry_their_label(archive):

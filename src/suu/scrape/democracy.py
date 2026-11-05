@@ -93,7 +93,8 @@ _MEETING_NUMBER_RE = re.compile(r"\bMeeting\s+(\d+)\b", re.IGNORECASE)
 _SUBHEADING_RE = re.compile(
     r"(\d{1,2})/(\d{1,2})/(\d{4})\s*\|\s*(\d{1,2}):(\d{2})\s*[-–—]\s*(\d{1,2}):(\d{2})"
 )
-_YEAR_RE = re.compile(r"(20\d{2})\s*[-–/]\s*(\d{2})")
+# "2025-26", or "25-26" as the archive has labelled its years since 5 Nov 2026.
+_YEAR_RE = re.compile(r"(?<!\d)((?:20)?\d{2})\s*[-–/]\s*(\d{2})(?!\d)")
 
 
 class DemocracyPageError(RuntimeError):
@@ -459,7 +460,7 @@ def parse_archive(html: str) -> list[ArchiveEntry]:
             dd = dt.find_next_sibling("dd")
             if not year_match or dd is None:
                 continue
-            start_year = int(year_match.group(1))
+            start_year = int(year_match.group(1)[-2:]) + 2000
             position = 0
             for line in _split_lines(dd):
                 for item in _line_items(line):
