@@ -147,7 +147,191 @@
             "name": "tags",
             "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-textfield']",
             "type": "text",
-            "description": "What's On tags (field_event_tags autocomplete deluxe input)",
+            "description": "Additional tags (field_event_tags autocomplete deluxe input): only keeps a term picked from its suggestions, so the Toolbox leaves it empty and ticks the featured tag checkboxes instead",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_volunteering",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-41037']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Volunteering (term 41037). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_nightlife",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-41241']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Nightlife (term 41241). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_fitness",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-41272']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Fitness (term 41272). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_beginner_friendly",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-41278']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Beginner Friendly (term 41278). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_free",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-41466']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Free (term 41466). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_sport",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-43030']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Sport (term 43030). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_careers",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-43360']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Careers (term 43360). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_postgraduate_summer",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-44137']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Postgraduate Summer (term 44137). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_representation",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-44160']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Representation (term 44160). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_wellbeing",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-44185']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Wellbeing (term 44185). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_alcohol_free",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-44220']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Alcohol Free (term 44220). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_ucl_east",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-44234']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: UCL East (term 44234). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_culture",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-44320']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Culture (term 44320). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_money_budgeting",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-46796']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Money & Budgeting (term 46796). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_welcome",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-47049']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Welcome (term 47049). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_under_18_friendly",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-47195']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Under 18 Friendly (term 47195). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_club_and_society_taster",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-47200']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Club and Society Taster (term 47200). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_black_history_month",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-48427']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Black History Month (term 48427). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_postgrads_only",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-48597']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Postgrads only (term 48597). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_make_a_difference",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-49267']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Make a Difference (term 49267). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_commuters",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-49276']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Commuters (term 49276). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_lowkey",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-50053']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Lowkey (term 50053). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_distance_leaners",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-50417']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Distance Leaners (term 50417). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
             "required": false,
             "confirmed": true
         },
