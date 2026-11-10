@@ -73,6 +73,7 @@
             "description": "Proposed Date(s) and Time(s): one row per date/session of the activity (proposed_date_s_and_time_s_)",
             "required": true,
             "add_button_selector": "[data-drupal-selector='edit-proposed-date-s-and-time-s-add-submit']",
+            "add_count_selector": "input[data-drupal-selector='edit-proposed-date-s-and-time-s-add-more-items']",
             "confirmed": true,
             "fields": [
                 {
@@ -240,6 +241,7 @@
             "required": false,
             "shown_when": "costs_money_yes is selected",
             "add_button_selector": "[data-drupal-selector='edit-expenditure-details-3-add-submit']",
+            "add_count_selector": "input[data-drupal-selector='edit-expenditure-details-3-add-more-items']",
             "confirmed": true,
             "fields": [
                 {
@@ -300,6 +302,7 @@
             "required": false,
             "shown_when": "costs_money_yes or generates_income_yes is selected",
             "add_button_selector": "[data-drupal-selector='edit-incomings-details-add-submit']",
+            "add_count_selector": "input[data-drupal-selector='edit-incomings-details-add-more-items']",
             "confirmed": true,
             "fields": [
                 {

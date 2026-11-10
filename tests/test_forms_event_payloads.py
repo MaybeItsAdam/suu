@@ -246,13 +246,15 @@ def test_event_listing_fields(sample, tmp_path):
     assert data["ticketing_type"] == "Club & Society event as part of a Ticket Request Form submission"
     # Only the free tier: paid tickets are the TRF's.
     assert data["ticket_tiers"] == [{"name": "Committee helpers", "price": "0.00", "quantity": "10"}]
-    # No source for the access lists yet.
-    assert keys_fit("su_event_listing", data) == {
+    # No source for the access lists or the featured tag checkboxes yet.
+    unfilled = keys_fit("su_event_listing", data)
+    assert {k for k in unfilled if not k.startswith("tag_")} == {
         "postgraduate",
         "family_friendly",
         "wheelchair_access_yes",
         "wheelchair_access_no",
     }
+    assert {k for k in unfilled if k.startswith("tag_")}
 
 
 def test_event_listing_carries_no_url_for_a_file(sample):

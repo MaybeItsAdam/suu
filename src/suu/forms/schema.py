@@ -13,6 +13,7 @@ class FormField(BaseModel):
     fields: Optional[List["FormField"]] = Field(None, description="Child fields for 'list' or 'group' types")
     list_container_selector: Optional[str] = Field(None, description="Selector for the container of list items (if type='list')")
     add_button_selector: Optional[str] = Field(None, description="Selector for the button to add new items (if type='list')")
+    add_count_selector: Optional[str] = Field(None, description="Selector for webform's 'Add [n] more items' box beside the add button: set it to every missing row and press add once (if type='list')")
     validation_selector: Optional[str] = Field(None, description="Selector that must appear to confirm success (e.g. 'Remove' button)")
     default: Optional[Any] = Field(None, description="Default value to use if input data is missing")
     # Scaffold metadata. The executors ignore both; they say how far to trust the rest.

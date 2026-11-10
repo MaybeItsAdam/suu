@@ -283,7 +283,10 @@ def match_definition(definition: FormDefinition, field_map: dict) -> dict[str, A
     for path, field in _walk(definition.fields):
         if not field.selector:
             continue
-        hit = soup.select(_interpolate(field.selector))
+        # Chosen draws its container beside the <select> at runtime; a capture's
+        # skeleton has only the controls, so match the <select> itself.
+        selector = re.sub(r"\s*\+\s*\.chosen-container\s*$", "", _interpolate(field.selector))
+        hit = soup.select(selector)
         (found if hit else missing).append({"field": path, "required": field.required, "selector": field.selector})
     missing.sort(key=lambda m: not m["required"])
 
