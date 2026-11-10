@@ -223,8 +223,8 @@
                     "name": "price",
                     "selector": "input[data-drupal-selector='edit-variations-{i}-inline-entity-form-price-0-number']",
                     "type": "text",
-                    "description": "Price in GBP; 0.00 for a free ticket",
-                    "required": true,
+                    "description": "Price in GBP; 0.00 for a free ticket; left blank on an external-ticket variation",
+                    "required": false,
                     "confirmed": true
                 },
                 {
@@ -232,6 +232,22 @@
                     "selector": "input[data-drupal-selector='edit-variations-{i}-inline-entity-form-field-stock-0-adjustment']",
                     "type": "text",
                     "description": "Add to stock (how many tickets are available)",
+                    "required": false,
+                    "confirmed": true
+                },
+                {
+                    "name": "external_url",
+                    "selector": "input[data-drupal-selector='edit-variations-{i}-inline-entity-form-field-event-external-link-0-uri']",
+                    "type": "text",
+                    "description": "External link to purchase tickets: URL. Only for ticketing_type 'Tickets booked or sold on external website'; tickets are then not sold on the Union site. Present in fixtures/su_event_listing.html (checked 2026-11-10).",
+                    "required": false,
+                    "confirmed": true
+                },
+                {
+                    "name": "external_link_text",
+                    "selector": "input[data-drupal-selector='edit-variations-{i}-inline-entity-form-field-event-external-link-0-title']",
+                    "type": "text",
+                    "description": "External link to purchase tickets: link text",
                     "required": false,
                     "confirmed": true
                 }
