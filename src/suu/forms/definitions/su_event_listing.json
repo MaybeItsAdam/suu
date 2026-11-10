@@ -36,8 +36,8 @@
         },
         {
             "name": "event_category",
-            "selector": "select[data-drupal-selector='edit-field-event-category']",
-            "type": "select",
+            "selector": "select[data-drupal-selector='edit-field-event-category'] + .chosen-container",
+            "type": "chosen_select",
             "description": "Category (field_event_category, default: Clubs & Societies)",
             "required": false,
             "default": "Clubs & Societies",
@@ -345,8 +345,8 @@
         },
         {
             "name": "family_friendly",
-            "selector": "select[data-drupal-selector='edit-field-access-family']",
-            "type": "select",
+            "selector": "select[data-drupal-selector='edit-field-access-family'] + .chosen-container",
+            "type": "chosen_select",
             "description": "Family friendly (field_access_family)",
             "required": false,
             "options": [
@@ -374,8 +374,8 @@
         },
         {
             "name": "ticketing_type",
-            "selector": "select[data-drupal-selector='edit-field-ticketing-type']",
-            "type": "select",
+            "selector": "select[data-drupal-selector='edit-field-ticketing-type'] + .chosen-container",
+            "type": "chosen_select",
             "description": "Ticketing type (field_ticketing_type)",
             "required": false,
             "options": [
