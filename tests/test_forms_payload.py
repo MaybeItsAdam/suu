@@ -53,7 +53,16 @@ def test_definitions_are_keyed_by_id_and_point_at_the_su(form_id):
     assert urlparse(definition.url).hostname == "studentsunionucl.org"
 
 
-SCAFFOLDS = {"su_activity_registration", "risk_assessment", "room_booking"}
+SCAFFOLDS = {"risk_assessment", "room_booking"}
+#: Forms whose selectors have been confirmed against a signed-in capture.
+CAPTURED = {
+    "su_activity_registration",
+    "su_ticket_request",
+    "su_event_listing",
+    "su_external_speaker_request",
+    "su_sales_invoice_request",
+    "su_additional_risk_assessment",
+}
 
 
 @pytest.mark.parametrize("form_id", sorted(SCAFFOLDS))
@@ -66,6 +75,69 @@ def test_scaffolds_load_and_say_what_is_unverified(form_id):
     assert raw["_todo"]["status"] == "scaffold"
     assert raw["_todo"]["unverified"]
     assert load_form_definition(form_id).login_required
+
+
+def _raw(form_id):
+    return json.loads((definitions_dir() / f"{form_id}.json").read_text(encoding="utf-8"))
+
+
+@pytest.mark.parametrize("form_id", sorted(CAPTURED))
+def test_captured_forms_mark_every_field_confirmed(form_id):
+    """Every selector in a captured form definition has been confirmed on the real page."""
+    fields = walk(load_form_definition(form_id).fields)
+    assert fields
+    assert [f.name for f in fields if not f.confirmed] == []
+    assert _raw(form_id)["_todo"]["status"] == "captured"
+
+
+@pytest.mark.parametrize("form_id", list_form_ids())
+def test_only_scaffolds_carry_unconfirmed_fields(form_id):
+    """A form that isn't a scaffold has had every selector seen on the real page."""
+    unconfirmed = [f.name for f in walk(load_form_definition(form_id).fields) if not f.confirmed]
+    if unconfirmed:
+        assert _raw(form_id).get("_todo", {}).get("status") == "scaffold", unconfirmed
+
+
+#: Every way an SU form is sent: a webform's Submit, Save draft and wizard
+#: Next, a node form's Save, Preview and Delete, and a bare submit button.
+FINAL_SUBMIT_PAGE = """<form>
+  <input type="text" data-drupal-selector="edit-title-0-value">
+  <input type="checkbox" data-drupal-selector="edit-field-event-online-value">
+  <div id="edit-actions" class="form-actions" data-drupal-selector="edit-actions">
+    <input type="submit" id="edit-actions-submit" data-drupal-selector="edit-actions-submit" name="op" value="Submit">
+    <input type="submit" id="edit-actions-draft" data-drupal-selector="edit-actions-draft" name="op" value="Save Draft">
+    <input type="submit" id="edit-actions-wizard-next" data-drupal-selector="edit-actions-wizard-next" name="op" value="Next">
+    <input type="submit" id="edit-submit" data-drupal-selector="edit-submit" name="op" value="Save">
+    <input type="submit" id="edit-preview" data-drupal-selector="edit-preview" name="op" value="Preview">
+    <a id="edit-delete" data-drupal-selector="edit-delete" href="/node/1/delete">Delete</a>
+  </div>
+  <button type="submit">Submit</button>
+</form>"""
+
+
+@pytest.mark.parametrize("form_id", list_form_ids())
+def test_no_action_selector_reaches_a_submit_button(form_id):
+    """Nothing a definition clicks, presses, ticks or adds may land on a way of sending the form."""
+    from bs4 import BeautifulSoup
+
+    from suu.forms.fieldmap import action_selectors
+
+    soup = BeautifulSoup(FINAL_SUBMIT_PAGE, "html.parser")
+    actions = soup.select("#edit-actions, #edit-actions *, button[type=submit]")
+    for selector in action_selectors(load_form_definition(form_id)):
+        for index in (0, 1):
+            css = selector.replace("{i}", str(index)).replace("{n}", str(index + 1))
+            hits = [el for el in soup.select(css) if el in actions]
+            assert hits == [], f"{form_id}: {selector}"
+
+
+@pytest.mark.parametrize("form_id", list_form_ids())
+def test_definitions_have_no_submit_step(form_id):
+    """`steps` is the other way a definition could act; none may click or submit."""
+    for step in load_form_definition(form_id).steps or []:
+        assert step.action not in ("submit",), f"{form_id}.{step.name}"
+        if step.action == "click" and step.selector:
+            assert not re.search(r"submit|edit-actions|preview|edit-delete", step.selector, re.I), f"{form_id}.{step.name}"
 
 
 def test_every_form_without_fields_is_a_known_scaffold():

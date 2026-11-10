@@ -156,6 +156,11 @@ Built-in forms: `payment_request` (reimbursements) and `purchase_request` (payin
 asking the Union to buy something). suu **never submits** a form — it fills it in and leaves
 the browser open so you can review and submit yourself.
 
+Drafts, not yet usable: `su_activity_registration` (Activity Registration Form),
+`su_ticket_request` (Ticket Request Form) and `su_event_listing` (What's On "Create event").
+Their selectors are unconfirmed until someone signed in captures the forms
+(`docs/capturing-forms.md`).
+
 If your society uses Adam's Campus Toolbox, you don't need suu for reimbursements: the
 Toolbox Connector extension fills the payment request from a receipt, in a window in your
 own browser, using these same form definitions — and likewise never submits.

@@ -1,0 +1,441 @@
+{
+    "form_id": "su_event_listing",
+    "url": "https://studentsunionucl.org/product/add/event",
+    "description": "UCL Student Union What's On listing ('Create event', /product/add/event): a club or society event on the What's On calendar (Drupal Commerce product bundle 'event'). The SU's own steps: sign in, open What's On, click 'Create event' (which opens /product/add/event), fill in the event details, pick the owning group (club or society), prefer an existing venue over creating a duplicate, and leave the optional sections ('Access to event and sales') blank if they don't apply. Promote only once every required form (ARF, risk assessment, TRF) is approved. Free tickets are created by the society on the SU website itself; paid tickets go through the Ticket Request Form, which asks for this listing's URL. Never press Save, Publish or Preview from a definition.",
+    "login_required": true,
+    "_todo": {
+        "status": "captured",
+        "verified": [
+            "url: /product/add/event, reached from the 'Create event' button on /whats-on (confirmed from signed-in capture, 2026-10-24)",
+            "an anonymous /whats-on has no Create event link, and /product/add/event requires sign-in (checked 2026-10-23)",
+            "selectors confirmed from signed-in capture of /product/add/event (samples/su/forms/su_event_listing, captured 2026-10-24): commerce-product-event-add-form, field_event_owner_group is a <select> of the officer's societies, field_access_wheelchair is Yes/No radios, field_access_family is a <select> (No/Yes/Partial), banner and card image uploads, variations inline entity form"
+        ],
+        "unverified": "Body textarea is backed by CKEditor 5 on the live page; not yet end-to-end filled on the live SU form.",
+        "sources": [
+            "https://studentsunionucl.org/how-to/clubs-and-societies/organising-activities-events",
+            "https://studentsunionucl.org/how-to/clubs-and-societies/sell-event-tickets-or-products",
+            "https://studentsunionucl.org/whats-on/clubs-societies/pub-social-mullys"
+        ]
+    },
+    "fields": [
+        {
+            "name": "title",
+            "selector": "input[data-drupal-selector='edit-title-0-value']",
+            "type": "text",
+            "description": "Event title (its path alias becomes /whats-on/clubs-societies/<slugified title>)",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "owner_group",
+            "selector": "select[data-drupal-selector='edit-field-event-owner-group-target-id-0-target-id']",
+            "type": "select",
+            "description": "Owning group: the club or society the event belongs to (field_event_owner_group). Must be picked, or the event isn't associated with the society.",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "start_date",
+            "selector": "input[data-drupal-selector='edit-field-date-range-0-value-date']",
+            "type": "text",
+            "description": "Start date, YYYY-MM-DD (field_date_range, a smartdate, Europe/London)",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "start_time",
+            "selector": "input[data-drupal-selector='edit-field-date-range-0-value-time']",
+            "type": "text",
+            "description": "Start time, HH:MM. Leave empty only when the time genuinely isn't known (never midnight as a placeholder).",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "end_date",
+            "selector": "input[data-drupal-selector='edit-field-date-range-0-end-value-date']",
+            "type": "text",
+            "description": "End date, YYYY-MM-DD; the start date for a one-evening event. A run of performances is several listings or dates, never one long span.",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "end_time",
+            "selector": "input[data-drupal-selector='edit-field-date-range-0-end-value-time']",
+            "type": "text",
+            "description": "End time, HH:MM",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "online",
+            "selector": "input[data-drupal-selector='edit-field-event-online-value']",
+            "type": "checkbox",
+            "description": "Online event (field_event_online)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "venue",
+            "selector": "input[data-drupal-selector='edit-field-event-venue-0-target-id']",
+            "type": "autocomplete",
+            "description": "Venue (field_event_venue). Pick an existing venue to avoid duplicates.",
+            "required": false,
+            "shown_when": "not an online event",
+            "confirmed": true
+        },
+        {
+            "name": "body",
+            "selector": "textarea[data-drupal-selector='edit-body-0-value']",
+            "type": "textarea",
+            "description": "Event description (body, backed by CKEditor on the live page)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "banner_image",
+            "selector": "input[data-drupal-selector='edit-field-event-image-banner-0-upload']",
+            "type": "file",
+            "description": "Banner image (3 MB limit; png, gif, jpg, jpeg)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "card_image",
+            "selector": "input[data-drupal-selector='edit-field-event-image-card-0-upload']",
+            "type": "file",
+            "description": "Card image (1 MB limit; upload a photo, avoid graphics or logos)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "contact_email",
+            "selector": "input[data-drupal-selector='edit-field-contact-email-0-value']",
+            "type": "text",
+            "description": "Contact email shown on the listing (field_contact_email); the society's @ucl.ac.uk address, not a person's",
+            "required": true,
+            "confirmed": true
+        },
+        {
+            "name": "contact_phone",
+            "selector": "input[data-drupal-selector='edit-field-contact-phone-number-0-value']",
+            "type": "text",
+            "description": "Contact phone number (field_contact_phone_number)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tags",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-textfield']",
+            "type": "text",
+            "description": "Additional tags (field_event_tags autocomplete deluxe input): only keeps a term picked from its suggestions, so the Toolbox leaves it empty and ticks the featured tag checkboxes instead",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_volunteering",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-41037']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Volunteering (term 41037). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_nightlife",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-41241']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Nightlife (term 41241). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_fitness",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-41272']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Fitness (term 41272). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_beginner_friendly",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-41278']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Beginner Friendly (term 41278). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_free",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-41466']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Free (term 41466). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_sport",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-43030']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Sport (term 43030). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_careers",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-43360']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Careers (term 43360). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_postgraduate_summer",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-44137']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Postgraduate Summer (term 44137). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_representation",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-44160']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Representation (term 44160). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_wellbeing",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-44185']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Wellbeing (term 44185). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_alcohol_free",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-44220']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Alcohol Free (term 44220). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_ucl_east",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-44234']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: UCL East (term 44234). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_culture",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-44320']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Culture (term 44320). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_money_budgeting",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-46796']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Money & Budgeting (term 46796). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_welcome",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-47049']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Welcome (term 47049). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_under_18_friendly",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-47195']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Under 18 Friendly (term 47195). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_club_and_society_taster",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-47200']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Club and Society Taster (term 47200). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_black_history_month",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-48427']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Black History Month (term 48427). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_postgrads_only",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-48597']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Postgrads only (term 48597). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_make_a_difference",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-49267']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Make a Difference (term 49267). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_commuters",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-49276']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Commuters (term 49276). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_lowkey",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-50053']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Lowkey (term 50053). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "tag_distance_leaners",
+            "selector": "input[data-drupal-selector='edit-field-event-tags-target-id-checked-50417']",
+            "type": "checkbox",
+            "description": "Featured tag checkbox: Distance Leaners (term 50417). The Tags section needs at least one; staff-only tags (artsUCL, Project Active, Discover London) are disabled and left out.",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "postgraduate",
+            "selector": "input[data-drupal-selector='edit-field-access-pg-value']",
+            "type": "checkbox",
+            "description": "Suitable for Postgraduates (field_access_pg)",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "event_category",
+            "selector": "select[data-drupal-selector='edit-field-event-category'] + .chosen-container",
+            "type": "chosen_select",
+            "description": "Category (field_event_category, default: Clubs & Societies). Filled late, after the society, venue and description: picked straight after the society it was left unset on the live form (2026-11-10), so something earlier in the form resets it.",
+            "required": false,
+            "default": "Clubs & Societies",
+            "options": [
+                "Bars",
+                "Clubs & Societies",
+                "Events & Activities",
+                "Give it a Go",
+                "Jobs & Skills",
+                "Meetings",
+                "Representation",
+                "Sport",
+                "Volunteering"
+            ],
+            "confirmed": true
+        },
+        {
+            "name": "family_friendly",
+            "selector": "select[data-drupal-selector='edit-field-access-family'] + .chosen-container",
+            "type": "chosen_select",
+            "description": "Family friendly (field_access_family)",
+            "required": false,
+            "options": [
+                "No",
+                "Yes",
+                "Partial"
+            ],
+            "confirmed": true
+        },
+        {
+            "name": "wheelchair_access_yes",
+            "selector": "input[data-drupal-selector='edit-field-access-wheelchair-yes']",
+            "type": "checkbox",
+            "description": "Wheelchair accessible (field_access_wheelchair) — Yes",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "wheelchair_access_no",
+            "selector": "input[data-drupal-selector='edit-field-access-wheelchair-no']",
+            "type": "checkbox",
+            "description": "Wheelchair accessible (field_access_wheelchair) — No",
+            "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "ticketing_type",
+            "selector": "select[data-drupal-selector='edit-field-ticketing-type'] + .chosen-container",
+            "type": "chosen_select",
+            "description": "Ticketing type (field_ticketing_type)",
+            "required": false,
+            "options": [
+                "No tickets",
+                "Free tickets bookable on this website",
+                "Paid tickets sold on this website",
+                "Tickets booked or sold on external website",
+                "Club & Society event as part of a Ticket Request Form submission"
+            ],
+            "confirmed": true
+        },
+        {
+            "name": "ticket_tiers",
+            "type": "list",
+            "description": "Date and ticket variations: free ticket tiers the society can create itself (paid tickets go through the Ticket Request Form instead). Leave blank if it doesn't apply.",
+            "required": false,
+            "add_button_selector": "[data-drupal-selector='edit-variations-add-more']",
+            "confirmed": true,
+            "fields": [
+                {
+                    "name": "name",
+                    "selector": "input[data-drupal-selector='edit-variations-{i}-inline-entity-form-title-0-value']",
+                    "type": "text",
+                    "description": "Variation title (ticket name)",
+                    "required": true,
+                    "confirmed": true
+                },
+                {
+                    "name": "price",
+                    "selector": "input[data-drupal-selector='edit-variations-{i}-inline-entity-form-price-0-number']",
+                    "type": "text",
+                    "description": "Price in GBP; 0.00 for a free ticket; left blank on an external-ticket variation",
+                    "required": false,
+                    "confirmed": true
+                },
+                {
+                    "name": "quantity",
+                    "selector": "input[data-drupal-selector='edit-variations-{i}-inline-entity-form-field-stock-0-adjustment']",
+                    "type": "text",
+                    "description": "Add to stock (how many tickets are available)",
+                    "required": false,
+                    "confirmed": true
+                },
+                {
+                    "name": "external_url",
+                    "selector": "input[data-drupal-selector='edit-variations-{i}-inline-entity-form-field-event-external-link-0-uri']",
+                    "type": "text",
+                    "description": "External link to purchase tickets: URL. Only for ticketing_type 'Tickets booked or sold on external website'; tickets are then not sold on the Union site. Present in fixtures/su_event_listing.html (checked 2026-11-10).",
+                    "required": false,
+                    "confirmed": true
+                },
+                {
+                    "name": "external_link_text",
+                    "selector": "input[data-drupal-selector='edit-variations-{i}-inline-entity-form-field-event-external-link-0-title']",
+                    "type": "text",
+                    "description": "External link to purchase tickets: link text",
+                    "required": false,
+                    "confirmed": true
+                }
+            ]
+        }
+    ]
+}

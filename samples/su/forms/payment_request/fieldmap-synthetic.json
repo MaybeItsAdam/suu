@@ -1,0 +1,297 @@
+{
+  "url": "https://studentsunionucl.org/forms/payment-request-form",
+  "title": "Payment Request Form | Students' Union UCL",
+  "forms": [
+    {
+      "id": "search-block-form",
+      "selector": "search-block-form",
+      "action": "/search",
+      "method": "get",
+      "fields": [
+        {
+          "tag": "input",
+          "type": "search",
+          "name": "keys",
+          "id": "edit-keys",
+          "selector": "edit-keys",
+          "label": "Search",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "submit_search",
+          "id": "edit-submit-search",
+          "selector": "edit-submit-search",
+          "label": "",
+          "required": false,
+          "hidden": false,
+          "text": "Search"
+        }
+      ]
+    },
+    {
+      "id": "webform-submission-payment-request-form-add-form",
+      "selector": "webform-submission-payment-request-form-add-form",
+      "action": "/forms/payment-request-form",
+      "method": "post",
+      "fields": [
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "webform_access_group",
+          "id": "edit-webform-access-group",
+          "selector": "edit-webform-access-group",
+          "label": "Club or Society",
+          "required": true,
+          "hidden": false,
+          "autocomplete": true
+        },
+        {
+          "tag": "textarea",
+          "type": "textarea",
+          "name": "description",
+          "id": "edit-description",
+          "selector": "edit-description",
+          "label": "Description",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "if_this_payment_is_linked_to_an_activity_registration_form_submi",
+          "id": "edit-if-this-payment-is-linked-to-an-activity-registration-form-submi",
+          "selector": "edit-if-this-payment-is-linked-to-an-activity-registration-form-submi",
+          "label": "If this payment is linked to an Activity Registration Form submission, select it here",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "payable_to",
+          "id": "edit-payable-to",
+          "selector": "edit-payable-to",
+          "label": "Payable to",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "tel",
+          "name": "payee_phone_number",
+          "id": "edit-payee-phone-number",
+          "selector": "edit-payee-phone-number",
+          "label": "Payee phone number",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "email",
+          "name": "payee_ucl_email_address",
+          "id": "edit-payee-ucl-email-address",
+          "selector": "edit-payee-ucl-email-address",
+          "label": "Payee UCL email address",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "account_number",
+          "id": "edit-account-number",
+          "selector": "edit-account-number",
+          "label": "Account number",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "sort_code",
+          "id": "edit-sort-code",
+          "selector": "edit-sort-code",
+          "label": "Sort code",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "payee_details_changed",
+          "id": "edit-payee-details-changed",
+          "selector": "edit-payee-details-changed",
+          "label": "Have the payee details changed?",
+          "required": false,
+          "hidden": false,
+          "options": [
+            {
+              "value": "",
+              "text": "- Select -"
+            },
+            {
+              "value": "No",
+              "text": "No"
+            },
+            {
+              "value": "Yes",
+              "text": "Yes"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "urgent",
+          "id": "edit-urgent-yes",
+          "selector": "edit-urgent-yes",
+          "label": "Yes",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "urgent",
+          "id": "edit-urgent-no",
+          "selector": "edit-urgent-no",
+          "label": "No",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "textarea",
+          "type": "textarea",
+          "name": "urgent_reason",
+          "id": "edit-urgent-reason",
+          "selector": "edit-urgent-reason",
+          "label": "Why is this urgent?",
+          "required": true,
+          "hidden": true
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "purchases_items_0_account_code_nomcod",
+          "id": "edit-purchases-items-0-account-code-nomcod",
+          "selector": "edit-purchases-items-0-account-code-nomcod",
+          "label": "Expenditure type",
+          "required": true,
+          "hidden": false,
+          "chosen": true,
+          "options": [
+            {
+              "value": "MISCELLANEOUS EXPENDITURE",
+              "text": "MISCELLANEOUS EXPENDITURE"
+            },
+            {
+              "value": "TRANSPORT",
+              "text": "TRANSPORT"
+            },
+            {
+              "value": "FACILITY HIRE",
+              "text": "FACILITY HIRE"
+            }
+          ]
+        },
+        {
+          "tag": "select",
+          "type": "select",
+          "name": "purchases_items_0_account_code_cc",
+          "id": "edit-purchases-items-0-account-code-cc",
+          "selector": "edit-purchases-items-0-account-code-cc",
+          "label": "Grant / Non-grant",
+          "required": true,
+          "hidden": false,
+          "options": [
+            {
+              "value": "N",
+              "text": "N"
+            },
+            {
+              "value": "G",
+              "text": "G"
+            }
+          ]
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "purchases_items_0_net",
+          "id": "edit-purchases-items-0-net",
+          "selector": "edit-purchases-items-0-net",
+          "label": "Cost",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "file",
+          "name": "purchases_items_0_receipt_upload",
+          "id": "edit-purchases-items-0-receipt-upload",
+          "selector": "edit-purchases-items-0-receipt-upload",
+          "label": "Receipt",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "purchases_items_0_receipt_upload_button",
+          "id": "edit-purchases-items-0-receipt-upload-button",
+          "selector": "edit-purchases-items-0-receipt-upload-button",
+          "label": "",
+          "required": false,
+          "hidden": false,
+          "text": "Upload"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "purchases_items_1_net",
+          "id": "edit-purchases-items-1-net",
+          "selector": "edit-purchases-items-1-net",
+          "label": "Cost",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "purchases_add_submit",
+          "id": "edit-purchases-add-submit",
+          "selector": "edit-purchases-add-submit",
+          "label": "",
+          "required": false,
+          "hidden": false,
+          "text": "Add"
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "form_build_id",
+          "id": "",
+          "selector": "",
+          "label": "",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "actions_submit",
+          "id": "edit-actions-submit",
+          "selector": "edit-actions-submit",
+          "label": "",
+          "required": false,
+          "hidden": false,
+          "text": "Submit"
+        }
+      ]
+    }
+  ],
+  "controlsOutsideForms": []
+}

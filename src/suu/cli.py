@@ -404,6 +404,31 @@ def forms_fill(form_id: str, data_path: "str | None", auth_file: "str | None") -
     fill(form_id=form_id, data_path=data_path, auth_file=auth_file)
 
 
+@forms.command("draft")
+@click.argument("field_map", type=click.Path(exists=True, dir_okay=False))
+@click.option("--against", "form_id", default=None, help="Also check this definition's selectors against the capture.")
+def forms_draft(field_map: str, form_id: "str | None") -> None:
+    """Draft definition fields from a Connector field map (fieldmap-*.json).
+
+    Prints the drafted `fields` as JSON. With --against, prints which of that
+    definition's fields the capture has, which it doesn't, and any action
+    selector that would reach a submit button (there must be none).
+    """
+    import json as _json
+
+    from suu.forms.fieldmap import draft_fields, load_field_map, match_definition
+    from suu.forms.loader import load_form_definition
+
+    data = load_field_map(field_map)
+    out: dict = {"fields": [f.model_dump(exclude_defaults=True) for f in draft_fields(data)]}
+    if form_id:
+        try:
+            out["match"] = match_definition(load_form_definition(form_id), data)
+        except ModuleNotFoundError as e:
+            raise _need_extra("forms", e)
+    click.echo(_json.dumps(out, indent=4, ensure_ascii=False))
+
+
 @forms.command("login")
 @click.argument("form_id", required=False, default="default")
 @click.option("--url", default=None, help="Page to open for logging in (advanced).")

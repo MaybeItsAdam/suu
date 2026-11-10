@@ -6,14 +6,23 @@ Kept in step with its TypeScript port, ``buildPaymentRequestData`` in the
 Toolbox (``src/lib/suuForms/payload.ts``), which feeds the Connector browser
 extension — the same mapping, run in the treasurer's own browser. A fix to
 one belongs in the other.
+
+The event builders at the bottom (``build_activity_registration_data``,
+``build_ticket_request_data``, ``build_event_listing_data``) map a Toolbox
+event onto the scaffold definitions for the ARF, the TRF and the What's On
+listing. They have no TypeScript port yet; the definitions' selectors are
+unconfirmed, so their keys are the contract, not the page.
 """
 
 from __future__ import annotations
 
+import math
 import os
 import re
+from datetime import datetime, timezone
 from functools import lru_cache
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import httpx
 
@@ -231,3 +240,361 @@ def normalize_payload(payload: dict, downloaded_file: Path | None = None) -> dic
         ),
         "receipts": [receipt_item],
     }
+
+
+# ---------------------------------------------------------------------------
+# Toolbox event → ARF / TRF / What's On listing (scaffold definitions)
+# ---------------------------------------------------------------------------
+#
+# The event is a Toolbox ``AdhocEvent`` as JSON (camelCase): ``title``,
+# ``society``, ``description``, ``startTime``/``endTime`` (ISO strings in UTC,
+# or datetimes), ``timeKnown``, ``location``, ``imageUrl``. What an AdhocEvent
+# doesn't hold yet, the caller adds alongside: ``ticketTiers`` (``name``,
+# ``price``, ``quantity``, optional ``projectedSales`` and ``audience``),
+# ``expectedAttendance``, ``contactEmail``, ``online``, ``tags``, and the yes/no
+# facts the forms ask (``charity``, ``highRisk``, ``externalCollaboration``,
+# ``externalSpeaker``, ``overnightOrAbroad``, ``cashDoorSales``,
+# ``whoCanAttend``). Missing means "don't fill", never a guess.
+
+LONDON = ZoneInfo("Europe/London")
+
+#: The SU asks for a 15% contingency line in every ARF budget.
+ARF_CONTINGENCY = 0.15
+#: "Never budget for more than 50% ticket sales."
+ARF_MAX_SALES_SHARE = 0.5
+#: Cash door sales are allowed only for tickets at this price or less.
+CASH_DOOR_SALES_MAX_PRICE = 10.0
+#: The balancing income line: whatever tickets and other income don't cover.
+ARF_ACCOUNT_LINE = "Club/society non-grant account contribution"
+
+
+def _amount(value: object) -> float | None:
+    """Pounds as a float, or None when unreadable or absent."""
+    text = format_cost(value)
+    try:
+        return float(text) if text else None
+    except ValueError:
+        return None
+
+
+def _yes_no(value: object) -> str | None:
+    """``"Yes"``/``"No"`` for a known boolean, None when not known."""
+    if value is None or value == "":
+        return None
+    if isinstance(value, str):
+        return "Yes" if value.strip().lower() in ("yes", "true", "1", "y") else "No"
+    return "Yes" if value else "No"
+
+
+def london_date_time(value: object, time_known: bool = True) -> tuple[str, str]:
+    """
+    ``("YYYY-MM-DD", "HH:MM")`` in Europe/London for a datetime or ISO string.
+
+    A naive value is taken as UTC, which is how the Toolbox stores times. When
+    the time isn't known (``timeKnown: false`` — the What's On scraper's
+    midnight placeholder), the time comes back empty rather than ``00:00``.
+    """
+    if value is None or value == "":
+        return "", ""
+    if isinstance(value, datetime):
+        moment = value
+    else:
+        try:
+            moment = datetime.fromisoformat(str(value).strip().replace("Z", "+00:00"))
+        except ValueError:
+            return "", ""
+    if moment.tzinfo is None:
+        moment = moment.replace(tzinfo=timezone.utc)
+    local = moment.astimezone(LONDON)
+    return local.strftime("%Y-%m-%d"), (local.strftime("%H:%M") if time_known else "")
+
+
+def normalize_ticket_tiers(tiers: object) -> list[dict]:
+    """
+    Ticket tiers as ``{name, price, quantity, projected, audience}``.
+
+    ``price`` is pounds (0.0 for free), ``quantity`` an int or None,
+    ``projected`` the sales to budget for: the caller's ``projectedSales``
+    capped at half the quantity, else half the quantity rounded down. A tier
+    with no name is dropped.
+    """
+    out: list[dict] = []
+    for tier in tiers if isinstance(tiers, list) else []:
+        if not isinstance(tier, dict):
+            continue
+        name = first_text(tier.get("name"), tier.get("title"))
+        if not name:
+            continue
+        price = _amount(tier.get("price")) or 0.0
+        quantity_raw = tier.get("quantity", tier.get("capacity"))
+        try:
+            quantity = int(quantity_raw) if quantity_raw not in (None, "") else None
+        except (TypeError, ValueError):
+            quantity = None
+        cap = math.floor(quantity * ARF_MAX_SALES_SHARE) if quantity is not None else None
+        projected_raw = tier.get("projectedSales")
+        try:
+            projected = int(projected_raw) if projected_raw not in (None, "") else cap
+        except (TypeError, ValueError):
+            projected = cap
+        if projected is not None and cap is not None:
+            projected = min(projected, cap)
+        on_sale_date, on_sale_time = london_date_time(tier.get("onSaleAt"))
+        off_sale_date, off_sale_time = london_date_time(tier.get("offSaleAt"))
+        out.append({
+            "name": name,
+            "price": price,
+            "quantity": quantity,
+            "projected": projected or 0,
+            "audience": first_text(tier.get("audience")),
+            "on_sale_date": first_text(tier.get("onSaleDate"), on_sale_date),
+            "on_sale_time": first_text(tier.get("onSaleTime"), on_sale_time),
+            "off_sale_date": first_text(tier.get("offSaleDate"), off_sale_date),
+            "off_sale_time": first_text(tier.get("offSaleTime"), off_sale_time),
+        })
+    return out
+
+
+def _cost_line(cost: dict) -> dict | None:
+    """One ARF expenditure line from a receipt or a planned cost."""
+    amount = _amount(cost.get("amount"))
+    if amount is None:
+        return None
+    category = first_text(cost.get("category"), cost.get("type"))
+    what = first_text(cost.get("description"), cost.get("notes"), cost.get("vendor"))
+    label = su_expenditure_type(category).capitalize() if category else ""
+    exp_type = label or what or "Expenditure"
+    description = " - ".join(p for p in (label, what) if p) or "Expenditure"
+    return {"type": exp_type, "description": description, "amount": amount}
+
+
+def _money(value: float) -> str:
+    return f"{value:.2f}"
+
+
+def build_activity_registration_data(event: dict, costs: list | tuple = ()) -> dict:
+    """
+    Form data for ``su_activity_registration.json`` from an event and its costs.
+
+    ``costs`` are Toolbox receipts (``category``, ``vendor``, ``notes``,
+    ``amount``) or planned costs (``description``, ``amount``). Expenditure is
+    one line per cost plus the SU's 15% contingency; income is one line per
+    paid ticket tier at its projected sales ("Early Bird - £10.00 x 15 =
+    £150.00"), then the society account covering whatever is left, so the
+    budget breaks even as the SU requires. Yes/no radios are ticked only when
+    the answer is known (from the budget or from ``event``).
+    """
+    expenditure = [line for line in (_cost_line(c) for c in costs if isinstance(c, dict)) if line]
+    spend = round(sum(line["amount"] for line in expenditure), 2)
+    if spend > 0:
+        expenditure.append({
+            "type": "Contingency",
+            "description": "Contingency (15%)",
+            "amount": round(spend * ARF_CONTINGENCY, 2),
+        })
+    spend_total = round(sum(line["amount"] for line in expenditure), 2)
+
+    income = []
+    for tier in normalize_ticket_tiers(event.get("ticketTiers")):
+        if tier["price"] <= 0 or tier["projected"] <= 0:
+            continue
+        subtotal = round(tier["price"] * tier["projected"], 2)
+        income.append({
+            "type": "Ticket sales",
+            "description": f"{tier['name']} - £{_money(tier['price'])} x {tier['projected']} = £{_money(subtotal)}",
+            "amount": subtotal,
+        })
+    shortfall = round(spend_total - sum(line["amount"] for line in income), 2)
+    if shortfall > 0:
+        income.append({
+            "type": "Non-Grant Funds",
+            "description": ARF_ACCOUNT_LINE,
+            "amount": shortfall,
+        })
+    income_total = round(sum(line["amount"] for line in income), 2)
+
+    time_known = event.get("timeKnown") is not False
+    start_date, start_time = london_date_time(event.get("startTime"), time_known)
+    end_date, end_time = london_date_time(event.get("endTime"), time_known)
+    location = first_text(event.get("location"))
+    attendance = event.get("expectedAttendance")
+    member_attendance = event.get("memberAttendance")
+
+    proposed_dates = [
+        {
+            "date": start_date,
+            "start_time": start_time,
+            "end_time": end_time,
+            "location": location,
+        }
+    ]
+    if end_date and end_date != start_date:
+        proposed_dates.append({
+            "date": end_date,
+            "start_time": start_time,
+            "end_time": end_time,
+            "location": location,
+        })
+
+    data: dict = {
+        "club_society": first_text(event.get("society"), event.get("organiserName")),
+        "lead_name": first_text(event.get("leadName"), event.get("submittedByName"), event.get("submittedBy")),
+        "lead_email": first_text(event.get("leadEmail"), event.get("contactEmail"), event.get("submittedByEmail")),
+        "lead_phone": first_text(event.get("leadPhone"), event.get("contactPhone"), event.get("phoneNumber")),
+        "activity_name": first_text(event.get("title")),
+        "activity_description": first_text(event.get("description")),
+        "proposed_dates": proposed_dates,
+        "member_attendance": str(int(member_attendance)) if isinstance(member_attendance, (int, float)) and not isinstance(member_attendance, bool) else "",
+        "expected_attendance": str(int(attendance)) if isinstance(attendance, (int, float)) and not isinstance(attendance, bool) else "",
+        "costs_money_yes": spend_total > 0,
+        "costs_money_no": spend_total == 0,
+        "expenditure": [
+            {"type": l["type"], "description": l["description"], "amount": _money(l["amount"])}
+            for l in expenditure
+        ],
+        "total_expenditure": _money(spend_total) if spend_total > 0 else "",
+        "generates_income_yes": income_total > 0,
+        "generates_income_no": income_total == 0,
+        "income": [
+            {"type": l["type"], "description": l["description"], "amount": _money(l["amount"])}
+            for l in income
+        ],
+        "total_income": _money(income_total) if income_total > 0 else "",
+    }
+    for yes_key, no_key, source in (
+        ("on_campus_yes", "on_campus_no", "onCampus"),
+        ("raising_for_charity_yes", "raising_for_charity_no", "charity"),
+        ("previous_event_yes", "previous_event_no", "previousEvent"),
+        ("risk_assessment_additional", "risk_assessment_core", "highRisk"),
+        ("under_18s_yes", "under_18s_no", "under18s"),
+        ("external_speaker_yes", "external_speaker_no", "externalSpeaker"),
+    ):
+        answer = _yes_no(event.get(source))
+        if answer == "Yes":
+            data[yes_key] = True
+        elif answer == "No":
+            data[no_key] = True
+    if first_text(event.get("charityName")):
+        data["charity_name"] = first_text(event.get("charityName"))
+    if first_text(event.get("charityRegistrationNumber")):
+        data["charity_registration_number"] = first_text(event.get("charityRegistrationNumber"))
+    if first_text(event.get("fundraisingDetail")):
+        data["fundraising_detail"] = first_text(event.get("fundraisingDetail"))
+    return data
+
+
+def build_ticket_request_data(
+    event: dict,
+    whats_on_url: str | None = None,
+    activity_registration_ref: str | None = None,
+) -> dict:
+    """
+    Form data for ``su_ticket_request.json``: the paid tiers of an event.
+
+    Free tiers are left out (the society makes those on the SU site itself).
+    The What's On URL is required by the SU and comes from the event's linked
+    listing (which already carries the event's title, date, time and venue);
+    an ARF reference is sent when given, and selects ``expenditure_over_200_yes``.
+    """
+    paid = [t for t in normalize_ticket_tiers(event.get("ticketTiers")) if t["price"] > 0]
+    quantities = [t["quantity"] for t in paid if t["quantity"] is not None]
+    total_tickets = str(sum(quantities)) if quantities else ""
+
+    data: dict = {
+        "club_society": first_text(event.get("society"), event.get("organiserName")),
+        "lead_name": first_text(event.get("leadName"), event.get("treasurerName"), event.get("submittedByName"), event.get("submittedBy")),
+        "lead_email": first_text(event.get("leadEmail"), event.get("contactEmail"), event.get("submittedByEmail")),
+        "lead_phone": first_text(event.get("leadPhone"), event.get("contactPhone"), event.get("phoneNumber")),
+        "selling_for_event": True,
+        "account_code": first_text(event.get("accountCode"), event.get("accountNumber")),
+        "whats_on_url": first_text(whats_on_url, event.get("whatsOnUrl")),
+        "ticket_tiers": [
+            {
+                "name": t["name"],
+                "audience": t["audience"],
+                "quantity": "" if t["quantity"] is None else str(t["quantity"]),
+                "price": _money(t["price"]),
+                "on_sale_date": t["on_sale_date"],
+                "on_sale_time": t["on_sale_time"],
+                "off_sale_date": t["off_sale_date"],
+                "off_sale_time": t["off_sale_time"],
+            }
+            for t in paid
+        ],
+        "total_tickets": total_tickets,
+        "additional_information": first_text(event.get("additionalInformation"), event.get("notes")),
+    }
+    reference = first_text(activity_registration_ref, event.get("activityRegistrationRef"))
+    if reference:
+        data["expenditure_over_200_yes"] = True
+        data["activity_registration_form"] = reference
+    for yes_key, no_key, source in (
+        ("raising_for_charity_yes", "raising_for_charity_no", "charity"),
+        ("linked_to_external_speaker_yes", "linked_to_external_speaker_no", "externalSpeaker"),
+        ("involves_coach_yes", "involves_coach_no", "involvesCoach"),
+    ):
+        answer = _yes_no(event.get(source))
+        if answer == "Yes":
+            data[yes_key] = True
+        elif answer == "No":
+            data[no_key] = True
+    if first_text(event.get("charityName")):
+        data["charity_name"] = first_text(event.get("charityName"))
+    return data
+
+
+def build_event_listing_data(event: dict, image_file: Path | None = None) -> dict:
+    """
+    Form data for ``su_event_listing.json`` (What's On "Create event", ``/product/add/event``).
+
+    Only free tiers go on the listing; paid tickets are the TRF's. The image
+    is a downloaded local file, like a payment request's receipt — the
+    payload never carries a URL for a file. An online event gets no venue.
+    """
+    time_known = event.get("timeKnown") is not False
+    start_date, start_time = london_date_time(event.get("startTime"), time_known)
+    end_date, end_time = london_date_time(event.get("endTime"), time_known)
+    online = bool(event.get("online"))
+    tags = event.get("tags")
+    all_tiers = normalize_ticket_tiers(event.get("ticketTiers"))
+    free = [t for t in all_tiers if t["price"] <= 0]
+    has_paid = any(t["price"] > 0 for t in all_tiers)
+    if has_paid:
+        ticketing_type = "Club & Society event as part of a Ticket Request Form submission"
+    elif free:
+        ticketing_type = "Free tickets bookable on this website"
+    else:
+        ticketing_type = "No tickets"
+    image_path = str(image_file) if image_file else ""
+    data: dict = {
+        "title": first_text(event.get("title")),
+        "owner_group": first_text(event.get("society"), event.get("organiserName")),
+        "event_category": first_text(event.get("eventCategory"), "Clubs & Societies"),
+        "start_date": start_date,
+        "start_time": start_time,
+        "end_date": end_date or start_date,
+        "end_time": end_time,
+        "online": online,
+        "venue": "" if online else first_text(event.get("location")),
+        "body": first_text(event.get("description")),
+        "banner_image": image_path,
+        "card_image": image_path,
+        "contact_email": first_text(event.get("contactEmail")),
+        "contact_phone": first_text(event.get("contactPhone"), event.get("leadPhone")),
+        "tags": ", ".join(t.strip() for t in tags if isinstance(t, str) and t.strip()) if isinstance(tags, list) else "",
+        "ticketing_type": ticketing_type,
+        "ticket_tiers": [
+            {"name": t["name"], "price": _money(0), "quantity": "" if t["quantity"] is None else str(t["quantity"])}
+            for t in free
+        ],
+    }
+    if event.get("postgraduate") is not None:
+        data["postgraduate"] = bool(event.get("postgraduate"))
+    if first_text(event.get("familyFriendly")):
+        data["family_friendly"] = first_text(event.get("familyFriendly"))
+    wheelchair = _yes_no(event.get("wheelchairAccess"))
+    if wheelchair == "Yes":
+        data["wheelchair_access_yes"] = True
+    elif wheelchair == "No":
+        data["wheelchair_access_no"] = True
+    return data

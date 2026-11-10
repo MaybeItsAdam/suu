@@ -1,0 +1,1134 @@
+{
+  "capturedAt": "2026-10-24",
+  "url": "https://studentsunionucl.org/webform/activity-registration-form",
+  "title": "Activity Registration Form | Students Union UCL",
+  "forms": [
+    {
+      "id": "webform-submission-activity-registration-form-add-form",
+      "selector": "webform-submission-activity-registration-form-add-form",
+      "action": "/webform/activity-registration-form",
+      "method": "post",
+      "fields": [
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "webform_access_group",
+          "id": "edit-webform-access-group",
+          "selector": "edit-webform-access-group",
+          "label": "Club/Society",
+          "required": true,
+          "hidden": false,
+          "autocomplete": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "event_lead_name",
+          "id": "edit-event-lead-name",
+          "selector": "edit-event-lead-name",
+          "label": "Activity Lead Name",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "email",
+          "name": "e_mail",
+          "id": "edit-e-mail",
+          "selector": "edit-e-mail",
+          "label": "Activity Lead Email Address",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "event_lead_phone",
+          "id": "edit-event-lead-phone",
+          "selector": "edit-event-lead-phone",
+          "label": "Activity Lead Phone Number",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "event_name",
+          "id": "edit-event-name",
+          "selector": "edit-event-name",
+          "label": "Activity Name",
+          "required": true,
+          "hidden": false,
+          "description": "Please provide a short name for your event, e.g. Online Hackathon 2023."
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "event_description",
+          "id": "edit-event-description",
+          "selector": "edit-event-description",
+          "label": "Activity Description",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "tabledrag-toggle-weight",
+          "label": "",
+          "required": false,
+          "hidden": false,
+          "text": "Show row weights"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "text": "Hide lower priority columns"
+        },
+        {
+          "tag": "input",
+          "type": "date",
+          "name": "proposed_date_s_and_time_s_[items][0][dateandtimeproposed]",
+          "id": "edit-proposed-date-s-and-time-s-items-0-dateandtimeproposed",
+          "selector": "edit-proposed-date-s-and-time-s-items-0-dateandtimeproposed",
+          "label": "Proposed Date(s)",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "time",
+          "name": "proposed_date_s_and_time_s_[items][0][start]",
+          "id": "edit-proposed-date-s-and-time-s-items-0-start",
+          "selector": "edit-proposed-date-s-and-time-s-items-0-start",
+          "label": "Start Time",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "time",
+          "name": "proposed_date_s_and_time_s_[items][0][end]",
+          "id": "edit-proposed-date-s-and-time-s-items-0-end",
+          "selector": "edit-proposed-date-s-and-time-s-items-0-end",
+          "label": "End Time",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "proposed_date_s_and_time_s_[items][0][proposedlocation]",
+          "id": "edit-proposed-date-s-and-time-s-items-0-proposedlocation",
+          "selector": "edit-proposed-date-s-and-time-s-items-0-proposedlocation",
+          "label": "Location",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "proposed_date_s_and_time_s_[items][0][weight]",
+          "id": "edit-proposed-date-s-and-time-s-items-0-weight",
+          "selector": "edit-proposed-date-s-and-time-s-items-0-weight",
+          "label": "Item weight",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "image",
+          "name": "proposed_date_s_and_time_s__table_add_0",
+          "id": "edit-proposed-date-s-and-time-s-items-0-operations-add",
+          "selector": "edit-proposed-date-s-and-time-s-items-0-operations-add",
+          "label": "",
+          "required": false,
+          "hidden": false,
+          "text": "Add new item after item 1"
+        },
+        {
+          "tag": "input",
+          "type": "image",
+          "name": "proposed_date_s_and_time_s__table_remove_0",
+          "id": "edit-proposed-date-s-and-time-s-items-0-operations-remove",
+          "selector": "edit-proposed-date-s-and-time-s-items-0-operations-remove",
+          "label": "",
+          "required": false,
+          "hidden": false,
+          "text": "Remove item 1"
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "proposed_date_s_and_time_s__table_add",
+          "id": "edit-proposed-date-s-and-time-s-add-submit",
+          "selector": "edit-proposed-date-s-and-time-s-add-submit",
+          "label": "",
+          "required": false,
+          "hidden": false,
+          "text": "Add"
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "proposed_date_s_and_time_s_[add][more_items]",
+          "id": "edit-proposed-date-s-and-time-s-add-more-items",
+          "selector": "edit-proposed-date-s-and-time-s-add-more-items",
+          "label": "Add more items",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "how_many_members_will_be_taking_part_in_this_activity_",
+          "id": "edit-how-many-members-will-be-taking-part-in-this-activity-",
+          "selector": "edit-how-many-members-will-be-taking-part-in-this-activity-",
+          "label": "How many members will be taking part in this activity?",
+          "required": false,
+          "hidden": false,
+          "description": "Please provide an approximate figure if you are not sure."
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "how_many_people_will_be_attending_in_total_",
+          "id": "edit-how-many-people-will-be-attending-in-total-",
+          "selector": "edit-how-many-people-will-be-attending-in-total-",
+          "label": "How many people will be attending in total?",
+          "required": false,
+          "hidden": false,
+          "description": "This includes members and non-members. Please provide an approximate figure if you are not sure."
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "is_your_activity_happening_on_campus",
+          "id": "edit-is-your-activity-happening-on-campus-1",
+          "selector": "edit-is-your-activity-happening-on-campus-1",
+          "label": "Yes",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "is_your_activity_happening_on_campus",
+          "id": "edit-is-your-activity-happening-on-campus-2",
+          "selector": "edit-is-your-activity-happening-on-campus-2",
+          "label": "No",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "is_your_activity_happening_on_campus",
+          "id": "edit-is-your-activity-happening-on-campus-3",
+          "selector": "edit-is-your-activity-happening-on-campus-3",
+          "label": "N/A",
+          "required": false,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "please_check_any_of_the_following_spaces_that_you_re_planning_on[jbr]",
+          "id": "edit-please-check-any-of-the-following-spaces-that-you-re-planning-on-jbr",
+          "selector": "edit-please-check-any-of-the-following-spaces-that-you-re-planning-on-jbr",
+          "label": "JBR",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "please_check_any_of_the_following_spaces_that_you_re_planning_on[wilkins_terrace]",
+          "id": "edit-please-check-any-of-the-following-spaces-that-you-re-planning-on-wilkins-terrace",
+          "selector": "edit-please-check-any-of-the-following-spaces-that-you-re-planning-on-wilkins-terrace",
+          "label": "Wilkins Terrace",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "please_check_any_of_the_following_spaces_that_you_re_planning_on[main_quad]",
+          "id": "edit-please-check-any-of-the-following-spaces-that-you-re-planning-on-main-quad",
+          "selector": "edit-please-check-any-of-the-following-spaces-that-you-re-planning-on-main-quad",
+          "label": "Main Quad",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "please_check_any_of_the_following_spaces_that_you_re_planning_on[student_centre]",
+          "id": "edit-please-check-any-of-the-following-spaces-that-you-re-planning-on-student-centre",
+          "selector": "edit-please-check-any-of-the-following-spaces-that-you-re-planning-on-student-centre",
+          "label": "Student Centre",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "please_check_any_of_the_following_spaces_that_you_re_planning_on[japanese_gardens]",
+          "id": "edit-please-check-any-of-the-following-spaces-that-you-re-planning-on-japanese-gardens",
+          "selector": "edit-please-check-any-of-the-following-spaces-that-you-re-planning-on-japanese-gardens",
+          "label": "Japanese Gardens",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "please_check_any_of_the_following_spaces_that_you_re_planning_on[south_quad]",
+          "id": "edit-please-check-any-of-the-following-spaces-that-you-re-planning-on-south-quad",
+          "selector": "edit-please-check-any-of-the-following-spaces-that-you-re-planning-on-south-quad",
+          "label": "South Quad",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "please_check_any_of_the_following_spaces_that_you_re_planning_on[logan_hall]",
+          "id": "edit-please-check-any-of-the-following-spaces-that-you-re-planning-on-logan-hall",
+          "selector": "edit-please-check-any-of-the-following-spaces-that-you-re-planning-on-logan-hall",
+          "label": "Logan Hall",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "please_check_any_of_the_following_spaces_that_you_re_planning_on[cruciform_lt1]",
+          "id": "edit-please-check-any-of-the-following-spaces-that-you-re-planning-on-cruciform-lt1",
+          "selector": "edit-please-check-any-of-the-following-spaces-that-you-re-planning-on-cruciform-lt1",
+          "label": "Cruciform LT1",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "please_check_any_of_the_following_spaces_that_you_re_planning_on[ucleast]",
+          "id": "edit-please-check-any-of-the-following-spaces-that-you-re-planning-on-ucleast",
+          "selector": "edit-please-check-any-of-the-following-spaces-that-you-re-planning-on-ucleast",
+          "label": "UCL East (any rooms)",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "please_check_any_of_the_following_spaces_that_you_re_planning_on[none]",
+          "id": "edit-please-check-any-of-the-following-spaces-that-you-re-planning-on-none",
+          "selector": "edit-please-check-any-of-the-following-spaces-that-you-re-planning-on-none",
+          "label": "None of the above",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "will_you_be_raising_money_for_a_charity",
+          "id": "edit-will-you-be-raising-money-for-a-charity-1",
+          "selector": "edit-will-you-be-raising-money-for-a-charity-1",
+          "label": "Yes",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "will_you_be_raising_money_for_a_charity",
+          "id": "edit-will-you-be-raising-money-for-a-charity-2",
+          "selector": "edit-will-you-be-raising-money-for-a-charity-2",
+          "label": "No",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "what_type_of_fundraising_will_you_be_carrying_out[1]",
+          "id": "edit-what-type-of-fundraising-will-you-be-carrying-out-1",
+          "selector": "edit-what-type-of-fundraising-will-you-be-carrying-out-1",
+          "label": "Collection (e.g. using a charity collection bucket at an event or on campus)",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "checkbox",
+          "name": "what_type_of_fundraising_will_you_be_carrying_out[2]",
+          "id": "edit-what-type-of-fundraising-will-you-be-carrying-out-2",
+          "selector": "edit-what-type-of-fundraising-will-you-be-carrying-out-2",
+          "label": "Fundraising event (e.g. an event with tickets raising money for charity, or selling cakes on a stall)",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "textarea",
+          "type": "textarea",
+          "name": "please_provide_the_detail_of_your_fundraising",
+          "id": "edit-please-provide-the-detail-of-your-fundraising",
+          "selector": "edit-please-provide-the-detail-of-your-fundraising",
+          "label": "Please provide any further detail about the fundraising activity you will be carrying out:",
+          "required": false,
+          "hidden": true,
+          "states": {
+            "visible": {
+              ".webform-submission-activity-registration-form-add-form :input[name=\"what_type_of_fundraising_will_you_be_carrying_out[2]\"]": {
+                "checked": true
+              }
+            },
+            "required": {
+              ".webform-submission-activity-registration-form-add-form :input[name=\"what_type_of_fundraising_will_you_be_carrying_out[2]\"]": {
+                "checked": true
+              }
+            }
+          }
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "name_of_organisation_you_are_raising_money_for",
+          "id": "edit-name-of-organisation-you-are-raising-money-for",
+          "selector": "edit-name-of-organisation-you-are-raising-money-for",
+          "label": "Name of organisation you are raising money for:",
+          "required": false,
+          "hidden": true,
+          "states": {
+            "visible": {
+              ".webform-submission-activity-registration-form-add-form :input[name=\"will_you_be_raising_money_for_a_charity\"]": {
+                "value": "1"
+              }
+            },
+            "required": {
+              ".webform-submission-activity-registration-form-add-form :input[name=\"will_you_be_raising_money_for_a_charity\"]": {
+                "value": "1"
+              }
+            }
+          }
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "charity_registration_number",
+          "id": "edit-charity-registration-number",
+          "selector": "edit-charity-registration-number",
+          "label": "Charity registration number:",
+          "required": false,
+          "hidden": true,
+          "states": {
+            "visible": {
+              ".webform-submission-activity-registration-form-add-form :input[name=\"will_you_be_raising_money_for_a_charity\"]": {
+                "value": "1"
+              }
+            },
+            "required": {
+              ".webform-submission-activity-registration-form-add-form :input[name=\"will_you_be_raising_money_for_a_charity\"]": {
+                "value": "1"
+              }
+            }
+          }
+        },
+        {
+          "tag": "input",
+          "type": "file",
+          "name": "files[charity_permission_letter]",
+          "id": "edit-charity-permission-letter-upload",
+          "selector": "edit-charity-permission-letter-upload",
+          "label": "Charity permission letter",
+          "required": false,
+          "hidden": true,
+          "description": "One file only. • Allowed types: jpg jpeg png html pdf doc docx. • 2 MB limit per file. The accumulated size of all files in this form cannot exceed 50 MB."
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "charity_permission_letter_upload_button",
+          "id": "edit-charity-permission-letter-upload-button",
+          "selector": "edit-charity-permission-letter-upload-button",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "description": "One file only. • Allowed types: jpg jpeg png html pdf doc docx. • 2 MB limit per file. The accumulated size of all files in this form cannot exceed 50 MB.",
+          "text": "Upload"
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "charity_permission_letter[fids]",
+          "id": "",
+          "selector": "edit-charity-permission-letter-fids",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "description": "One file only. • Allowed types: jpg jpeg png html pdf doc docx. • 2 MB limit per file. The accumulated size of all files in this form cannot exceed 50 MB."
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "previous_event",
+          "id": "edit-previous-event-1",
+          "selector": "edit-previous-event-1",
+          "label": "Yes",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "previous_event",
+          "id": "edit-previous-event-2",
+          "selector": "edit-previous-event-2",
+          "label": "No",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "tabledrag-toggle-weight",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "text": "Show row weights"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "text": "Hide lower priority columns"
+        },
+        {
+          "tag": "input",
+          "type": "date",
+          "name": "previous_event_information[items][0][date]",
+          "id": "edit-previous-event-information-items-0-date",
+          "selector": "edit-previous-event-information-items-0-date",
+          "label": "Date(s)",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "previous_event_information[items][0][location]",
+          "id": "edit-previous-event-information-items-0-location",
+          "selector": "edit-previous-event-information-items-0-location",
+          "label": "Location",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "previous_event_information[items][0][weight]",
+          "id": "edit-previous-event-information-items-0-weight",
+          "selector": "edit-previous-event-information-items-0-weight",
+          "label": "Item weight",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "image",
+          "name": "previous_event_information_table_add_0",
+          "id": "edit-previous-event-information-items-0-operations-add",
+          "selector": "edit-previous-event-information-items-0-operations-add",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "text": ""
+        },
+        {
+          "tag": "input",
+          "type": "image",
+          "name": "previous_event_information_table_remove_0",
+          "id": "edit-previous-event-information-items-0-operations-remove",
+          "selector": "edit-previous-event-information-items-0-operations-remove",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "text": ""
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "previous_event_information_table_add",
+          "id": "edit-previous-event-information-add-submit",
+          "selector": "edit-previous-event-information-add-submit",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "text": "Add"
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "previous_event_information[add][more_items]",
+          "id": "edit-previous-event-information-add-more-items",
+          "selector": "edit-previous-event-information-add-more-items",
+          "label": "Add more items",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "profit_loss_figure_",
+          "id": "edit-profit-loss-figure-",
+          "selector": "edit-profit-loss-figure-",
+          "label": "Profit/loss (figure)",
+          "required": false,
+          "hidden": true,
+          "states": {
+            "required": {
+              ".webform-submission-activity-registration-form-add-form :input[name=\"previous_event\"]": {
+                "value": "1"
+              }
+            }
+          }
+        },
+        {
+          "tag": "textarea",
+          "type": "textarea",
+          "name": "additional_information",
+          "id": "edit-additional-information",
+          "selector": "edit-additional-information",
+          "label": "Additional information",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "will_this_activity_cost_money_to_run_",
+          "id": "edit-will-this-activity-cost-money-to-run-yes",
+          "selector": "edit-will-this-activity-cost-money-to-run-yes",
+          "label": "Yes",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "will_this_activity_cost_money_to_run_",
+          "id": "edit-will-this-activity-cost-money-to-run-no",
+          "selector": "edit-will-this-activity-cost-money-to-run-no",
+          "label": "No",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "tabledrag-toggle-weight",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "description": "Please use the table below to describe details of your predicted expenditures. You can use details from any quotes you have received from relevant companies or providers. Please include VAT in all figures below. When completing the table below, you must include a contingency figure, which is 15% of ",
+          "text": "Show row weights"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "description": "Please use the table below to describe details of your predicted expenditures. You can use details from any quotes you have received from relevant companies or providers. Please include VAT in all figures below. When completing the table below, you must include a contingency figure, which is 15% of ",
+          "text": "Hide lower priority columns"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "expenditure_details_3[items][0][type]",
+          "id": "edit-expenditure-details-3-items-0-type",
+          "selector": "edit-expenditure-details-3-items-0-type",
+          "label": "Expenditure Type",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "expenditure_details_3[items][0][details]",
+          "id": "edit-expenditure-details-3-items-0-details",
+          "selector": "edit-expenditure-details-3-items-0-details",
+          "label": "Details",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "expenditure_details_3[items][0][amount]",
+          "id": "edit-expenditure-details-3-items-0-amount",
+          "selector": "edit-expenditure-details-3-items-0-amount",
+          "label": "Amount (£)",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "expenditure_details_3[items][0][weight]",
+          "id": "edit-expenditure-details-3-items-0-weight",
+          "selector": "edit-expenditure-details-3-items-0-weight",
+          "label": "Item weight",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "image",
+          "name": "expenditure_details_3_table_add_0",
+          "id": "edit-expenditure-details-3-items-0-operations-add",
+          "selector": "edit-expenditure-details-3-items-0-operations-add",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "description": "Please use the table below to describe details of your predicted expenditures. You can use details from any quotes you have received from relevant companies or providers. Please include VAT in all figures below. When completing the table below, you must include a contingency figure, which is 15% of ",
+          "text": ""
+        },
+        {
+          "tag": "input",
+          "type": "image",
+          "name": "expenditure_details_3_table_remove_0",
+          "id": "edit-expenditure-details-3-items-0-operations-remove",
+          "selector": "edit-expenditure-details-3-items-0-operations-remove",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "description": "Please use the table below to describe details of your predicted expenditures. You can use details from any quotes you have received from relevant companies or providers. Please include VAT in all figures below. When completing the table below, you must include a contingency figure, which is 15% of ",
+          "text": ""
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "expenditure_details_3_table_add",
+          "id": "edit-expenditure-details-3-add-submit",
+          "selector": "edit-expenditure-details-3-add-submit",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "description": "Please use the table below to describe details of your predicted expenditures. You can use details from any quotes you have received from relevant companies or providers. Please include VAT in all figures below. When completing the table below, you must include a contingency figure, which is 15% of ",
+          "text": "Add"
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "expenditure_details_3[add][more_items]",
+          "id": "edit-expenditure-details-3-add-more-items",
+          "selector": "edit-expenditure-details-3-add-more-items",
+          "label": "Add more items",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "total_expenditure",
+          "id": "edit-total-expenditure",
+          "selector": "edit-total-expenditure",
+          "label": "Total predicted expenditure",
+          "required": false,
+          "hidden": true,
+          "states": {
+            "visible": {
+              ".webform-submission-activity-registration-form-add-form :input[name=\"will_this_activity_cost_money_to_run_\"]": {
+                "value": "Yes"
+              }
+            },
+            "required": {
+              ".webform-submission-activity-registration-form-add-form :input[name=\"will_this_activity_cost_money_to_run_\"]": {
+                "value": "Yes"
+              }
+            }
+          }
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "will_this_event_generate_income_",
+          "id": "edit-will-this-event-generate-income-yes",
+          "selector": "edit-will-this-event-generate-income-yes",
+          "label": "Yes",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "will_this_event_generate_income_",
+          "id": "edit-will-this-event-generate-income-no",
+          "selector": "edit-will-this-event-generate-income-no",
+          "label": "No",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "tabledrag-toggle-weight",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "description": "If your activity will have expenditure, you must detail what income will cover these costs. Please use the table below to describe your predicted income for this activity. You must include all income. Examples include: Ticket sales Sponsorship Non-Grant Funds Grant Funds Donations Other Add rows for",
+          "text": "Show row weights"
+        },
+        {
+          "tag": "button",
+          "type": "button",
+          "name": "",
+          "id": "",
+          "selector": "",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "description": "If your activity will have expenditure, you must detail what income will cover these costs. Please use the table below to describe your predicted income for this activity. You must include all income. Examples include: Ticket sales Sponsorship Non-Grant Funds Grant Funds Donations Other Add rows for",
+          "text": "Hide lower priority columns"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "incomings_details[items][0][type]",
+          "id": "edit-incomings-details-items-0-type",
+          "selector": "edit-incomings-details-items-0-type",
+          "label": "Type of Income",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "incomings_details[items][0][details]",
+          "id": "edit-incomings-details-items-0-details",
+          "selector": "edit-incomings-details-items-0-details",
+          "label": "Details",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "incomings_details[items][0][amount]",
+          "id": "edit-incomings-details-items-0-amount",
+          "selector": "edit-incomings-details-items-0-amount",
+          "label": "Amount (£)",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "incomings_details[items][0][weight]",
+          "id": "edit-incomings-details-items-0-weight",
+          "selector": "edit-incomings-details-items-0-weight",
+          "label": "Item weight",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "image",
+          "name": "incomings_details_table_add_0",
+          "id": "edit-incomings-details-items-0-operations-add",
+          "selector": "edit-incomings-details-items-0-operations-add",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "description": "If your activity will have expenditure, you must detail what income will cover these costs. Please use the table below to describe your predicted income for this activity. You must include all income. Examples include: Ticket sales Sponsorship Non-Grant Funds Grant Funds Donations Other Add rows for",
+          "text": ""
+        },
+        {
+          "tag": "input",
+          "type": "image",
+          "name": "incomings_details_table_remove_0",
+          "id": "edit-incomings-details-items-0-operations-remove",
+          "selector": "edit-incomings-details-items-0-operations-remove",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "description": "If your activity will have expenditure, you must detail what income will cover these costs. Please use the table below to describe your predicted income for this activity. You must include all income. Examples include: Ticket sales Sponsorship Non-Grant Funds Grant Funds Donations Other Add rows for",
+          "text": ""
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "incomings_details_table_add",
+          "id": "edit-incomings-details-add-submit",
+          "selector": "edit-incomings-details-add-submit",
+          "label": "",
+          "required": false,
+          "hidden": true,
+          "description": "If your activity will have expenditure, you must detail what income will cover these costs. Please use the table below to describe your predicted income for this activity. You must include all income. Examples include: Ticket sales Sponsorship Non-Grant Funds Grant Funds Donations Other Add rows for",
+          "text": "Add"
+        },
+        {
+          "tag": "input",
+          "type": "number",
+          "name": "incomings_details[add][more_items]",
+          "id": "edit-incomings-details-add-more-items",
+          "selector": "edit-incomings-details-add-more-items",
+          "label": "Add more items",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "total_predicted_income",
+          "id": "edit-total-predicted-income",
+          "selector": "edit-total-predicted-income",
+          "label": "Total predicted income",
+          "required": false,
+          "hidden": true,
+          "states": {
+            "visible": {
+              ".webform-submission-activity-registration-form-add-form :input[name=\"will_this_activity_cost_money_to_run_\"]": {
+                "value": "Yes"
+              }
+            },
+            "required": {
+              ".webform-submission-activity-registration-form-add-form :input[name=\"will_this_activity_cost_money_to_run_\"]": {
+                "value": "Yes"
+              }
+            }
+          }
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "is_this_activity_covered_by_a_risk_assessment_",
+          "id": "edit-is-this-activity-covered-by-a-risk-assessment-1",
+          "selector": "edit-is-this-activity-covered-by-a-risk-assessment-1",
+          "label": "Core Risk Assessment",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "is_this_activity_covered_by_a_risk_assessment_",
+          "id": "edit-is-this-activity-covered-by-a-risk-assessment-2",
+          "selector": "edit-is-this-activity-covered-by-a-risk-assessment-2",
+          "label": "Additional Risk Assessment",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "will_there_be_under_18s_in_attendance_at_this_event",
+          "id": "edit-will-there-be-under-18s-in-attendance-at-this-event-1",
+          "selector": "edit-will-there-be-under-18s-in-attendance-at-this-event-1",
+          "label": "Yes",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "will_there_be_under_18s_in_attendance_at_this_event",
+          "id": "edit-will-there-be-under-18s-in-attendance-at-this-event-2",
+          "selector": "edit-will-there-be-under-18s-in-attendance-at-this-event-2",
+          "label": "No",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "will_there_be_under_18s_in_attendance_at_this_event",
+          "id": "edit-will-there-be-under-18s-in-attendance-at-this-event-3",
+          "selector": "edit-will-there-be-under-18s-in-attendance-at-this-event-3",
+          "label": "N/A",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "does_this_include_any_externals_exc_visiting_and_associate_membe",
+          "id": "edit-does-this-include-any-externals-exc-visiting-and-associate-membe-1",
+          "selector": "edit-does-this-include-any-externals-exc-visiting-and-associate-membe-1",
+          "label": "Yes",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "does_this_include_any_externals_exc_visiting_and_associate_membe",
+          "id": "edit-does-this-include-any-externals-exc-visiting-and-associate-membe-2",
+          "selector": "edit-does-this-include-any-externals-exc-visiting-and-associate-membe-2",
+          "label": "No",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "textarea",
+          "type": "textarea",
+          "name": "please_provide_more_details",
+          "id": "edit-please-provide-more-details",
+          "selector": "edit-please-provide-more-details",
+          "label": "Please provide more details",
+          "required": false,
+          "hidden": true,
+          "states": {
+            "visible": {
+              ".webform-submission-activity-registration-form-add-form :input[name=\"does_this_include_any_externals_exc_visiting_and_associate_membe\"]": {
+                "value": "1"
+              }
+            },
+            "required": {
+              ".webform-submission-activity-registration-form-add-form :input[name=\"does_this_include_any_externals_exc_visiting_and_associate_membe\"]": {
+                "value": "1"
+              }
+            }
+          }
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "will_you_have_an_external_speaker_at_this_activity_",
+          "id": "edit-will-you-have-an-external-speaker-at-this-activity-1",
+          "selector": "edit-will-you-have-an-external-speaker-at-this-activity-1",
+          "label": "Yes",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "radio",
+          "name": "will_you_have_an_external_speaker_at_this_activity_",
+          "id": "edit-will-you-have-an-external-speaker-at-this-activity-2",
+          "selector": "edit-will-you-have-an-external-speaker-at-this-activity-2",
+          "label": "No",
+          "required": true,
+          "hidden": false
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "if_you_have_already_submitted_an_external_speaker_request_form_p",
+          "id": "edit-if-you-have-already-submitted-an-external-speaker-request-form-p",
+          "selector": "edit-if-you-have-already-submitted-an-external-speaker-request-form-p",
+          "label": "If you have already submitted an external speaker request form, please link it here by searching and selecting.",
+          "required": false,
+          "hidden": true,
+          "states": {
+            "visible": {
+              ".webform-submission-activity-registration-form-add-form :input[name=\"will_you_have_an_external_speaker_at_this_activity_\"]": {
+                "value": "1"
+              }
+            }
+          },
+          "autocomplete": true
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "antibot_key",
+          "id": "",
+          "selector": "edit-antibot-key",
+          "label": "",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "form_build_id",
+          "id": "",
+          "selector": "",
+          "label": "",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "form_token",
+          "id": "",
+          "selector": "edit-webform-submission-activity-registration-form-add-form-form-token",
+          "label": "",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "form_id",
+          "id": "",
+          "selector": "edit-webform-submission-activity-registration-form-add-form",
+          "label": "",
+          "required": false,
+          "hidden": true
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "name": "op",
+          "id": "edit-submit",
+          "selector": "edit-submit",
+          "label": "",
+          "required": false,
+          "hidden": false,
+          "wrapperSelector": "edit-actions",
+          "text": "Submit form"
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "url",
+          "id": "edit-url",
+          "selector": "edit-url",
+          "label": "Leave this field blank",
+          "required": false,
+          "hidden": true
+        }
+      ]
+    }
+  ],
+  "controlsOutsideForms": [
+    {
+      "tag": "input",
+      "type": "text",
+      "name": "",
+      "id": "search-input",
+      "selector": "",
+      "label": "",
+      "required": false,
+      "hidden": false
+    }
+  ]
+}
