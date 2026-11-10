@@ -35,26 +35,6 @@
             "confirmed": true
         },
         {
-            "name": "event_category",
-            "selector": "select[data-drupal-selector='edit-field-event-category'] + .chosen-container",
-            "type": "chosen_select",
-            "description": "Category (field_event_category, default: Clubs & Societies)",
-            "required": false,
-            "default": "Clubs & Societies",
-            "options": [
-                "Bars",
-                "Clubs & Societies",
-                "Events & Activities",
-                "Give it a Go",
-                "Jobs & Skills",
-                "Meetings",
-                "Representation",
-                "Sport",
-                "Volunteering"
-            ],
-            "confirmed": true
-        },
-        {
             "name": "start_date",
             "selector": "input[data-drupal-selector='edit-field-date-range-0-value-date']",
             "type": "text",
@@ -341,6 +321,26 @@
             "type": "checkbox",
             "description": "Suitable for Postgraduates (field_access_pg)",
             "required": false,
+            "confirmed": true
+        },
+        {
+            "name": "event_category",
+            "selector": "select[data-drupal-selector='edit-field-event-category'] + .chosen-container",
+            "type": "chosen_select",
+            "description": "Category (field_event_category, default: Clubs & Societies). Filled late, after the society, venue and description: picked straight after the society it was left unset on the live form (2026-11-10), so something earlier in the form resets it.",
+            "required": false,
+            "default": "Clubs & Societies",
+            "options": [
+                "Bars",
+                "Clubs & Societies",
+                "Events & Activities",
+                "Give it a Go",
+                "Jobs & Skills",
+                "Meetings",
+                "Representation",
+                "Sport",
+                "Volunteering"
+            ],
             "confirmed": true
         },
         {
